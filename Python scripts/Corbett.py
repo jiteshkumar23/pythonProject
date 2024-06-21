@@ -8,6 +8,9 @@ from tkinter import simpledialog
 from autoit import autoit
 from config import image_directory
 
+delay_correct = 0.1
+delay_error = 0.5
+
 
 def wait_for_image_and_click(image_path, timeout_duration=60, check_interval=0.5):
     # Calculate the timeout end time
@@ -84,22 +87,14 @@ def click_on_image_in_region(left, top, width, height, image):
         print(f"An error occurred: {str(e)}")
 
 
-def human_typing(text, delay_range=(0.001, 0.005)):
-    """
-    Simulates human-like typing speed with random delays between keystrokes.
-
-    Parameters:
-    - text (str): The text to be typed.
-    - delay_range (tuple): A tuple (min_delay, max_delay) specifying the range
-      of random delays (in seconds) between keystrokes. Defaults to (0.1, 0.3).
-    """
+def human_typing(text, delay_range=(0.0, delay_correct)):
     for char in text:
-        pyautogui.typewrite(char)
+        autoit.send(char)
         delay = random.uniform(delay_range[0], delay_range[1])
         time.sleep(delay)
 
 
-def slow_type_with_error(text, delay):
+def autoit_slow_type_with_error(text):
     # Choose a random position to make a typing error
     error_position = random.randint(0, len(text) - 1)
     # Choose a random alphabet as the incorrect character
@@ -110,11 +105,32 @@ def slow_type_with_error(text, delay):
             # Type the wrong random character
             autoit.send(wrong_character)
             # Backspace to delete the wrong character
+            time.sleep(delay_error)
             autoit.send("{BACKSPACE}")
-
+            time.sleep(delay_correct)
         # Type the correct character
         autoit.send(character)
-        time.sleep(delay)
+        time.sleep(delay_correct)
+
+
+def autoit_slow_type_numbers_with_error(numbers):
+    # Choose a random position to make a typing error
+    error_position = random.randint(0, len(numbers) - 1)
+    # Choose a random digit as the incorrect character
+    wrong_character = random.choice(string.digits)
+
+    for i, character in enumerate(numbers):
+        if i == error_position:
+            # Type the wrong random character
+            autoit.send(wrong_character)
+            # Backspace to delete the wrong character
+            time.sleep(delay_error)
+            autoit.send("{BACKSPACE}")
+            time.sleep(delay_correct)
+            # Additional delay for the correction
+        # Type the correct character
+        autoit.send(character)
+        time.sleep(delay_correct)
 
 
 def main():
@@ -122,10 +138,6 @@ def main():
     ok_image_path = os.path.join(image_directory, 'ok.png')
     firstpersonText_image_path = os.path.join(image_directory, 'firstpersonText.png')
     identity_proof_type_image_path = os.path.join(image_directory, 'identity_proof_type.png')
-
-    # Check if the image file exists
-    # if not os.path.exists(image_path):
-    #     raise FileNotFoundError(f"Image file not found: {image_path}")
 
     # Get user input before starting
     get_user_input()
@@ -136,45 +148,44 @@ def main():
     # pyautogui.click(location)
 
     # two tabs to open the checkin date
-    # pyautogui.press('tab 2')
+    # autoit.send("{TAB 2}")
 
     # Press "Shift" and "W" together
     # pyautogui.hotkey('shift', 'w')
 
+    # Takes you to top of page very fast
+    autoit.send("{HOME}")
+
     location2 = wait_for_image_and_click(firstpersonText_image_path)
     pyautogui.click(location2)
-    pyautogui.press("tab")
-    slow_type_with_error("Jack Dawson", 0.01)
-    pyautogui.press("tab")
-    pyautogui.typewrite("f")
+    autoit.send("{TAB}")
+    autoit_slow_type_with_error("Jack Dawson")
+    autoit.send("{TAB}")
+    autoit.send("f")
     time.sleep(0.1)
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
     pyautogui.click(838, 396)
     time.sleep(0.5)
     pyautogui.hotkey('ctrl', 'f')
     time.sleep(0.1)
-    pyautogui.typewrite("usa")
+    human_typing("australia")
     time.sleep(1)
-    pyautogui.press("esc")
+    autoit.send("{ESC}")
     # Wait for a moment before pressing Enter
     time.sleep(0.2)
 
     # Press Enter key
-    pyautogui.press('enter')
-    time.sleep(1)
-    # pyautogui.click(location2)
-    # pyautogui.press("tab")
-    # pyautogui.press("tab")
-    # pyautogui.press("tab")
-    # click_on_image_in_region(144, 306, 1609, 138, 'identity_proof_type.png')
+    autoit.send("{ENTER}")
+    time.sleep(0.6)
+
     pyautogui.click(1007, 390)
     time.sleep(0.2)
-    pyautogui.typewrite("pan")
-    pyautogui.press('enter')
-    pyautogui.press("tab")
-    pyautogui.typewrite("1234567890")
-    pyautogui.press("tab")
-    pyautogui.typewrite("33")
+    autoit.send("pan")
+    autoit.send("{ENTER}")
+    autoit.send("{TAB}")
+    autoit_slow_type_numbers_with_error("834563895999")
+    autoit.send("{TAB}")
+    human_typing("33")
 
 
 if __name__ == "__main__":

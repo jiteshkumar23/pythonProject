@@ -74,7 +74,7 @@ def click_on_image_in_region(left, top, width, height, image):
         image_location = pyautogui.locateOnScreen(image, region=region)
 
         if image_location is not None:
-            # Click on the center of the image location
+            # Click in the center of the image location
             center = pyautogui.center(image_location)
             pyautogui.click(center)
             print("Image found and clicked.")

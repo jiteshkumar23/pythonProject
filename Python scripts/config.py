@@ -12,7 +12,7 @@ delay_correct = 0.001
 delay_error = 0.001
 
 number_of_rooms = "2"
-number_of_adults = "2"
+number_of_adults = "6"
 number_of_children = "1"
 
 pax_1 = "Foreigner"  # "Indian" , "Foreigner","Student","Senior Citizen"

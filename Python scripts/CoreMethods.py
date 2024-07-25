@@ -1,5 +1,7 @@
 import datetime
 import string
+
+import keyboard
 import pyautogui
 import time
 import random
@@ -9,7 +11,16 @@ from autoit import autoit
 from config import image_directory, delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     firstPersonText_image_path, number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
     idNumberOfFirstPerson, idTypeOfFirstPerson, idTypeOfSecondPerson, idNumberOfSecondPerson, nameOfFirstPerson, \
-    genderOfFirstPerson, countrySecondPerson, countryFirstPerson, ageOfFirstPerson, ageOfSecondPerson
+    genderOfFirstPerson, countrySecondPerson, countryFirstPerson, ageOfFirstPerson, ageOfSecondPerson, \
+    nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, idTypeOfThirdPerson, idNumberOfThirdPerson, \
+    ageOfThirdPerson, nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, idTypeOfFourthPerson, \
+    idNumberOfFourthPerson, ageOfFourthPerson, nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, \
+    idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, nameOfSixthPerson, genderOfSixthPerson, \
+    countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
+    number_of_children, number_of_rooms, ok_image_path
+
+global fifth
+fifth = False
 
 
 def printDateTime():
@@ -206,21 +217,40 @@ def select_room_priority(room_priority):
 
 
 def fillForm():
+    global fifth
     if int(number_of_adults) >= 1:
         location2 = wait_for_image_and_click(firstPersonText_image_path)
         pyautogui.click(location2)
-        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, 838, 396, 1007, 390,
+        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, 838, 390, 1007, 390,
                          idTypeOfFirstPerson,
                          idNumberOfFirstPerson, ageOfFirstPerson)
 
     if int(number_of_adults) >= 2:
-        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, 838, 563, 1016, 556,
+        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, 838, 556, 1007, 556,
                          idTypeOfSecondPerson,
                          idNumberOfSecondPerson, ageOfSecondPerson)
+    if int(number_of_adults) >= 3:
+        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, 838, 721, 1007, 721,
+                         idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson)
+    if int(number_of_adults) >= 4:
+        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, 838, 881, 1007, 881,
+                         idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson)
+
+    if int(number_of_adults) >= 5:
+        fifth = True
+        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, 838, 556, 1007, 556,
+                         idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson)
+
+    if int(number_of_adults) >= 6:
+        fifth = False
+        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, 838, 718, 1007, 718,
+                         idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson)
 
 
 def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age):
     autoit.send("{TAB}")
+    if fifth:
+        time.sleep(0.5)
     autoit_slow_type_with_error(name)
     autoit.send("{TAB}")
     if gender.lower() == 'female':
@@ -271,3 +301,143 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     autoit_slow_type_numbers_with_error(idNumber)
     autoit.send("{TAB}")
     human_typing(age)
+
+
+def custom_hotkey():
+    # Define your desired hotkey combination
+    return keyboard.is_pressed("ctrl+alt+x")  # Example: Ctrl+Alt+X
+
+
+def debounce_key(key):
+    # Wait for key release
+    while keyboard.is_pressed(key):
+        pass
+
+
+def firstPageFill():
+    # Call the function to wait for the image and click on it
+    location = wait_for_image_and_click(ok_image_path)
+    print(location)
+    # click on location of ok button again
+    pyautogui.click(location)
+
+    speed_for_first_page(speed_first_page)
+
+    # two tabs to open the checkin date
+    autoit.send("{TAB 2}")
+
+    speed_for_first_page(speed_first_page)
+
+    # Press hotkey to select checkin
+    # pyautogui.hotkey('shift', 'w')
+
+    speed_for_first_page(speed_first_page)
+
+    # Press enter
+    autoit.send("{ENTER}")
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the checkout date
+    autoit.send("{TAB}")
+
+    speed_for_first_page(speed_first_page)
+
+    # Press hotkey to select checkout date
+    # pyautogui.hotkey('shift', 'w')
+
+    speed_for_first_page(speed_first_page)
+
+    # Press enter
+    autoit.send("{ENTER}")
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to select rooms
+    autoit.send("{TAB}")
+
+    speed_for_first_page(speed_first_page)
+
+    # select the number of rooms
+    autoit.send(number_of_rooms)
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the adults dropdown
+    autoit.send("{TAB}")
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to select Adults
+    autoit.send(number_of_adults)
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the children dropdown
+    autoit.send("{TAB}")
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to select children
+    autoit.send(number_of_children)
+
+    speed_for_first_page(speed_first_page)
+
+    if int(number_of_adults) >= 1:
+        # one tab to open the pax1 dropdown and select
+        autoit.send("{TAB}")
+        selectPaxDropdown(pax_1.lower())
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the pax2 dropdown and select
+    if int(number_of_adults) >= 2:
+        # one tab to open the pax1 dropdown and select
+        autoit.send("{TAB}")
+        selectPaxDropdown(pax_2.lower())
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the pax3 dropdown and select
+    if int(number_of_adults) >= 3:
+        # one tab to open the pax1 dropdown and select
+        autoit.send("{TAB}")
+        selectPaxDropdown(pax_3.lower())
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the pax4 dropdown and select
+    if int(number_of_adults) >= 4:
+        # one tab to open the pax1 dropdown and select
+        autoit.send("{TAB}")
+        selectPaxDropdown(pax_4.lower())
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the pax5 dropdown and select
+    if int(number_of_adults) >= 5:
+        # one tab to open the pax1 dropdown and select
+        autoit.send("{TAB}")
+        selectPaxDropdown(pax_5.lower())
+
+    speed_for_first_page(speed_first_page)
+
+    # one tab to open the pax6 dropdown and select
+    if int(number_of_adults) >= 6:
+        # one tab to open the pax1 dropdown and select
+        autoit.send("{TAB}")
+        selectPaxDropdown(pax_6.lower())
+
+    speed_for_first_page(speed_first_page)
+
+    # tab and enter
+    autoit.send("{TAB}")
+    autoit.send("{ENTER}")
+
+    speed_for_first_page(speed_first_page)
+    # sleep for 1 second
+    time.sleep(1)
+
+    select_room_priority("Bijrani")
+
+    time.sleep(1)

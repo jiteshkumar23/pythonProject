@@ -3,7 +3,6 @@ import pyautogui
 # Get the current mouse position
 print("Move your mouse cursor to the top-left corner of the region and press Enter...")
 input()  # Wait for user input
-
 left, top = pyautogui.position()
 print(f"Left: {left}, Top: {top}")
 

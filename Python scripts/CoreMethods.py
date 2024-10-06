@@ -1,12 +1,18 @@
 import datetime
+from datetime import datetime
+import os
 import string
-
+import traceback
 import keyboard
 import pyautogui
 import time
 import random
 import tkinter as tk
 from tkinter import simpledialog
+import cv2
+import numpy as np
+
+from PIL import ImageGrab
 from autoit import autoit
 from config import image_directory, delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     firstPersonText_image_path, number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
@@ -17,7 +23,10 @@ from config import image_directory, delay_correct, delay_error, pax_1, pax_2, pa
     idNumberOfFourthPerson, ageOfFourthPerson, nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, \
     idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, nameOfSixthPerson, genderOfSixthPerson, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
-    number_of_children, number_of_rooms, ok_image_path
+    number_of_children, number_of_rooms, ok_image_path, firstPersonText_image_path2, \
+    iamforeigner_image_path, iamIndian_image_path, ReservationsFor_image_path, success_image_path, room, \
+    indian_flag_image_path, mobileNumber, SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, \
+    email_image_path, emailAddress, continue_image_path, contactdetails_image_path, showQR_image_path
 
 global fifth
 fifth = False
@@ -47,6 +56,18 @@ def nationalityDropDownDisplayed():
         return False
 
 
+def allForeigners():
+    if (pax_1.lower() == "foreigner" and
+            pax_2.lower() == "foreigner" and
+            pax_3.lower() == "foreigner" and
+            pax_4.lower() == "foreigner" and
+            pax_5.lower() == "foreigner" and
+            pax_6.lower() == "foreigner"):
+        return True
+    else:
+        return False
+
+
 def selectPaxDropdown(case_value):
     switch_dict = {
         'indian': 'i',
@@ -60,6 +81,42 @@ def selectPaxDropdown(case_value):
         return True
     else:
         return False
+
+
+def wait_for_image1_or_image2_and_click(image_path, image_path2, timeout_duration=60, check_interval=0.001):
+    timeout_end = time.time() + timeout_duration
+
+    print(f"Waiting for {image_path} to appear on the screen...")
+
+    while time.time() < timeout_end:
+        try:
+            # Locate the image on the screen
+            location = pyautogui.locateCenterOnScreen(image_path, grayscale=True)
+
+            # If the image is found, click on it and break the loop
+            if location is not None:
+                print(f"Image found at {location}, clicking on it...")
+                pyautogui.click(location)
+                break
+        except pyautogui.ImageNotFoundException:
+            # Handle the case where the image is not found
+            print(f"Image not found: {image_path}")
+            try:
+                location = pyautogui.locateCenterOnScreen(image_path2, grayscale=True)
+                if location is not None:
+                    print(f"Image found at {location}, clicking on it...")
+                    pyautogui.click(location)
+                    break
+            except pyautogui.ImageNotFoundException:
+                print(f"Image not found: {image_path2}")
+
+        # Wait for the specified interval before checking again
+        time.sleep(check_interval)
+    else:
+        print("Timeout reached. Image not found.")
+
+    print("Task completed.")
+    return location
 
 
 def wait_for_image_and_click(image_path, timeout_duration=60, check_interval=0.001):
@@ -136,11 +193,10 @@ def click_on_image_in_region(left, top, width, height, image):
         print(f"An error occurred: {str(e)}")
 
 
-def human_typing(text, delay_range=(0.0, delay_correct)):
+def human_typing(text):
     for char in text:
         autoit.send(char)
-        delay = random.uniform(delay_range[0], delay_range[1])
-        time.sleep(delay)
+        time.sleep(delay_correct)
 
 
 def autoit_slow_type_with_error(text):
@@ -218,32 +274,35 @@ def select_room_priority(room_priority):
 
 def fillForm():
     global fifth
+    autoit.send("{HOME}")
+    autoit.send("{HOME}")
     if int(number_of_adults) >= 1:
-        location2 = wait_for_image_and_click(firstPersonText_image_path)
+        location2 = find_image_on_screen_using_opencv(firstPersonText_image_path, 10)
         pyautogui.click(location2)
-        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, 838, 390, 1007, 390,
+
+        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, 861, 332, 1054, 322,
                          idTypeOfFirstPerson,
                          idNumberOfFirstPerson, ageOfFirstPerson)
 
     if int(number_of_adults) >= 2:
-        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, 838, 556, 1007, 556,
+        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, 861, 494, 1054, 494,
                          idTypeOfSecondPerson,
                          idNumberOfSecondPerson, ageOfSecondPerson)
     if int(number_of_adults) >= 3:
-        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, 838, 721, 1007, 721,
+        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, 861, 656, 1054, 656,
                          idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson)
     if int(number_of_adults) >= 4:
-        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, 838, 881, 1007, 881,
+        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, 861, 815, 1054, 815,
                          idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson)
 
     if int(number_of_adults) >= 5:
         fifth = True
-        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, 838, 556, 1007, 556,
+        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, 861, 981, 1054, 981,
                          idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson)
 
     if int(number_of_adults) >= 6:
-        fifth = False
-        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, 838, 718, 1007, 718,
+        # fifth = False
+        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, 861, 569, 1054, 569,
                          idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson)
 
 
@@ -277,11 +336,11 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
             time.sleep(0.5)
             pyautogui.click(identityProofX, identityProofY)
         else:
+            time.sleep(0.25)
             autoit.send("{TAB}")
-            time.sleep(0.2)
     else:
         autoit.send("{TAB}")
-        time.sleep(0.1)
+        time.sleep(0.25)
 
     if idType.lower() == 'aadhar card':
         autoit.send("aad")
@@ -316,12 +375,18 @@ def debounce_key(key):
 
 def firstPageFill():
     # Call the function to wait for the image and click on it
-    location = wait_for_image_and_click(ok_image_path)
-    print(location)
-    # click on location of ok button again
-    pyautogui.click(location)
+    # location = wait_for_image_and_click(ok_image_path)
+    # if allForeigners():
+    #     pyautogui.click(find_image_on_screen_using_opencv_and_click(iamforeigner_image_path, 2))
+    #
+    # else:
+    #     pyautogui.click(find_image_on_screen_using_opencv_and_click(iamIndian_image_path, 2))
+
+    pyautogui.click(find_image_on_screen_using_opencv(ok_image_path, 5))
 
     speed_for_first_page(speed_first_page)
+
+    pyautogui.click(find_image_on_screen_using_opencv(ReservationsFor_image_path, 2))
 
     # two tabs to open the checkin date
     autoit.send("{TAB 2}")
@@ -329,7 +394,7 @@ def firstPageFill():
     speed_for_first_page(speed_first_page)
 
     # Press hotkey to select checkin
-    # pyautogui.hotkey('shift', 'w')
+    pyautogui.hotkey('alt', 'i')
 
     speed_for_first_page(speed_first_page)
 
@@ -344,7 +409,7 @@ def firstPageFill():
     speed_for_first_page(speed_first_page)
 
     # Press hotkey to select checkout date
-    # pyautogui.hotkey('shift', 'w')
+    pyautogui.hotkey('alt', 'o')
 
     speed_for_first_page(speed_first_page)
 
@@ -438,6 +503,56 @@ def firstPageFill():
     # sleep for 1 second
     time.sleep(1)
 
-    select_room_priority("Bijrani")
+    find_image_on_screen_using_opencv(success_image_path, 30)
+
+    select_room_priority(room)
 
     time.sleep(1)
+
+
+def find_image_on_screen_using_opencv(template_path1, timeout):
+    template = cv2.imread(template_path1, 0)
+    w, h = template.shape[::-1]
+    start_time = time.time()
+
+    while True:
+        screenshot = np.array(pyautogui.screenshot())
+        screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+        res = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+
+        if max_val >= 0.8:  # You can adjust the threshold as needed
+            print(max_loc[0], max_loc[1], w, h)
+            return max_loc[0], max_loc[1], w, h
+
+        if time.time() - start_time > timeout:
+            return None
+
+        time.sleep(0.5)
+
+
+def enterMobile():
+    multiplePressUsingPyAutoGUI('tab', 3)
+    human_typing(mobileNumber)
+    multiplePressUsingPyAutoGUI('tab', 1)
+    multiplePressUsingPyAutoGUI('enter', 1)
+
+
+def payment():
+    location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 120)
+    pyautogui.click(location)
+    location2 = find_image_on_screen_using_opencv(UPI_image_path, 10)
+    pyautogui.click(location2)
+    location3 = find_image_on_screen_using_opencv(PayNow_image_path, 10)
+    pyautogui.click(location3)
+    location4 = find_image_on_screen_using_opencv(contactdetails_image_path, 10)
+    pyautogui.click(location4)
+    multiplePressUsingPyAutoGUI('tab',3)
+    human_typing(emailAddress)
+    location5 = find_image_on_screen_using_opencv(continue_image_path, 10)
+    pyautogui.click(location5)
+    location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
+    pyautogui.click(location6)
+
+
+

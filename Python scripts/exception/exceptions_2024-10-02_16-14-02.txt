@@ -1,0 +1,2 @@
+Exception occurred at 2024-10-02_16-14-02:
+cannot access local variable 'location' where it is not associated with a value

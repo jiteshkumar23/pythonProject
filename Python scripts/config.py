@@ -2,28 +2,46 @@ import os
 
 # Images
 
-image_directory = 'C:\\Users\\jites\\PycharmProjects\\pythonProject\\Python scripts\\images'
+image_directory = os.getcwd()+'\\images'
 ok_image_path = os.path.join(image_directory, 'ok.png')
 firstPersonText_image_path = os.path.join(image_directory, 'firstpersonText.png')
+firstPersonText_image_path2 = os.path.join(image_directory, 'firstpersonText2.png')
 identity_proof_type_image_path = os.path.join(image_directory, 'identity_proof_type.png')
+iamforeigner_image_path = os.path.join(image_directory, 'iamforeigner.png')
+iamIndian_image_path = os.path.join(image_directory, 'iamIndian.png')
+ReservationsFor_image_path = os.path.join(image_directory, 'ReservationsFor.png')
+success_image_path = os.path.join(image_directory, 'success.png')
+indian_flag_image_path = os.path.join(image_directory, 'indian_flag.png')
+SelectPaymentOption_image_path = os.path.join(image_directory, 'SelectPaymentOption.png')
+UPI_image_path = os.path.join(image_directory, 'UPI.png')
+PayNow_image_path = os.path.join(image_directory, 'PayNow.png')
+email_image_path = os.path.join(image_directory, 'email.png')
+continue_image_path = os.path.join(image_directory, 'continue.png')
+contactdetails_image_path = os.path.join(image_directory, 'contactdetails.png')
+showQR_image_path = os.path.join(image_directory, 'showQR.png')
 
-speed_first_page = 0.00
-delay_correct = 0.001
-delay_error = 0.001
 
+
+# SPEED Selection
+speed_first_page = 0.1
+delay_correct = 0.1   # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
+delay_error = 0.3    # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
+
+
+# Data Entry
 number_of_rooms = "2"
 number_of_adults = "6"
 number_of_children = "1"
 
-pax_1 = "Foreigner"  # "Indian" , "Foreigner","Student","Senior Citizen"
+pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_2 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_3 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_4 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_5 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_6 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 
-
-room = "Bijrani"
+#Select room to be booked
+room = "Morghati"
 # “Bijrani”
 # “Gairal New”
 # “Halduparao”
@@ -51,39 +69,39 @@ ageOfFirstPerson = "30"
 genderOfFirstPerson = "Female"  # "Male", "Female","Transgender"
 idTypeOfFirstPerson = "Passport"  # "Aadhar Card", "Pan Card", "Driving License", "Passport", "Student ID Card"
 idNumberOfFirstPerson = "AB123456"
-countryFirstPerson = "USA"  # "USA", "United Kingdom","Canada","Australia","Italy"
+countryFirstPerson = "India"  # "USA", "United Kingdom","Canada","Australia","Italy, "India"
 
 # Details of Second Person
 nameOfSecondPerson = "Jane Smith"
 ageOfSecondPerson = "28"
 genderOfSecondPerson = "Female"
-idTypeOfSecondPerson = "Aadhar Card"
+idTypeOfSecondPerson = "Passport"
 idNumberOfSecondPerson = "BC987654"
-countrySecondPerson = "Canada"
+countrySecondPerson = "India"
 
 # Details of Third Person
 nameOfThirdPerson = "Alex Lee"
 ageOfThirdPerson = "35"
 genderOfThirdPerson = "Transgender"
-idTypeOfThirdPerson = "Pan Card"
+idTypeOfThirdPerson = "Passport"
 idNumberOfThirdPerson = "AU123789"
-countryThirdPerson = "Australia"
+countryThirdPerson = "India"
 
 # Details of Fourth Person
 nameOfFourthPerson = "Carlos Rodriguez"
 ageOfFourthPerson = "42"
 genderOfFourthPerson = "Male"
-idTypeOfFourthPerson = "Driving License"
+idTypeOfFourthPerson = "Passport"
 idNumberOfFourthPerson = "ES456789"
-countryFourthPerson = "Spain"
+countryFourthPerson = "India"
 
 # Details of Fifth Person
 nameOfFifthPerson = "Emily Kim"
 ageOfFifthPerson = "25"
 genderOfFifthPerson = "Female"
-idTypeOfFifthPerson = "Student ID Card"
+idTypeOfFifthPerson = "Passport"
 idNumberOfFifthPerson = "KR987654"
-countryFifthPerson = "South Korea"
+countryFifthPerson = "India"
 
 # Details of Sixth Person
 nameOfSixthPerson = "Gabriel Silva"
@@ -91,4 +109,8 @@ ageOfSixthPerson = "38"
 genderOfSixthPerson = "Male"
 idTypeOfSixthPerson = "Passport"
 idNumberOfSixthPerson = "BR123456"
-countrySixthPerson = "Brazil"
+countrySixthPerson = "India"
+
+#MobileNumber
+mobileNumber = "9971185015"
+emailAddress = "email.address@yahoo.com"

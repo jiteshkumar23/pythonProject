@@ -388,11 +388,11 @@ def firstPageFill():
     # else:
     #     pyautogui.click(find_image_on_screen_using_opencv_and_click(iamIndian_image_path, 2))
 
-    pyautogui.click(find_image_on_screen_using_opencv(ok_image_path, 5))
+    pyautogui.click(find_image_on_screen_using_opencv(ok_image_path, 600))
 
     speed_for_first_page(speed_first_page)
 
-    pyautogui.click(find_image_on_screen_using_opencv(ReservationsFor_image_path, 2))
+    pyautogui.click(find_image_on_screen_using_opencv(ReservationsFor_image_path, 10))
 
     # two tabs to open the checkin date
     autoit.send("{TAB 2}")

@@ -6,8 +6,8 @@ from CoreMethods import (nationalityDropDownDisplayed,
 
 
 def main():
-    valueOfNationalityDropDownDisplayed = nationalityDropDownDisplayed()
-    print(valueOfNationalityDropDownDisplayed)
+    # valueOfNationalityDropDownDisplayed = nationalityDropDownDisplayed()
+    print("Ready , waiting for command")
 
     # print("Press Ctrl+Alt+X to continue...")
     # while not custom_hotkey():

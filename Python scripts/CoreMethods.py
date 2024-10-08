@@ -14,8 +14,8 @@ import numpy as np
 
 from PIL import ImageGrab
 from autoit import autoit
-from config import image_directory, delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
-    firstPersonText_image_path, number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
+from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
+    number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
     idNumberOfFirstPerson, idTypeOfFirstPerson, idTypeOfSecondPerson, idNumberOfSecondPerson, nameOfFirstPerson, \
     genderOfFirstPerson, countrySecondPerson, countryFirstPerson, ageOfFirstPerson, ageOfSecondPerson, \
     nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, idTypeOfThirdPerson, idNumberOfThirdPerson, \
@@ -23,10 +23,15 @@ from config import image_directory, delay_correct, delay_error, pax_1, pax_2, pa
     idNumberOfFourthPerson, ageOfFourthPerson, nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, \
     idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, nameOfSixthPerson, genderOfSixthPerson, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
-    number_of_children, number_of_rooms, ok_image_path, firstPersonText_image_path2, \
-    iamforeigner_image_path, iamIndian_image_path, ReservationsFor_image_path, success_image_path, room, \
-    indian_flag_image_path, mobileNumber, SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, \
-    email_image_path, emailAddress, continue_image_path, contactdetails_image_path, showQR_image_path
+    number_of_children, number_of_rooms, \
+    room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard
+
+from images_path import image_directory, firstPersonText_image_path, ok_image_path, firstPersonText_image_path2, \
+    iamforeigner_image_path, iamIndian_image_path, ReservationsFor_image_path, success_image_path, \
+    indian_flag_image_path, \
+    SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, continue_image_path, \
+    contactdetails_image_path, showQR_image_path, creditcard_image_path, payViaCard_image_path, addANewCard_image_path, \
+    recommended_image_path
 
 global fifth
 fifth = False
@@ -259,7 +264,8 @@ def select_room_priority(room_priority):
         "Dhela": ("alt", "6"),
         "Sultan": ("alt", "7"),
         "Mailani": ("alt", "8"),
-        "Loghut-Dhikala": ("alt", "9")
+        "Loghut-Dhikala": ("alt", "9"),
+        "Bijrani FRH-Single Bed": ("alt", "p")
         # Add more room priorities here
     }
 
@@ -497,6 +503,13 @@ def firstPageFill():
 
     # tab and enter
     autoit.send("{TAB}")
+
+    speed_for_first_page(speed_first_page)
+
+    multiplePressUsingPyAutoGUI('down', 2)
+
+    speed_for_first_page(speed_first_page)
+
     autoit.send("{ENTER}")
 
     speed_for_first_page(speed_first_page)
@@ -534,25 +547,80 @@ def find_image_on_screen_using_opencv(template_path1, timeout):
 def enterMobile():
     multiplePressUsingPyAutoGUI('tab', 3)
     human_typing(mobileNumber)
+    time.sleep(0.1)
     multiplePressUsingPyAutoGUI('tab', 1)
+    time.sleep(0.1)
     multiplePressUsingPyAutoGUI('enter', 1)
 
 
 def payment():
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 120)
     pyautogui.click(location)
-    location2 = find_image_on_screen_using_opencv(UPI_image_path, 10)
-    pyautogui.click(location2)
-    location3 = find_image_on_screen_using_opencv(PayNow_image_path, 10)
-    pyautogui.click(location3)
-    location4 = find_image_on_screen_using_opencv(contactdetails_image_path, 10)
-    pyautogui.click(location4)
-    multiplePressUsingPyAutoGUI('tab',3)
-    human_typing(emailAddress)
-    location5 = find_image_on_screen_using_opencv(continue_image_path, 10)
-    pyautogui.click(location5)
-    location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
-    pyautogui.click(location6)
+    if paymentMethod == "upi":
+        location2 = find_image_on_screen_using_opencv(UPI_image_path, 10)
+        pyautogui.click(location2)
+        location3 = find_image_on_screen_using_opencv(PayNow_image_path, 10)
+        pyautogui.click(location3)
+        location4 = find_image_on_screen_using_opencv(contactdetails_image_path, 20)
+        time.sleep(1)
+        pyautogui.click(location4)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        human_typing(emailAddress)
+        location5 = find_image_on_screen_using_opencv(continue_image_path, 10)
+        pyautogui.click(location5)
+        location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
+        pyautogui.click(location6)
+        location6b = find_image_on_screen_using_opencv(recommended_image_path, 10)
+        pyautogui.click(location6b)
+
+    elif paymentMethod == "creditcard":
+        location7 = find_image_on_screen_using_opencv(creditcard_image_path, 10)
+        pyautogui.click(location7)
+        location8 = find_image_on_screen_using_opencv(PayNow_image_path, 10)
+        pyautogui.click(location8)
+        location9 = find_image_on_screen_using_opencv(contactdetails_image_path, 20)
+        time.sleep(1)
+        pyautogui.click(location9)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        human_typing(emailAddress)
+        location10 = find_image_on_screen_using_opencv(continue_image_path, 10)
+        pyautogui.click(location10)
+        location11 = find_image_on_screen_using_opencv(payViaCard_image_path, 10)
+        pyautogui.click(location11)
+        location12 = find_image_on_screen_using_opencv(addANewCard_image_path, 10)
+        pyautogui.click(location12)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        human_typing(card_number)
+        time.sleep(0.1)
+        autoit.send("{TAB}")
+        human_typing(Month)
+        time.sleep(0.05)
+        human_typing(Year)
+        time.sleep(0.05)
+        autoit.send("{TAB}")
+        human_typing(CVV)
+        time.sleep(0.05)
+        autoit.send("{TAB}")
+        human_typing(NameOnCard)
+        time.sleep(0.1)
+        location12 = find_image_on_screen_using_opencv(continue_image_path, 10)
+        pyautogui.click(location12)
+
+
+
+
+
 
 
 

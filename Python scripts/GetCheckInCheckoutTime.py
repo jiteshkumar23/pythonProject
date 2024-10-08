@@ -1,6 +1,6 @@
 import datetime
 
-# Your input dates
+# Your input dates in the format YYYY-MM-DD
 input_checkin_date = "2024-11-19"
 input_checkout_date = "2024-11-21"
 
@@ -12,5 +12,5 @@ date2 = datetime.datetime.strptime(input_checkout_date, "%Y-%m-%d").replace(tzin
 checkin_timestamp = int(date1.timestamp() * 1000)
 checkout_timestamp = int(date2.timestamp() * 1000)
 
-print(f"checkin date in millis is --> {checkin_timestamp}")
-print(f"checkout date in millis is --> {checkout_timestamp}")
+print(f"checkin date {input_checkin_date} converted to millis is --> {checkin_timestamp}")
+print(f"checkout date {input_checkout_date} converted to  millis is --> {checkout_timestamp}")

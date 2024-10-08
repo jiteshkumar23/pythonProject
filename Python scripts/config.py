@@ -1,37 +1,13 @@
-import os
-
-# Images
-
-image_directory = os.getcwd()+'\\images'
-ok_image_path = os.path.join(image_directory, 'ok.png')
-firstPersonText_image_path = os.path.join(image_directory, 'firstpersonText.png')
-firstPersonText_image_path2 = os.path.join(image_directory, 'firstpersonText2.png')
-identity_proof_type_image_path = os.path.join(image_directory, 'identity_proof_type.png')
-iamforeigner_image_path = os.path.join(image_directory, 'iamforeigner.png')
-iamIndian_image_path = os.path.join(image_directory, 'iamIndian.png')
-ReservationsFor_image_path = os.path.join(image_directory, 'ReservationsFor.png')
-success_image_path = os.path.join(image_directory, 'success.png')
-indian_flag_image_path = os.path.join(image_directory, 'indian_flag.png')
-SelectPaymentOption_image_path = os.path.join(image_directory, 'SelectPaymentOption.png')
-UPI_image_path = os.path.join(image_directory, 'UPI.png')
-PayNow_image_path = os.path.join(image_directory, 'PayNow.png')
-email_image_path = os.path.join(image_directory, 'email.png')
-continue_image_path = os.path.join(image_directory, 'continue.png')
-contactdetails_image_path = os.path.join(image_directory, 'contactdetails.png')
-showQR_image_path = os.path.join(image_directory, 'showQR.png')
-
-
-
 # SPEED Selection
-speed_first_page = 0.1
-delay_correct = 0.1   # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
-delay_error = 0.3    # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
-
+speed_first_page = 0.09    # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
+delay_correct = 0.09       # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
+delay_error = 0.09    # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
 
 # Data Entry
 number_of_rooms = "2"
-number_of_adults = "6"
+number_of_adults = "4"
 number_of_children = "1"
+
 
 pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_2 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
@@ -40,7 +16,7 @@ pax_4 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_5 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_6 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 
-#Select room to be booked
+# Select room to be booked
 room = "Morghati"
 # “Bijrani”
 # “Gairal New”
@@ -62,6 +38,7 @@ room = "Morghati"
 # “Sultan”
 # “Mailani”
 # “Loghut-Dhikala”
+
 
 # Details of First Person
 nameOfFirstPerson = "John Doe"
@@ -111,6 +88,19 @@ idTypeOfSixthPerson = "Passport"
 idNumberOfSixthPerson = "BR123456"
 countrySixthPerson = "India"
 
-#MobileNumber
+# MobileNumber for OTP
 mobileNumber = "9971185015"
-emailAddress = "email.address@yahoo.com"
+
+# email address for payment
+emailAddress = "myemailaddress@gmail.com"
+
+# Payment Method - "upi" or "creditcard"
+paymentMethod = "upi"
+
+# if paymentMethod is credit card , provide card details
+card_number = "4315811894239005"
+Month = "04"
+Year = "25"
+CVV = "585"
+NameOnCard = "Alex Pereira"
+

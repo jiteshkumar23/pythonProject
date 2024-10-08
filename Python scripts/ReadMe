@@ -1,0 +1,8 @@
+1)Install Shortkeys in Chrome and import the code from ShortKeys COde file in this project
+https://chromewebstore.google.com/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck?pli=1
+
+2) Convert the check out and check in date to milliseconds using GetCheckinCheckOutTime.py file
+
+3) Fill data in config.py file
+
+4) Run the Corbett.py file

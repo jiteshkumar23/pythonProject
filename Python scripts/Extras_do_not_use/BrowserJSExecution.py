@@ -1,5 +1,6 @@
-import pyautogui
 import time
+
+import pyautogui
 
 # Open the browser (assuming it's already open)
 # Navigate to the browser window

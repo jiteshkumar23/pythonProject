@@ -1,6 +1,7 @@
-import pyautogui
 import random
 import string
+
+import pyautogui
 
 
 def fast_type_with_error_pyautogui(text):

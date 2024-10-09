@@ -1,11 +1,12 @@
 import keyboard
 from autoit import autoit
 
-from CoreMethods.CoreMethods import (fillForm, debounce_key, firstPageFill, enterMobile, payment)
+from CoreMethods.CoreMethods import (fillForm, debounce_key, firstPageFill, enterMobile, payment, setImagePath)
 
 
 def main():
     # valueOfNationalityDropDownDisplayed = nationalityDropDownDisplayed()
+    setImagePath()
     print("Ready , waiting for command")
 
     # print("Press Ctrl+Alt+X to continue...")
@@ -20,7 +21,7 @@ def main():
         if keyboard.is_pressed("r+4"):
             print("Keys Pressed - r+4 - Exiting the loop. Goodbye!")
             break
-        #elif keyboard.is_pressed("ctrl+alt+j"):
+        # elif keyboard.is_pressed("ctrl+alt+j"):
         elif keyboard.is_pressed("r+1"):
             print("Keys Pressed - r+1 - Filling first page only")
             firstPageFill()

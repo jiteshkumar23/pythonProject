@@ -1,19 +1,18 @@
 import datetime
-from datetime import datetime
 import os
-import string
-import traceback
-import keyboard
-import pyautogui
-import time
 import random
+import string
+import time
 import tkinter as tk
+from datetime import datetime
 from tkinter import simpledialog
-import cv2
-import numpy as np
 
-from PIL import ImageGrab
+import cv2
+import keyboard
+import numpy as np
+import pyautogui
 from autoit import autoit
+
 from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
     idNumberOfFirstPerson, idTypeOfFirstPerson, idTypeOfSecondPerson, idNumberOfSecondPerson, nameOfFirstPerson, \
@@ -24,18 +23,21 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, nameOfSixthPerson, genderOfSixthPerson, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
-    room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard
-
-from CoreMethods.images_path import image_directory, firstPersonText_image_path, ok_image_path, firstPersonText_image_path2, \
-    iamforeigner_image_path, iamIndian_image_path, ReservationsFor_image_path, success_image_path, \
-    indian_flag_image_path, \
-    SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, continue_image_path, \
-    contactdetails_image_path, showQR_image_path, creditcard_image_path, payViaCard_image_path, addANewCard_image_path, \
-    recommended_image_path
+    room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine
 from room_shortcuts import select_room_priority
 
 global fifth
 fifth = False
+
+global image_directory, ok_image_path, firstPersonText_image_path, firstPersonText_image_path2, \
+    identity_proof_type_image_path, iamforeigner_image_path, iamIndian_image_path, \
+    ReservationsFor_image_path, success_image_path, indian_flag_image_path, \
+    SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, \
+    continue_image_path, contactdetails_image_path, showQR_image_path, \
+    recommended_image_path, creditcard_image_path, payViaCard_image_path, \
+    addANewCard_image_path
+
+global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
 
 
 def printDateTime():
@@ -205,6 +207,12 @@ def human_typing(text):
         time.sleep(delay_correct)
 
 
+def human_typing_age(text):
+    for char in text:
+        autoit.send(char)
+        time.sleep(delay_correct + 0.1)
+
+
 def autoit_slow_type_with_error(text):
     # Choose a random position to make a typing error
     error_position = random.randint(0, len(text) - 1)
@@ -243,37 +251,67 @@ def autoit_slow_type_numbers_with_error(numbers):
         autoit.send(character)
         time.sleep(delay_correct)
 
+
 def fillForm():
     global fifth
+    global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
+    print("Machine being used is " + machine)
+    if machine == "laptop":
+        indiaFlagX = 861
+        identityDropDownX = 1054
+        Y1 = 332
+        Y2 = 494
+        Y3 = 656
+        Y4 = 815
+        Y5 = 981
+        Y6 = 569
+    elif machine == "desktop":
+        indiaFlagX = 602
+        identityDropDownX = 767
+        Y1 = 298
+        Y2 = 430
+        Y3 = 559
+        Y4 = 687
+        Y5 = 426
+        Y6 = 554
+
     autoit.send("{HOME}")
     autoit.send("{HOME}")
+
     if int(number_of_adults) >= 1:
         location2 = find_image_on_screen_using_opencv(firstPersonText_image_path, 10)
         pyautogui.click(location2)
 
-        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, 861, 332, 1054, 322,
+        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, indiaFlagX, Y1, identityDropDownX,
+                         Y1,
                          idTypeOfFirstPerson,
                          idNumberOfFirstPerson, ageOfFirstPerson)
 
     if int(number_of_adults) >= 2:
-        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, 861, 494, 1054, 494,
+        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, indiaFlagX, Y2,
+                         identityDropDownX, Y2,
                          idTypeOfSecondPerson,
                          idNumberOfSecondPerson, ageOfSecondPerson)
     if int(number_of_adults) >= 3:
-        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, 861, 656, 1054, 656,
+
+        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, indiaFlagX, Y3, identityDropDownX,
+                         Y3,
                          idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson)
     if int(number_of_adults) >= 4:
-        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, 861, 815, 1054, 815,
+        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, indiaFlagX, Y4,
+                         identityDropDownX, Y4,
                          idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson)
 
     if int(number_of_adults) >= 5:
         fifth = True
-        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, 861, 981, 1054, 981,
+        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, indiaFlagX, Y5, identityDropDownX,
+                         Y5,
                          idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson)
 
     if int(number_of_adults) >= 6:
         # fifth = False
-        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, 861, 569, 1054, 569,
+        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, indiaFlagX, Y6, identityDropDownX,
+                         Y6,
                          idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson)
 
 
@@ -330,7 +368,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     autoit.send("{TAB}")
     autoit_slow_type_numbers_with_error(idNumber)
     autoit.send("{TAB}")
-    human_typing(age)
+    human_typing_age(age)
 
 
 def custom_hotkey():
@@ -490,21 +528,28 @@ def firstPageFill():
     time.sleep(1)
 
 
-def find_image_on_screen_using_opencv(template_path1, timeout):
+def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
     template = cv2.imread(template_path1, 0)
     w, h = template.shape[::-1]
     start_time = time.time()
 
     while True:
-        screenshot = np.array(pyautogui.screenshot())
-        screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
-        res = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
+        # Capture a screenshot
+        screenshot = pyautogui.screenshot()
+
+        # Convert screenshot to numpy array and then to grayscale
+        screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2GRAY)
+
+        # Perform template matching
+        res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
 
-        if max_val >= 0.8:  # You can adjust the threshold as needed
-            print(max_loc[0], max_loc[1], w, h)
+        # Check if the match value is above the threshold
+        if max_val >= threshold:
+            # Return the location of the matched region
             return max_loc[0], max_loc[1], w, h
 
+        # Check if the timeout has been reached
         if time.time() - start_time > timeout:
             return None
 
@@ -585,9 +630,71 @@ def payment():
         pyautogui.click(location12)
 
 
+def setImagePath():
+    print("Machine being used is " + machine)
+    global image_directory
+    if machine == "laptop":
+        image_directory = os.getcwd() + '\\images_laptop'
+    elif machine == "desktop":
+        image_directory = os.getcwd() + '\\images_desktop'
 
+    print("Picking this image directory -->" + image_directory)
+    global ok_image_path
+    ok_image_path = os.path.join(image_directory, 'ok.png')
 
+    global firstPersonText_image_path
+    firstPersonText_image_path = os.path.join(image_directory, 'firstpersonText.png')
 
+    global firstPersonText_image_path2
+    firstPersonText_image_path2 = os.path.join(image_directory, 'firstpersonText2.png')
 
+    global identity_proof_type_image_path
+    identity_proof_type_image_path = os.path.join(image_directory, 'identity_proof_type.png')
 
+    global iamforeigner_image_path
+    iamforeigner_image_path = os.path.join(image_directory, 'iamforeigner.png')
 
+    global iamIndian_image_path
+    iamIndian_image_path = os.path.join(image_directory, 'iamIndian.png')
+
+    global ReservationsFor_image_path
+    ReservationsFor_image_path = os.path.join(image_directory, 'ReservationsFor.png')
+
+    global success_image_path
+    success_image_path = os.path.join(image_directory, 'success.png')
+
+    global indian_flag_image_path
+    indian_flag_image_path = os.path.join(image_directory, 'indian_flag.png')
+
+    global SelectPaymentOption_image_path
+    SelectPaymentOption_image_path = os.path.join(image_directory, 'SelectPaymentOption.png')
+
+    global UPI_image_path
+    UPI_image_path = os.path.join(image_directory, 'UPI.png')
+
+    global PayNow_image_path
+    PayNow_image_path = os.path.join(image_directory, 'PayNow.png')
+
+    global email_image_path
+    email_image_path = os.path.join(image_directory, 'email.png')
+
+    global continue_image_path
+    continue_image_path = os.path.join(image_directory, 'continue.png')
+
+    global contactdetails_image_path
+    contactdetails_image_path = os.path.join(image_directory, 'contactdetails.png')
+
+    global showQR_image_path
+    showQR_image_path = os.path.join(image_directory, 'showQR.png')
+
+    global recommended_image_path
+    recommended_image_path = os.path.join(image_directory, 'recommended.png')
+
+    global creditcard_image_path
+    creditcard_image_path = os.path.join(image_directory, 'credit_debit_card.png')
+
+    global payViaCard_image_path
+    payViaCard_image_path = os.path.join(image_directory, 'payViaCard.png')
+
+    global addANewCard_image_path
+    addANewCard_image_path = os.path.join(image_directory, 'addANewCard.png')

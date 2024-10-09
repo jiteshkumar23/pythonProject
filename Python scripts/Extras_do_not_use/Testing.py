@@ -1,7 +1,8 @@
-import autoit
-import time
 import random
 import string
+import time
+
+import autoit
 
 
 def slow_type_with_error(text, delay=0.1):
@@ -29,9 +30,7 @@ time.sleep(5)
 # Use the slow_type_with_error function to type "Jitesh Kumar"
 slow_type_with_error("Jitesh Kumar", 0.1)
 
-#autoit.send("{TAB}")
+# autoit.send("{TAB}")
 autoit.send("{TAB 3}")
 
 slow_type_with_error("Mahesh Kumar", 0.1)
-
-

@@ -1,5 +1,4 @@
 import pyautogui
-from autoit import autoit
 
 print("Start")
 # Press the TAB key 50 times
@@ -23,5 +22,3 @@ def modify_global_variable():
 
 # Call the method
 modify_global_variable()
-
-

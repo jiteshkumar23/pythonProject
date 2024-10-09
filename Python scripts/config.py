@@ -1,13 +1,15 @@
+# laptop or desktop
+machine = "desktop"
+
 # SPEED Selection
-speed_first_page = 0.1    # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
-delay_correct = 0.09       # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
-delay_error = 0.09    # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
+speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
+delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
+delay_error = 0.09  # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
 
 # Data Entry
 number_of_rooms = "1"
 number_of_adults = "1"
 number_of_children = "0"
-
 
 pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_2 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
@@ -104,4 +106,3 @@ Month = "04"
 Year = "25"
 CVV = "585"
 NameOnCard = "Alex Pereira"
-

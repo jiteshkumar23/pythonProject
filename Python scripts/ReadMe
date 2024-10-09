@@ -22,8 +22,17 @@ pip install keyboard, autoit, pyautoit, pyautogui, opencv-python, Pillow
 12)Install Shortkeys in Chrome and import the code from ShortKeys COde file in this project
 https://chromewebstore.google.com/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck?pli=1
 
-13) Convert the check out and check in date to milliseconds using GetCheckinCheckOutTime.py file
 
-14) Fill data in config.py file
+For Daily Use :
 
-15) Run the Corbett.py file
+1) Room shortcuts in room_shortcuts.py should match with ShortKeys plugin
+Make sure the room you want to book (in the config file) is available with same name in room_shortcuts.py and has same
+shortcut in file and plugin
+
+2) Convert the checkout and checkin date to milliseconds using GetCheckinCheckOutTime.py file
+
+3) Place the mills in plugin and save. Refresh the site for changes to take effect in the plugin/site.
+
+4) Fill data in config.py file
+
+5) Run the Corbett.py file

@@ -1,8 +1,7 @@
 import keyboard
 from autoit import autoit
 
-from CoreMethods import (nationalityDropDownDisplayed,
-                         fillForm, debounce_key, firstPageFill, enterMobile, payment)
+from CoreMethods.CoreMethods import (fillForm, debounce_key, firstPageFill, enterMobile, payment)
 
 
 def main():

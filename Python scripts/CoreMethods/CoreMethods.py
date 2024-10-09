@@ -26,12 +26,13 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard
 
-from images_path import image_directory, firstPersonText_image_path, ok_image_path, firstPersonText_image_path2, \
+from CoreMethods.images_path import image_directory, firstPersonText_image_path, ok_image_path, firstPersonText_image_path2, \
     iamforeigner_image_path, iamIndian_image_path, ReservationsFor_image_path, success_image_path, \
     indian_flag_image_path, \
     SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, continue_image_path, \
     contactdetails_image_path, showQR_image_path, creditcard_image_path, payViaCard_image_path, addANewCard_image_path, \
     recommended_image_path
+from room_shortcuts import select_room_priority
 
 global fifth
 fifth = False
@@ -242,42 +243,6 @@ def autoit_slow_type_numbers_with_error(numbers):
         autoit.send(character)
         time.sleep(delay_correct)
 
-
-def select_room_priority(room_priority):
-    key_mapping = {
-        "Bijrani": ("shift", "1"),
-        "Gairal New": ("shift", "2"),
-        "Halduparao": ("shift", "3"),
-        "Jhirna": ("shift", "4"),
-        "Morghati": ("shift", "5"),
-        "Mudiapani": ("shift", "6"),
-        "Pakhro": ("shift", "7"),
-        "Rathuwadhab": ("shift", "8"),
-        "Gairal Dormitory": ("shift", "9"),
-        "Hutment-Dhikala": ("shift", "0"),
-        "Cabin 4ABC-Dhikala": ("alt", "0"),
-        "New-Dhikala": ("alt", "1"),
-        "Annexi-Dhikala FRH-1/2/3/4/6": ("alt", "2"),
-        "Annexi-Dhikala FRH- 5/7": ("alt", "3"),
-        "Sarpduli FRH": ("alt", "4"),
-        "Sarpduli Dormitory": ("alt", "5"),
-        "Dhela": ("alt", "6"),
-        "Sultan": ("alt", "7"),
-        "Mailani": ("alt", "8"),
-        "Loghut-Dhikala": ("alt", "9"),
-        "Bijrani FRH-Single Bed": ("alt", "p")
-        # Add more room priorities here
-    }
-
-    keys = key_mapping.get(room_priority, None)
-    if keys:
-        print(f"roomPriority selected is {room_priority}")
-        print(f"Keys pressed for {room_priority} are : {keys[0]} + {keys[1]}")
-        pyautogui.hotkey(*keys)
-    else:
-        print("Invalid roomPriority")
-
-
 def fillForm():
     global fifth
     autoit.send("{HOME}")
@@ -397,7 +362,7 @@ def firstPageFill():
     # two tabs to open the checkin date
     autoit.send("{TAB 2}")
 
-    speed_for_first_page(speed_first_page)
+    time.sleep(0.2)
 
     # Press hotkey to select checkin
     pyautogui.hotkey('alt', 'i')
@@ -412,7 +377,7 @@ def firstPageFill():
     # one tab to open the checkout date
     autoit.send("{TAB}")
 
-    speed_for_first_page(speed_first_page)
+    time.sleep(0.2)
 
     # Press hotkey to select checkout date
     pyautogui.hotkey('alt', 'o')
@@ -515,6 +480,8 @@ def firstPageFill():
     speed_for_first_page(speed_first_page)
     # sleep for 1 second
     time.sleep(1)
+
+    multiplePressUsingPyAutoGUI('up', 2)
 
     find_image_on_screen_using_opencv(success_image_path, 30)
 

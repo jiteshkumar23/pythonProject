@@ -7,7 +7,10 @@ from CoreMethods.CoreMethods import (fillForm, debounce_key, firstPageFill, ente
 def main():
     # valueOfNationalityDropDownDisplayed = nationalityDropDownDisplayed()
     setImagePath()
-    print("Ready , waiting for command")
+    print("Press - r+1 - For filling first page only")
+    print("Press - r+2 - For filling form and payment only")
+    print("Press - r+3 - For filling  first page , form and payment")
+    print("Press - r+4 - For exit")
 
     # print("Press Ctrl+Alt+X to continue...")
     # while not custom_hotkey():
@@ -19,7 +22,7 @@ def main():
 
     while True:
         if keyboard.is_pressed("r+4"):
-            print("Keys Pressed - r+4 - Exiting the loop. Goodbye!")
+            print("Keys Pressed - r+4 - Exiting........... Goodbye!")
             break
         # elif keyboard.is_pressed("ctrl+alt+j"):
         elif keyboard.is_pressed("r+1"):

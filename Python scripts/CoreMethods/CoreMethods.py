@@ -6,7 +6,6 @@ import time
 import tkinter as tk
 from datetime import datetime
 from tkinter import simpledialog
-
 import cv2
 import keyboard
 import numpy as np
@@ -24,6 +23,7 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine
+
 from room_shortcuts import select_room_priority
 
 global fifth

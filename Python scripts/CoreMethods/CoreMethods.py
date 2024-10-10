@@ -582,7 +582,7 @@ def payment():
         time.sleep(0.1)
         autoit.send("{TAB}")
         time.sleep(0.1)
-        human_typing(emailAddress)
+        autoit.send(emailAddress)
         location5 = find_image_on_screen_using_opencv(continue_image_path, 10)
         pyautogui.click(location5)
         location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)

@@ -35,7 +35,7 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, \
     continue_image_path, contactdetails_image_path, showQR_image_path, \
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
-    addANewCard_image_path
+    addANewCard_image_path,rooms_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
 
@@ -336,6 +336,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
             pyautogui.hotkey('ctrl', 'f')
             time.sleep(0.5)
             human_typing(country)
+            # autoit.send(country)
             time.sleep(0.5)
             autoit.send("{ESC}")
             # Wait for a moment before pressing Enter
@@ -516,16 +517,15 @@ def firstPageFill():
     autoit.send("{ENTER}")
 
     speed_for_first_page(speed_first_page)
-    # sleep for 1 second
-    time.sleep(1)
 
-    multiplePressUsingPyAutoGUI('up', 2)
+    locationOfRooms = find_image_on_screen_using_opencv(rooms_image_path, 30)
 
-    find_image_on_screen_using_opencv(success_image_path, 30)
+    print("Rooms was displayed here -->"+str(locationOfRooms))
 
     select_room_priority(room)
 
-    time.sleep(1)
+    time.sleep(0.5)
+
 
 
 def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
@@ -554,7 +554,6 @@ def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
             return None
 
         time.sleep(0.5)
-
 
 def enterMobile():
     multiplePressUsingPyAutoGUI('tab', 3)
@@ -698,3 +697,6 @@ def setImagePath():
 
     global addANewCard_image_path
     addANewCard_image_path = os.path.join(image_directory, 'addANewCard.png')
+
+    global rooms_image_path
+    rooms_image_path = os.path.join(image_directory, 'rooms.png')

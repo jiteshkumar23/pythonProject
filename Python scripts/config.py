@@ -1,10 +1,10 @@
-# laptop or desktop
+# laptop or desktop or rohit
 machine = "desktop"
 
 # SPEED Selection
 speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
 delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
-delay_error = 0.09  # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
+delay_error = 0.4  # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
 
 # Data Entry
 number_of_rooms = "2"
@@ -57,7 +57,7 @@ ageOfSecondPerson = "28"
 genderOfSecondPerson = "Female"
 idTypeOfSecondPerson = "Passport"
 idNumberOfSecondPerson = "BC987654"
-countrySecondPerson = "United Kingdom"
+countrySecondPerson = "USA"
 
 # Details of Third Person
 nameOfThirdPerson = "Alex Lee"
@@ -65,7 +65,7 @@ ageOfThirdPerson = "35"
 genderOfThirdPerson = "Transgender"
 idTypeOfThirdPerson = "Passport"
 idNumberOfThirdPerson = "AU123789"
-countryThirdPerson = "Canada"
+countryThirdPerson = "USA"
 
 # Details of Fourth Person
 nameOfFourthPerson = "Carlos Rodriguez"
@@ -73,7 +73,7 @@ ageOfFourthPerson = "42"
 genderOfFourthPerson = "Male"
 idTypeOfFourthPerson = "Passport"
 idNumberOfFourthPerson = "ES456789"
-countryFourthPerson = "Australia"
+countryFourthPerson = "USA"
 
 # Details of Fifth Person
 nameOfFifthPerson = "Emily Kim"
@@ -81,7 +81,7 @@ ageOfFifthPerson = "25"
 genderOfFifthPerson = "Female"
 idTypeOfFifthPerson = "Passport"
 idNumberOfFifthPerson = "KR987654"
-countryFifthPerson = "Italy"
+countryFifthPerson = "USA"
 
 # Details of Sixth Person
 nameOfSixthPerson = "Gabriel Silva"
@@ -89,13 +89,13 @@ ageOfSixthPerson = "38"
 genderOfSixthPerson = "Male"
 idTypeOfSixthPerson = "Passport"
 idNumberOfSixthPerson = "BR123456"
-countrySixthPerson = "Canada"
+countrySixthPerson = "USA"
 
 # MobileNumber for OTP
-mobileNumber = "9971185015"
+mobileNumber = "9582638349"
 
 # email address for payment
-emailAddress = "myemailaddress@gmail.com"
+emailAddress = "satrajuma@gmail.com"
 
 # Payment Method - "upi" or "creditcard"
 paymentMethod = "upi"

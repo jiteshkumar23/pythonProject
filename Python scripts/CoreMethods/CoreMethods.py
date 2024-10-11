@@ -274,6 +274,15 @@ def fillForm():
         Y4 = 687
         Y5 = 426
         Y6 = 554
+    elif machine == "rohit":
+        indiaFlagX = 602
+        identityDropDownX = 767
+        Y1 = 260
+        Y2 = 394
+        Y3 = 524
+        Y4 = 649
+        Y5 = 412
+        Y6 = 536
 
     time.sleep(1.25)
     autoit.send("{HOME}")

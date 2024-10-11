@@ -40,7 +40,7 @@
     ]
   },
   {
-    "key": "shift+2",
+    "key": "shift+[",
     "label": "Gairal New",
     "action": "javascript",
     "activeInInputs": true,

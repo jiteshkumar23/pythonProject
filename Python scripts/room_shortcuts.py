@@ -4,7 +4,7 @@ import pyautogui
 def select_room_priority(room_priority):
     key_mapping = {
         "Bijrani": ("shift", "1"),
-        "Gairal New": ("shift", "2"),
+        "Gairal New": ("shift", "["),
         "Halduparao": ("shift", "3"),
         "Jhirna": ("shift", "4"),
         "Morghati": ("shift", "5"),

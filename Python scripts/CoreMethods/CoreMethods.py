@@ -275,8 +275,10 @@ def fillForm():
         Y5 = 426
         Y6 = 554
 
+    time.sleep(1.25)
     autoit.send("{HOME}")
     autoit.send("{HOME}")
+
 
     if int(number_of_adults) >= 1:
         location2 = find_image_on_screen_using_opencv(firstPersonText_image_path, 10)

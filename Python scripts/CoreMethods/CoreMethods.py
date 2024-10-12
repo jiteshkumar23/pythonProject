@@ -651,9 +651,9 @@ def payment():
 def setImagePath():
     print("Machine being used is " + machine)
     global image_directory
-    if machine == "laptop":
+    if machine == "laptop" or machine == "pradeeplaptop":
         image_directory = os.getcwd() + '\\images_laptop'
-    elif machine == "desktop":
+    elif machine == "desktop" or machine == "rohit":
         image_directory = os.getcwd() + '\\images_desktop'
 
     print("Picking this image directory -->" + image_directory)

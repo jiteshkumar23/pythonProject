@@ -1,4 +1,4 @@
-# laptop or desktop or rohit
+# laptop or desktop or rohit or pradeeplaptop
 machine = "desktop"
 
 # SPEED Selection

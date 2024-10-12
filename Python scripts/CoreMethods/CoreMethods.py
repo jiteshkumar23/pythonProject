@@ -283,7 +283,15 @@ def fillForm():
         Y4 = 649
         Y5 = 412
         Y6 = 536
-
+    elif machine == "pradeeplaptop":
+        indiaFlagX = 861
+        identityDropDownX = 1054
+        Y1 = 332
+        Y2 = 530
+        Y3 = 701
+        Y4 = 860
+        Y5 = 991
+        Y6 = 585
     time.sleep(1.25)
     autoit.send("{HOME}")
     autoit.send("{HOME}")

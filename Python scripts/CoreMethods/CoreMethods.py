@@ -594,6 +594,8 @@ def payment():
         location4 = find_image_on_screen_using_opencv(contactdetails_image_path, 20)
         time.sleep(1)
         pyautogui.click(location4)
+        location4a = find_image_on_screen_using_opencv(contactdetails_image_path, 2)
+        pyautogui.click(location4a)
         autoit.send("{TAB}")
         time.sleep(0.1)
         autoit.send("{TAB}")

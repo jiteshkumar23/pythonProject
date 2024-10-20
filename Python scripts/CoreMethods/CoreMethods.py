@@ -22,7 +22,8 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, nameOfSixthPerson, genderOfSixthPerson, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
-    room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine
+    room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
+    checkOutDate
 
 from room_shortcuts import select_room_priority
 
@@ -35,7 +36,7 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, \
     continue_image_path, contactdetails_image_path, showQR_image_path, \
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
-    addANewCard_image_path,rooms_image_path
+    addANewCard_image_path, rooms_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
 
@@ -45,11 +46,12 @@ def printDateTime():
 
 
 def multiplePressUsingPyAutoGUI(key, times):
+    print("pressing " + " " + key + " " + str(times))
     pyautogui.press(key, presses=times)
 
 
-def speed_for_first_page(speed_first_page):
-    time.sleep(speed_first_page)
+def speed_for_first_page(speed):
+    time.sleep(speed)
 
 
 def nationalityDropDownDisplayed():
@@ -255,7 +257,6 @@ def autoit_slow_type_numbers_with_error(numbers):
 def fillForm():
     global fifth
     global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
-    print("Machine being used is " + machine)
     if machine == "laptop":
         indiaFlagX = 861
         identityDropDownX = 1054
@@ -296,7 +297,6 @@ def fillForm():
     autoit.send("{HOME}")
     autoit.send("{HOME}")
 
-
     if int(number_of_adults) >= 1:
         location2 = find_image_on_screen_using_opencv(firstPersonText_image_path, 10)
         pyautogui.click(location2)
@@ -312,7 +312,6 @@ def fillForm():
                          idTypeOfSecondPerson,
                          idNumberOfSecondPerson, ageOfSecondPerson)
     if int(number_of_adults) >= 3:
-
         fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, indiaFlagX, Y3, identityDropDownX,
                          Y3,
                          idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson)
@@ -410,7 +409,6 @@ def firstPageFill():
     #
     # else:
     #     pyautogui.click(find_image_on_screen_using_opencv_and_click(iamIndian_image_path, 2))
-
     pyautogui.click(find_image_on_screen_using_opencv(ok_image_path, 600))
 
     speed_for_first_page(speed_first_page)
@@ -421,6 +419,13 @@ def firstPageFill():
     autoit.send("{TAB 2}")
 
     time.sleep(0.2)
+
+    # Next Month Handling for checkInDate
+    print(days_difference_with_checkInDate(checkInDate))
+    multiplePressUsingPyAutoGUI('right', days_difference_with_checkInDate(checkInDate))
+    # autoit.send("{RIGHT 31}")
+
+    time.sleep(0.1)
 
     # Press hotkey to select checkin
     pyautogui.hotkey('alt', 'i')
@@ -436,6 +441,12 @@ def firstPageFill():
     autoit.send("{TAB}")
 
     time.sleep(0.2)
+
+    # Next Month Handling for checkInDate
+    print(days_difference_with_checkInDate_checkOutDate(checkInDate, checkOutDate))
+    multiplePressUsingPyAutoGUI('right', days_difference_with_checkInDate_checkOutDate(checkInDate, checkOutDate))
+
+    time.sleep(0.1)
 
     # Press hotkey to select checkout date
     pyautogui.hotkey('alt', 'o')
@@ -539,12 +550,11 @@ def firstPageFill():
 
     locationOfRooms = find_image_on_screen_using_opencv(rooms_image_path, 30)
 
-    print("Rooms was displayed here -->"+str(locationOfRooms))
+    print("Rooms was displayed here -->" + str(locationOfRooms))
 
     select_room_priority(room)
 
     time.sleep(0.5)
-
 
 
 def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
@@ -573,6 +583,7 @@ def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
             return None
 
         time.sleep(0.5)
+
 
 def enterMobile():
     multiplePressUsingPyAutoGUI('tab', 3)
@@ -651,14 +662,12 @@ def payment():
 
 
 def setImagePath():
-    print("Machine being used is " + machine)
     global image_directory
     if machine == "laptop" or machine == "pradeeplaptop":
         image_directory = os.getcwd() + '\\images_laptop'
     elif machine == "desktop" or machine == "rohit":
         image_directory = os.getcwd() + '\\images_desktop'
 
-    print("Picking this image directory -->" + image_directory)
     global ok_image_path
     ok_image_path = os.path.join(image_directory, 'ok.png')
 
@@ -721,3 +730,37 @@ def setImagePath():
 
     global rooms_image_path
     rooms_image_path = os.path.join(image_directory, 'rooms.png')
+
+
+def check_current_month(checkInDatePassed):
+    input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month
+    current_month = datetime.now().month
+    return input_month == current_month
+
+
+def days_difference_with_checkInDate(checkOutDate1):
+    # Define the dates
+    current_date = datetime.now()
+    compare_date = datetime(2024, 11, 15)
+
+    # Get the higher date
+    higher_date = max(current_date, compare_date)
+
+    # Parse checkOutDate
+    checkOutDate1 = datetime.strptime(checkOutDate1, "%Y-%m-%d")
+
+    # Calculate the difference in days
+    difference_in_days = abs((checkOutDate1 - higher_date).days)
+    return difference_in_days
+
+
+def days_difference_with_checkInDate_checkOutDate(checkInDate1, checkOutDate1):
+    # Convert strings to datetime objects if they aren't already
+    if isinstance(checkInDate1, str):
+        checkInDate1 = datetime.strptime(checkInDate1, "%Y-%m-%d")
+    if isinstance(checkOutDate1, str):
+        checkOutDate1 = datetime.strptime(checkOutDate1, "%Y-%m-%d")
+
+    # Calculate the difference in days and ensure it's positive
+    difference_in_days = abs((checkOutDate1 - checkInDate1).days) - 1
+    return difference_in_days

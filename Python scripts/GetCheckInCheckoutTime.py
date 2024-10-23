@@ -1,8 +1,10 @@
 import datetime
 
+from config import checkInDate, checkOutDate
+
 # Your input dates in the format YYYY-MM-DD
-input_checkin_date = "2024-11-19"
-input_checkout_date = "2024-11-21"
+input_checkin_date = checkInDate
+input_checkout_date = checkOutDate
 
 # Convert the input dates to datetime objects at midnight UTC
 date1 = datetime.datetime.strptime(input_checkin_date, "%Y-%m-%d").replace(tzinfo=datetime.timezone.utc, hour=0,

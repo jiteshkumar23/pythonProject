@@ -1,6 +1,9 @@
 # laptop or desktop or rohit or pradeeplaptop
 machine = "desktop"
 
+checkInDate = "2024-12-03"
+checkOutDate = "2024-12-05"
+
 # SPEED Selection
 speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
 delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode

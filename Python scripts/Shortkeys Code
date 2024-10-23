@@ -153,12 +153,26 @@
   },
   {
     "key": "shift+0",
-    "label": "Hutment-Dhikala",
+    "label": "Hutment-Dhikala FRH-1/2/3/4",
     "action": "javascript",
     "activeInInputs": true,
     "blacklist": false,
     "sites": "https://booking.corbettgov.org/resort/\nhttps://booking.corbettgov.org/resort/#\nhttps://booking.corbettgov.org/resort#",
-    "code": "document.querySelector(\".btn.btn-success.book-button[data-resort-title*='Hutment-Dhikala']\").click()",
+    "code": "document.querySelector(\".btn.btn-success.book-button[data-resort-title*='Hutment-Dhikala FRH-1/2/3/4']\").click()",
+    "sitesArray": [
+      "https://booking.corbettgov.org/resort/",
+      "https://booking.corbettgov.org/resort/#",
+      "https://booking.corbettgov.org/resort#"
+    ]
+  },
+  {
+    "key": "shift+]",
+    "label": "Hutment-Dhikala FRH-5/6",
+    "action": "javascript",
+    "activeInInputs": true,
+    "blacklist": false,
+    "sites": "https://booking.corbettgov.org/resort/\nhttps://booking.corbettgov.org/resort/#\nhttps://booking.corbettgov.org/resort#",
+    "code": "document.querySelector(\".btn.btn-success.book-button[data-resort-title*='Hutment-Dhikala FRH-5/6']\").click()",
     "sitesArray": [
       "https://booking.corbettgov.org/resort/",
       "https://booking.corbettgov.org/resort/#",

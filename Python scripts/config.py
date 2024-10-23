@@ -1,5 +1,5 @@
 # laptop or desktop or rohit or pradeeplaptop
-machine = "laptop"
+machine = "desktop"
 
 checkInDate = "2024-12-03"
 checkOutDate = "2024-12-05"

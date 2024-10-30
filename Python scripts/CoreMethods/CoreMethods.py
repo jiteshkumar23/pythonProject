@@ -36,7 +36,8 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, \
     continue_image_path, contactdetails_image_path, showQR_image_path, \
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
-    addANewCard_image_path, rooms_image_path
+    addANewCard_image_path, rooms_image_path,tiger_image_path,proceedAfterTiger_image_path,UPIQR_AfterTiger_image_path,\
+    showQR_AfterTiger_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
 
@@ -361,7 +362,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
             time.sleep(0.2)
             # Press Enter key
             autoit.send("{ENTER}")
-            time.sleep(0.5)
+            time.sleep(0.75)
             pyautogui.click(identityProofX, identityProofY)
         else:
             time.sleep(0.25)
@@ -598,28 +599,54 @@ def payment():
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 120)
     pyautogui.click(location)
     if paymentMethod == "upi":
-        location2 = find_image_on_screen_using_opencv(UPI_image_path, 10)
+        location2 = find_image_on_screen_using_opencv(UPI_image_path, 20)
         pyautogui.click(location2)
-        location3 = find_image_on_screen_using_opencv(PayNow_image_path, 10)
+        location3 = find_image_on_screen_using_opencv(PayNow_image_path, 20)
         pyautogui.click(location3)
-        location4 = find_image_on_screen_using_opencv(contactdetails_image_path, 20)
-        time.sleep(1)
-        pyautogui.click(location4)
-        location4a = find_image_on_screen_using_opencv(contactdetails_image_path, 2)
-        pyautogui.click(location4a)
-        autoit.send("{TAB}")
-        time.sleep(0.1)
-        autoit.send("{TAB}")
-        time.sleep(0.1)
-        autoit.send("{TAB}")
-        time.sleep(0.1)
-        autoit.send(emailAddress)
-        location5 = find_image_on_screen_using_opencv(continue_image_path, 10)
-        pyautogui.click(location5)
-        location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
-        pyautogui.click(location6)
-        location6b = find_image_on_screen_using_opencv(recommended_image_path, 10)
-        pyautogui.click(location6b)
+
+
+        find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path,40)
+        time.sleep(0.5)
+        result2 = find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path, 40)
+        print(str(result2))
+        image_name, x_image, y_image, w_image, h_image = result2
+        location4 = int(x_image), int(y_image), w_image, h_image
+
+        if image_name == "Image 1":
+            print("Image 1 was displayed")
+            pyautogui.click(location4)
+            autoit.send("{TAB}")
+            time.sleep(0.1)
+            autoit.send("{TAB}")
+            time.sleep(0.1)
+            autoit.send("{TAB}")
+            time.sleep(0.1)
+            autoit.send(emailAddress)
+            time.sleep(0.2)
+            autoit.send("{TAB}")
+            autoit.send("{ENTER}")
+            location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
+            print("show QR was displayed")
+            pyautogui.click(location6)
+            location6b = find_image_on_screen_using_opencv(recommended_image_path, 10)
+            pyautogui.click(location6b)
+
+        elif image_name == "Image 2":
+            print("Image 2 was displayed")
+            pyautogui.click(location4)
+            autoit.send("{TAB}")
+            time.sleep(0.1)
+            autoit.send("{TAB}")
+            time.sleep(0.1)
+            autoit.send("{TAB}")
+            time.sleep(0.1)
+            autoit.send(emailAddress)
+            location5 = find_image_on_screen_using_opencv(proceedAfterTiger_image_path, 10)
+            pyautogui.click(location5)
+            location6 = find_image_on_screen_using_opencv(UPIQR_AfterTiger_image_path, 10)
+            pyautogui.click(location6)
+            location6b = find_image_on_screen_using_opencv(showQR_AfterTiger_image_path, 10)
+            pyautogui.click(location6b)
 
     elif paymentMethod == "creditcard":
         location7 = find_image_on_screen_using_opencv(creditcard_image_path, 10)
@@ -731,6 +758,19 @@ def setImagePath():
     global rooms_image_path
     rooms_image_path = os.path.join(image_directory, 'rooms.png')
 
+    global tiger_image_path
+    tiger_image_path = os.path.join(image_directory, 'tiger.png')
+
+    global proceedAfterTiger_image_path
+    proceedAfterTiger_image_path = os.path.join(image_directory, 'proceedAfterTiger.png')
+
+    global UPIQR_AfterTiger_image_path
+    UPIQR_AfterTiger_image_path = os.path.join(image_directory, 'UPIQR_AfterTiger.png')
+
+    global showQR_AfterTiger_image_path
+    showQR_AfterTiger_image_path = os.path.join(image_directory, 'showQR_AfterTiger.png')
+
+
 
 def check_current_month(checkInDatePassed):
     input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month
@@ -764,3 +804,46 @@ def days_difference_with_checkInDate_checkOutDate(checkInDate1, checkOutDate1):
     # Calculate the difference in days and ensure it's positive
     difference_in_days = abs((checkOutDate1 - checkInDate1).days) - 1
     return difference_in_days
+
+
+import cv2
+import pyautogui
+import time
+
+
+def find_any_of_two_images_on_screen_using_opencv(template_path1, template_path2, timeout, threshold=0.7):
+    template1 = cv2.imread(template_path1, 0)
+    template2 = cv2.imread(template_path2, 0)
+    w1, h1 = template1.shape[::-1]
+    w2, h2 = template2.shape[::-1]
+    start_time = time.time()
+
+    while True:
+        # Capture a screenshot
+        screenshot = pyautogui.screenshot()
+        # Convert screenshot to numpy array and then to grayscale
+        screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2GRAY)
+
+        # Perform template matching for the first image
+        res1 = cv2.matchTemplate(screenshot, template1, cv2.TM_CCOEFF_NORMED)
+        min_val1, max_val1, min_loc1, max_loc1 = cv2.minMaxLoc(res1)
+
+        # Perform template matching for the second image
+        res2 = cv2.matchTemplate(screenshot, template2, cv2.TM_CCOEFF_NORMED)
+        min_val2, max_val2, min_loc2, max_loc2 = cv2.minMaxLoc(res2)
+
+        # Check if the first image match value is above the threshold
+        if max_val1 >= threshold:
+            # Take action for the first image
+            return ("Image 1", max_loc1[0], max_loc1[1], w1, h1)
+
+        # Check if the second image match value is above the threshold
+        if max_val2 >= threshold:
+            # Take action for the second image
+            return ("Image 2", max_loc2[0], max_loc2[1], w2, h2)
+
+        # Check if the timeout has been reached
+        if time.time() - start_time > timeout:
+            return None
+
+        time.sleep(0.1)

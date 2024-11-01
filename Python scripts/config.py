@@ -95,7 +95,7 @@ idNumberOfSixthPerson = "BR123456"
 countrySixthPerson = "USA"
 
 # MobileNumber for OTP
-mobileNumber = "9582638349"
+mobileNumber = "9999999999"
 
 # email address for payment
 emailAddress = "abcd@gmail.com"

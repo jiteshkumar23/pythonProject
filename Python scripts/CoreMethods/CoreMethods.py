@@ -23,7 +23,7 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
-    checkOutDate
+    checkOutDate, UPI_ADDRESS
 
 from room_shortcuts import select_room_priority
 
@@ -36,8 +36,8 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, \
     continue_image_path, contactdetails_image_path, showQR_image_path, \
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
-    addANewCard_image_path, rooms_image_path,tiger_image_path,proceedAfterTiger_image_path,UPIQR_AfterTiger_image_path,\
-    showQR_AfterTiger_image_path
+    addANewCard_image_path, rooms_image_path, tiger_image_path, proceedAfterTiger_image_path, UPIQR_AfterTiger_image_path, \
+    showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
 
@@ -232,7 +232,36 @@ def autoit_slow_type_with_error(text):
             time.sleep(delay_correct)
         # Type the correct character
         autoit.send(character)
+        # pyautogui.press(character)
         time.sleep(delay_correct)
+
+
+def pyautogui_slow_type_with_error(text):
+    delay_correct = 0.1  # Adjust these values to fine-tune typing speed
+    delay_error = 0.3
+
+    # Choose a random position to make a typing error
+    error_position = random.randint(0, len(text) - 1)
+    # Choose a random alphabet as the incorrect character
+    wrong_character = random.choice('abcdefghijklmnopqrstuvwxyz')
+
+    for i, character in enumerate(text):
+        if i == error_position:
+            # Type the wrong random character
+            pyautogui.typewrite(wrong_character)
+            # Backspace to delete the wrong character
+            time.sleep(delay_error)
+            pyautogui.press('backspace')
+            time.sleep(delay_correct)
+
+        # Random slight delay before typing the next correct character
+        random_delay = delay_correct + random.uniform(-0.05, 0.05)
+        pyautogui.typewrite(character)
+        time.sleep(random_delay)
+
+        # Occasional longer pause to simulate thinking/hesitating
+        if random.random() < 0.1:  # 10% chance of a pause
+            time.sleep(random.uniform(0.11, 0.22))
 
 
 def autoit_slow_type_numbers_with_error(numbers):
@@ -339,6 +368,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     if fifth:
         time.sleep(0.5)
     autoit_slow_type_with_error(name)
+    # pyautogui_slow_type_with_error(name)
     autoit.send("{TAB}")
     if gender.lower() == 'female':
         autoit.send("f")
@@ -598,14 +628,12 @@ def enterMobile():
 def payment():
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 120)
     pyautogui.click(location)
-    if paymentMethod == "upi":
+    if paymentMethod == "upi" or paymentMethod == "upi_id":
         location2 = find_image_on_screen_using_opencv(UPI_image_path, 20)
         pyautogui.click(location2)
         location3 = find_image_on_screen_using_opencv(PayNow_image_path, 20)
         pyautogui.click(location3)
-
-
-        find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path,40)
+        find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path, 40)
         time.sleep(0.5)
         result2 = find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path, 40)
         print(str(result2))
@@ -625,11 +653,26 @@ def payment():
             time.sleep(0.2)
             autoit.send("{TAB}")
             autoit.send("{ENTER}")
-            location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
-            print("show QR was displayed")
-            pyautogui.click(location6)
-            location6b = find_image_on_screen_using_opencv(recommended_image_path, 10)
-            pyautogui.click(location6b)
+            if paymentMethod == "upi":
+                location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
+                print("show QR was displayed")
+                pyautogui.click(location6)
+                location6b = find_image_on_screen_using_opencv(recommended_image_path, 10)
+                pyautogui.click(location6b)
+            elif paymentMethod == "upi_id":
+                location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 10)
+                print("UPI_ID was displayed")
+                pyautogui.click(location6)
+                time.sleep(0.1)
+                autoit.send("{TAB}")
+                time.sleep(0.1)
+                autoit.send("{TAB}")
+                time.sleep(0.1)
+                pyautogui.typewrite(UPI_ADDRESS)
+                time.sleep(0.1)
+                autoit.send("{TAB}")
+                time.sleep(0.1)
+                autoit.send("{ENTER}")
 
         elif image_name == "Image 2":
             print("Image 2 was displayed")
@@ -645,8 +688,19 @@ def payment():
             pyautogui.click(location5)
             location6 = find_image_on_screen_using_opencv(UPIQR_AfterTiger_image_path, 10)
             pyautogui.click(location6)
-            location6b = find_image_on_screen_using_opencv(showQR_AfterTiger_image_path, 10)
-            pyautogui.click(location6b)
+            if paymentMethod == "upi":
+                location6b = find_image_on_screen_using_opencv(showQR_AfterTiger_image_path, 10)
+                pyautogui.click(location6b)
+            elif paymentMethod == "upi_id":
+                location6b = find_image_on_screen_using_opencv(UPI_ID_Image2_image_path, 10)
+                pyautogui.click(location6b)
+                time.sleep(0.1)
+                pyautogui.typewrite(UPI_ADDRESS)
+                time.sleep(0.1)
+                autoit.send("{TAB}")
+                time.sleep(0.1)
+                autoit.send("{ENTER}")
+
 
     elif paymentMethod == "creditcard":
         location7 = find_image_on_screen_using_opencv(creditcard_image_path, 10)
@@ -770,6 +824,11 @@ def setImagePath():
     global showQR_AfterTiger_image_path
     showQR_AfterTiger_image_path = os.path.join(image_directory, 'showQR_AfterTiger.png')
 
+    global UPI_ID_image_path
+    UPI_ID_image_path = os.path.join(image_directory, 'UPI_ID.png')
+
+    global UPI_ID_Image2_image_path
+    UPI_ID_Image2_image_path = os.path.join(image_directory, 'UPI_ID_Image2.png')
 
 
 def check_current_month(checkInDatePassed):

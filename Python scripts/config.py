@@ -98,13 +98,16 @@ countrySixthPerson = "USA"
 mobileNumber = "9582638349"
 
 # email address for payment
-emailAddress = "satrajuma@gmail.com"
+emailAddress = "abcd@gmail.com"
 
-# Payment Method - "upi" or "creditcard"
-paymentMethod = "upi"
+# Payment Method - "upi" or "upi_id" or "creditcard"
+paymentMethod = "upi_id"
+
+# if payment method is upi_id , provide UPI ADDRESS
+UPI_ADDRESS = "9999999999@ybl"
 
 # if paymentMethod is credit card , provide card details
-card_number = "5376523894005939"
+card_number = "5376523894009999"
 Month = "06"
 Year = "28"
 CVV = "337"

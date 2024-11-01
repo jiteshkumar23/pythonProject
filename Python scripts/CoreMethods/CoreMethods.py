@@ -669,7 +669,7 @@ def payment():
                 autoit.send("{TAB}")
                 time.sleep(0.1)
                 pyautogui.typewrite(UPI_ADDRESS)
-                time.sleep(0.1)
+                time.sleep(0.25)
                 autoit.send("{TAB}")
                 time.sleep(0.1)
                 autoit.send("{ENTER}")
@@ -694,7 +694,7 @@ def payment():
             elif paymentMethod == "upi_id":
                 location6b = find_image_on_screen_using_opencv(UPI_ID_Image2_image_path, 10)
                 pyautogui.click(location6b)
-                time.sleep(0.1)
+                time.sleep(0.25)
                 pyautogui.typewrite(UPI_ADDRESS)
                 time.sleep(0.1)
                 autoit.send("{TAB}")

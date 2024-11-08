@@ -671,13 +671,13 @@ def payment():
                 print("UPI_ID was displayed")
                 pyautogui.click(location6)
                 time.sleep(0.1)
-                autoit.send("{TAB}")
+                location7 = find_image_on_screen_using_opencv(UPI_Number_FirstImage_image_path, 10)
+                pyautogui.click(location7)
+                # autoit.send("{TAB}")
                 time.sleep(0.1)
                 autoit.send("{TAB}")
-                time.sleep(0.2)
-                # pyautogui.typewrite(UPI_ADDRESS)
-                # autoit.send(UPI_ADDRESS)
-                human_typing(UPI_ADDRESS)
+                time.sleep(0.1)
+                pyautogui.typewrite(UPI_ADDRESS)
                 time.sleep(0.25)
                 autoit.send("{TAB}")
                 time.sleep(0.1)
@@ -846,6 +846,8 @@ def setImagePath():
     global UPI_ID_Image2_image_path
     UPI_ID_Image2_image_path = os.path.join(image_directory, 'UPI_ID_Image2.png')
 
+    global UPI_Number_FirstImage_image_path
+    UPI_Number_FirstImage_image_path = os.path.join(image_directory, 'UPI_Number_FirstImage.png')
 
 def check_current_month(checkInDatePassed):
     input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month

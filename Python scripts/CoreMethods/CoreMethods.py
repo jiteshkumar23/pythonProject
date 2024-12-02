@@ -276,11 +276,13 @@ def typing_text_with_random_delays(text, random_numbers,random_numbers3):
         error_chars = string.ascii_lowercase
         wrong_character1 = random.choice(error_chars)
         autoit.send(wrong_character1)
+        time.sleep(random.uniform(0.1, 0.2))
         autoit.send(wrong_character1)
-        time.sleep(random.uniform(0.5, 1))
+        time.sleep(random.uniform(0.5, 0.6))
         autoit.send("{BACKSPACE}")
+        time.sleep(random.uniform(0.1, 0.2))
         autoit.send("{BACKSPACE}")
-        time.sleep(random.uniform(1, 1.5))
+        time.sleep(random.uniform(0.1, 0.2))
 
     if (randomness_profile == 4 or randomness_profile == 5) and currentPerson in random_numbers:
         time.sleep(random.uniform(1, 1.5))

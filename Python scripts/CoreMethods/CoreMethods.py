@@ -559,7 +559,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
     autoit.send("{TAB}")
     human_typing_age(age)
-    time.sleep(random.uniform(0.05, 1.25))
+    time.sleep(random.uniform(0.05, 1))
 
 
 def custom_hotkey():

@@ -11,6 +11,8 @@ import keyboard
 import numpy as np
 import pyautogui
 from autoit import autoit
+from pynput import mouse
+import time
 
 from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
@@ -23,12 +25,12 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
-    checkOutDate, UPI_ADDRESS
+    checkOutDate, UPI_ADDRESS, randomness_profile
 
 from room_shortcuts import select_room_priority
 
-global fifth
 fifth = False
+currentPerson = 0
 
 global image_directory, ok_image_path, firstPersonText_image_path, firstPersonText_image_path2, \
     identity_proof_type_image_path, iamforeigner_image_path, iamIndian_image_path, \
@@ -207,33 +209,114 @@ def click_on_image_in_region(left, top, width, height, image):
 def human_typing(text):
     for char in text:
         autoit.send(char)
-        time.sleep(delay_correct)
+        time.sleep(random.uniform(0.05, 0.15))
 
 
 def human_typing_age(text):
     for char in text:
         autoit.send(char)
-        time.sleep(delay_correct + 0.1)
+        time.sleep(random.uniform(0.05, 0.15))
 
+
+# def autoit_slow_type_with_error(text):
+#     # Choose a random position to make a typing error
+#     error_position = random.randint(0, len(text) - 1)
+#     # Choose a random alphabet as the incorrect character
+#     wrong_character = random.choice(string.ascii_lowercase)
+#
+#     for i, character in enumerate(text):
+#         if i == error_position:
+#             # Type the wrong random character
+#             autoit.send(wrong_character)
+#             # Backspace to delete the wrong character
+#             time.sleep(delay_error)
+#             autoit.send("{BACKSPACE}")
+#             time.sleep(delay_correct)
+#         # Type the correct character
+#         autoit.send(character)
+#         # pyautogui.press(character)
+#         time.sleep(delay_correct)
 
 def autoit_slow_type_with_error(text):
-    # Choose a random position to make a typing error
-    error_position = random.randint(0, len(text) - 1)
-    # Choose a random alphabet as the incorrect character
-    wrong_character = random.choice(string.ascii_lowercase)
+    if len(text) <= 4:
+        for character in text:
+            autoit.send(character)
+            time.sleep(random.uniform(0.05, 0.2))
+        return
 
+    # Choose a few random positions to make typing errors
+    num_errors = random.randint(1, 4)  # Randomly decide how many errors to make
+    error_positions = random.sample(range(len(text)), num_errors)
+    error_chars = string.ascii_lowercase + string.ascii_uppercase
     for i, character in enumerate(text):
-        if i == error_position:
+        if i in error_positions:
+            # Choose a random wrong character
+            wrong_character = random.choice(error_chars)
             # Type the wrong random character
             autoit.send(wrong_character)
             # Backspace to delete the wrong character
-            time.sleep(delay_error)
+            time.sleep(random.uniform(0.2, 0.5))  # Random delay for error
             autoit.send("{BACKSPACE}")
-            time.sleep(delay_correct)
+            time.sleep(random.uniform(0.2, 0.4))  # Random delay for correction
         # Type the correct character
         autoit.send(character)
-        # pyautogui.press(character)
-        time.sleep(delay_correct)
+        time.sleep(random.uniform(0.05, 0.2))  # Random delay for typing speed
+
+
+def typing_text_with_random_delays(text, random_numbers,random_numbers3):
+    text = text.lower()
+    count = len(text)
+    new_random = random_number_between_min_and_max(1, count)
+
+    for i in range(new_random - 1):
+        pyautogui.typewrite(text[i])
+        time.sleep(random.uniform(0.01, 0.10))
+
+    if randomness_profile == 3 and currentPerson in random_numbers3:
+        error_chars = string.ascii_lowercase
+        wrong_character1 = random.choice(error_chars)
+        autoit.send(wrong_character1)
+        autoit.send(wrong_character1)
+        time.sleep(random.uniform(0.5, 1))
+        autoit.send("{BACKSPACE}")
+        autoit.send("{BACKSPACE}")
+        time.sleep(random.uniform(1, 1.5))
+
+    if (randomness_profile == 4 or randomness_profile == 5) and currentPerson in random_numbers:
+        time.sleep(random.uniform(1, 1.5))
+
+    for i in range(new_random - 1, count):
+        pyautogui.typewrite(text[i])
+        time.sleep(random.uniform(0.01, 0.10))
+
+    time.sleep(random.uniform(0.01, 0.10))
+
+
+def generate_3_random_numbers():
+    return random.sample(range(1, 7), 3)
+
+
+def generate_3_random_numbers_2():
+    return random.sample(range(1, 7), 3)
+
+
+def generate_1_random_number():
+    return random.sample(range(1, 7), 1)
+
+
+def typing_text_with_random_delays_IDNumber(text, currentPerson, random_numbers2):
+    text = text.lower()
+    count = len(text)
+    for i in range(count):
+        pyautogui.typewrite(text[i])
+        time.sleep(random.uniform(0.01, 0.10))
+        if i == 3 and (randomness_profile == 2 or randomness_profile == 5) and currentPerson in random_numbers2:
+            time.sleep(random.uniform(1, 1.5))
+    time.sleep(random.uniform(0.01, 0.10))
+
+
+def random_number_between_min_and_max(min_val, max_val):
+    return random.randint(min_val, max_val)
 
 
 def pyautogui_slow_type_with_error(text):
@@ -286,7 +369,14 @@ def autoit_slow_type_numbers_with_error(numbers):
 
 def fillForm():
     global fifth
+    global currentPerson
     global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
+    random_numbers = generate_3_random_numbers()
+    random_numbers2 = generate_3_random_numbers_2()
+    random_numbers3 = generate_1_random_number()
+    print(random_numbers)
+    print(random_numbers2)
+    print(random_numbers3)
     if machine == "laptop":
         indiaFlagX = 861
         identityDropDownX = 1054
@@ -328,48 +418,96 @@ def fillForm():
     autoit.send("{HOME}")
 
     if int(number_of_adults) >= 1:
+        currentPerson = 1
         location2 = find_image_on_screen_using_opencv(firstPersonText_image_path, 10)
         pyautogui.click(location2)
 
         fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, indiaFlagX, Y1, identityDropDownX,
                          Y1,
                          idTypeOfFirstPerson,
-                         idNumberOfFirstPerson, ageOfFirstPerson)
+                         idNumberOfFirstPerson, ageOfFirstPerson, currentPerson, random_numbers, random_numbers2,random_numbers3)
 
     if int(number_of_adults) >= 2:
+        currentPerson = 2
         fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, indiaFlagX, Y2,
                          identityDropDownX, Y2,
                          idTypeOfSecondPerson,
-                         idNumberOfSecondPerson, ageOfSecondPerson)
+                         idNumberOfSecondPerson, ageOfSecondPerson, currentPerson, random_numbers, random_numbers2,random_numbers3)
     if int(number_of_adults) >= 3:
+        currentPerson = 3
         fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, indiaFlagX, Y3, identityDropDownX,
                          Y3,
-                         idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson)
+                         idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson, currentPerson, random_numbers,
+                         random_numbers2,random_numbers3)
     if int(number_of_adults) >= 4:
+        currentPerson = 4
         fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, indiaFlagX, Y4,
                          identityDropDownX, Y4,
-                         idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson)
+                         idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson, currentPerson, random_numbers,
+                         random_numbers2,random_numbers3)
 
     if int(number_of_adults) >= 5:
+        currentPerson = 5
         fifth = True
         fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, indiaFlagX, Y5, identityDropDownX,
                          Y5,
-                         idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson)
+                         idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, currentPerson, random_numbers,
+                         random_numbers2,random_numbers3)
 
     if int(number_of_adults) >= 6:
+        currentPerson = 6
         # fifth = False
         fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, indiaFlagX, Y6, identityDropDownX,
                          Y6,
-                         idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson)
+                         idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, currentPerson, random_numbers,
+                         random_numbers2,random_numbers3)
 
 
-def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age):
+def playback_mouse_movements(fileName):
+    mouse_movements = []
+    with open(fileName, 'r') as file:
+        for line in file:
+            mouse_movements.append(eval(line.strip()))
+
+    # Playback the mouse movements
+    controller = mouse.Controller()
+    start_time = mouse_movements[0][-1]
+
+    for movement in mouse_movements:
+        action, x, y, *rest, timestamp = movement
+        delay = timestamp - start_time
+
+        # Sleep to synchronize the playback
+        if delay > 0:
+            time.sleep(delay)
+
+        if action == 'move':
+            controller.position = (x, y)
+        elif action == 'click':
+            button = mouse.Button[rest[0]]
+            pressed = rest[1]
+            if pressed:
+                controller.press(button)
+            else:
+                controller.release(button)
+        elif action == 'scroll':
+            dx, dy = rest[0], rest[1]
+            controller.scroll(dx, dy)
+
+        start_time = timestamp
+
+
+def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age,
+                     currentPerson, random_numbers, random_numbers2,random_numbers3):
+    print(currentPerson)
     autoit.send("{TAB}")
     if fifth:
         time.sleep(0.5)
-    autoit_slow_type_with_error(name)
+    # autoit_slow_type_with_error(name)
     # pyautogui_slow_type_with_error(name)
+    typing_text_with_random_delays(name, random_numbers,random_numbers3)
     autoit.send("{TAB}")
+
     if gender.lower() == 'female':
         autoit.send("f")
     elif gender.lower() == 'male':
@@ -415,10 +553,13 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     if nationalityDropDownDisplayed():
         if country.lower() != "india":
             autoit.send("{ENTER}")
+    time.sleep(0.25)
     autoit.send("{TAB}")
-    autoit_slow_type_numbers_with_error(idNumber)
+    # autoit_slow_type_numbers_with_error(idNumber)
+    typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
     autoit.send("{TAB}")
     human_typing_age(age)
+    time.sleep(random.uniform(0.25, 1.25))
 
 
 def custom_hotkey():
@@ -848,6 +989,7 @@ def setImagePath():
 
     global UPI_Number_FirstImage_image_path
     UPI_Number_FirstImage_image_path = os.path.join(image_directory, 'UPI_Number_FirstImage.png')
+
 
 def check_current_month(checkInDatePassed):
     input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month

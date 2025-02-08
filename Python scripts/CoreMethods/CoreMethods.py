@@ -1012,7 +1012,7 @@ def days_difference_with_checkInDate(checkOutDate1):
 
     # Calculate the difference in days
     difference_in_days = abs((checkOutDate1 - higher_date).days)
-    return difference_in_days
+    return difference_in_days + 1
 
 
 def days_difference_with_checkInDate_checkOutDate(checkInDate1, checkOutDate1):

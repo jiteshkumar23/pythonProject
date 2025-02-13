@@ -1,17 +1,18 @@
 # laptop or desktop or rohit or pradeeplaptop
-machine = "desktop"
+machine = "laptop"
 
-checkInDate = "2025-01-03"
-checkOutDate = "2025-01-04"
+checkInDate = "2025-03-15"
+checkOutDate = "2025-03-18"
 
 # SPEED Selection
 speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
 delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
-delay_error = 0.4  # pause after wrong value is typed , 0.3 is more human like,  0.01 is super fast , 0.0 is GOD mode
+
+typingGap = 0.15 # minimum value of 0.05 , don't decrease below 0.05
 
 # Data Entry
-number_of_rooms = "2"
-number_of_adults = "6"
+number_of_rooms = "1"
+number_of_adults = "1"
 number_of_children = "0"
 
 pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
@@ -22,7 +23,7 @@ pax_5 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_6 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 
 # Select room to be booked
-room = "Morghati"
+room = "Rathuwadhab"
 # “Bijrani”
 # “Gairal New”
 # “Halduparao”
@@ -111,7 +112,7 @@ card_number = "5376523894009999"
 Month = "06"
 Year = "28"
 CVV = "337"
-NameOnCard = "Rajendra"
+NameOnCard = "Raj"
 
 
 # Profile for randomness

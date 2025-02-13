@@ -14,7 +14,7 @@ from autoit import autoit
 from pynput import mouse
 import time
 
-from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
+from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
     idNumberOfFirstPerson, idTypeOfFirstPerson, idTypeOfSecondPerson, idNumberOfSecondPerson, nameOfFirstPerson, \
     genderOfFirstPerson, countrySecondPerson, countryFirstPerson, ageOfFirstPerson, ageOfSecondPerson, \
@@ -25,7 +25,7 @@ from config import delay_correct, delay_error, pax_1, pax_2, pax_3, pax_4, pax_5
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
-    checkOutDate, UPI_ADDRESS, randomness_profile
+    checkOutDate, UPI_ADDRESS, randomness_profile, typingGap
 
 from room_shortcuts import select_room_priority
 
@@ -39,7 +39,8 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     continue_image_path, contactdetails_image_path, showQR_image_path, \
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
     addANewCard_image_path, rooms_image_path, tiger_image_path, proceedAfterTiger_image_path, UPIQR_AfterTiger_image_path, \
-    showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path
+    showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path, gender_dropdown_image_path, \
+    id_details_image_path, age_image_path, fullname_image_path, mobile_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
 
@@ -176,7 +177,6 @@ def get_user_input():
 
 
 def click_on_image_in_region(left, top, width, height, image):
-    time.sleep(1)
     # Define the region of interest (left, top, width, height)
     region = (left, top, width, height)
     # Print debug information
@@ -209,13 +209,13 @@ def click_on_image_in_region(left, top, width, height, image):
 def human_typing(text):
     for char in text:
         autoit.send(char)
-        time.sleep(random.uniform(0.05, 0.15))
+        time.sleep(random.uniform(0.05, typingGap))
 
 
-def human_typing_age(text):
+def human_typing_other(text):
     for char in text:
         autoit.send(char)
-        time.sleep(random.uniform(0.05, 0.15))
+        time.sleep(random.uniform(0.05, 0.08))
 
 
 # def autoit_slow_type_with_error(text):
@@ -263,7 +263,7 @@ def autoit_slow_type_with_error(text):
         time.sleep(random.uniform(0.05, 0.2))  # Random delay for typing speed
 
 
-def typing_text_with_random_delays(text, random_numbers,random_numbers3):
+def typing_text_with_random_delays(text, random_numbers, random_numbers3):
     text = text.lower()
     count = len(text)
     new_random = random_number_between_min_and_max(1, count)
@@ -360,7 +360,7 @@ def autoit_slow_type_numbers_with_error(numbers):
             # Type the wrong random character
             autoit.send(wrong_character)
             # Backspace to delete the wrong character
-            time.sleep(delay_error)
+            time.sleep(0.25)
             autoit.send("{BACKSPACE}")
             time.sleep(delay_correct)
             # Additional delay for the correction
@@ -380,6 +380,12 @@ def fillForm():
     print(random_numbers2)
     print(random_numbers3)
     if machine == "laptop":
+        region1 = (251, 279, 1403, 142)
+        region2 = (251, 440, 1403, 142)
+        region3 = (251, 605, 1403, 142)
+        region4 = (251, 768, 1403, 142)
+        region5 = (251, 897, 1403, 142)
+        region6 = (251, 498, 1403, 142)
         indiaFlagX = 861
         identityDropDownX = 1054
         Y1 = 332
@@ -421,32 +427,31 @@ def fillForm():
 
     if int(number_of_adults) >= 1:
         currentPerson = 1
-        location2 = find_image_on_screen_using_opencv(firstPersonText_image_path, 10)
-        pyautogui.click(location2)
-
         fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, indiaFlagX, Y1, identityDropDownX,
                          Y1,
                          idTypeOfFirstPerson,
-                         idNumberOfFirstPerson, ageOfFirstPerson, currentPerson, random_numbers, random_numbers2,random_numbers3)
+                         idNumberOfFirstPerson, ageOfFirstPerson, currentPerson, random_numbers, random_numbers2,
+                         random_numbers3, region1)
 
     if int(number_of_adults) >= 2:
         currentPerson = 2
         fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, indiaFlagX, Y2,
                          identityDropDownX, Y2,
                          idTypeOfSecondPerson,
-                         idNumberOfSecondPerson, ageOfSecondPerson, currentPerson, random_numbers, random_numbers2,random_numbers3)
+                         idNumberOfSecondPerson, ageOfSecondPerson, currentPerson, random_numbers, random_numbers2,
+                         random_numbers3, region2)
     if int(number_of_adults) >= 3:
         currentPerson = 3
         fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, indiaFlagX, Y3, identityDropDownX,
                          Y3,
                          idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson, currentPerson, random_numbers,
-                         random_numbers2,random_numbers3)
+                         random_numbers2, random_numbers3, region3)
     if int(number_of_adults) >= 4:
         currentPerson = 4
         fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, indiaFlagX, Y4,
                          identityDropDownX, Y4,
                          idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson, currentPerson, random_numbers,
-                         random_numbers2,random_numbers3)
+                         random_numbers2, random_numbers3, region4)
 
     if int(number_of_adults) >= 5:
         currentPerson = 5
@@ -454,7 +459,7 @@ def fillForm():
         fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, indiaFlagX, Y5, identityDropDownX,
                          Y5,
                          idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, currentPerson, random_numbers,
-                         random_numbers2,random_numbers3)
+                         random_numbers2, random_numbers3, region5)
 
     if int(number_of_adults) >= 6:
         currentPerson = 6
@@ -462,8 +467,9 @@ def fillForm():
         fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, indiaFlagX, Y6, identityDropDownX,
                          Y6,
                          idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, currentPerson, random_numbers,
-                         random_numbers2,random_numbers3)
-
+                         random_numbers2, random_numbers3, region6)
+    pyautogui.scroll(-2500)
+    enterMobile()
 
 def playback_mouse_movements(fileName):
     mouse_movements = []
@@ -500,15 +506,29 @@ def playback_mouse_movements(fileName):
 
 
 def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age,
-                     currentPerson, random_numbers, random_numbers2,random_numbers3):
+                     currentPerson, random_numbers, random_numbers2, random_numbers3, region):
     print(currentPerson)
-    autoit.send("{TAB}")
-    if fifth:
-        time.sleep(0.5)
-    # autoit_slow_type_with_error(name)
-    # pyautogui_slow_type_with_error(name)
-    typing_text_with_random_delays(name, random_numbers,random_numbers3)
-    autoit.send("{TAB}")
+    if not (machine == "laptop" and currentPerson >= 5):
+        pyautogui.click(find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region))
+        # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
+        # pyautogui.click(fullname_location)
+
+    wait_for_alt_q()
+    time.sleep(0.1)
+    # typing_text_with_random_delays(name, random_numbers, random_numbers3)
+    # type_text(name.lower())
+    human_typing(name.lower())
+
+    gender_dropdown_location = pyautogui.locateOnScreen(gender_dropdown_image_path, region=region, confidence=0.7)
+
+    # wait for alt+q
+    wait_for_alt_q()
+
+    # Mouse movement
+    move_mouse_to_center(gender_dropdown_location)
+
+    # Click
+    pyautogui.click(gender_dropdown_location)
 
     if gender.lower() == 'female':
         autoit.send("f")
@@ -518,29 +538,40 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
         autoit.send("t")
 
     time.sleep(0.05)
-    # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
-    if nationalityDropDownDisplayed():
-        if country.lower() != "india":
-            pyautogui.click(indiaX, indiaY)
-            pyautogui.hotkey('ctrl', 'f')
-            time.sleep(0.5)
-            human_typing(country)
-            # autoit.send(country)
-            time.sleep(0.5)
-            autoit.send("{ESC}")
-            # Wait for a moment before pressing Enter
-            time.sleep(0.2)
-            # Press Enter key
-            autoit.send("{ENTER}")
-            time.sleep(0.75)
-            pyautogui.click(identityProofX, identityProofY)
-        else:
-            time.sleep(0.25)
-            autoit.send("{TAB}")
-    else:
-        autoit.send("{TAB}")
-        time.sleep(0.25)
+    autoit.send("{ENTER}")
 
+    # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
+    # if nationalityDropDownDisplayed():
+    #     if country.lower() != "india":
+    #         pyautogui.click(indiaX, indiaY)
+    #         pyautogui.hotkey('ctrl', 'f')
+    #         time.sleep(0.5)
+    #         human_typing(country)
+    #         # autoit.send(country)
+    #         time.sleep(0.5)
+    #         autoit.send("{ESC}")
+    #         # Wait for a moment before pressing Enter
+    #         time.sleep(0.2)
+    #         # Press Enter key
+    #         autoit.send("{ENTER}")
+    #         time.sleep(0.75)
+    #         pyautogui.click(identityProofX, identityProofY)
+    #     else:
+    #         time.sleep(0.25)
+    #         autoit.send("{TAB}")
+    # else:
+    #     time.sleep(0.25)
+
+    identity_proof_type_location = pyautogui.locateOnScreen(identity_proof_type_image_path, region=region,
+                                                            confidence=0.7)
+    wait_for_alt_q()
+
+    # Mouse movement
+    move_mouse_to_center(identity_proof_type_location)
+
+    pyautogui.click(identity_proof_type_location)
+    time.sleep(0.2)
+    print(idType)
     if idType.lower() == 'aadhar card':
         autoit.send("aad")
     elif idType.lower() == 'pan card':
@@ -549,19 +580,39 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
         autoit.send("d")
     elif idType.lower() == 'passport':
         autoit.send("pas")
+        print("sent pas")
     elif idType.lower() == 'student id card':
         autoit.send("s")
 
-    if nationalityDropDownDisplayed():
-        if country.lower() != "india":
-            autoit.send("{ENTER}")
-    time.sleep(0.25)
-    autoit.send("{TAB}")
+    time.sleep(0.1)
+    autoit.send("{ENTER}")
+
+    # if nationalityDropDownDisplayed():
+    #     if country.lower() != "india":
+    #         autoit.send("{ENTER}")
+    # time.sleep(0.25)
+    # autoit.send("{TAB}")
     # autoit_slow_type_numbers_with_error(idNumber)
-    typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
-    autoit.send("{TAB}")
-    human_typing_age(age)
+    id_details_location = pyautogui.locateOnScreen(id_details_image_path, region=region, confidence=0.7)
+    wait_for_alt_q()
+    # Mouse movement
+    move_mouse_to_center(id_details_location)
+
+    pyautogui.click(id_details_location)
+    #typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
+    #type_text(idNumber.lower())
+    human_typing(idNumber.lower())
+
+    age_location = pyautogui.locateOnScreen(age_image_path, region=region, confidence=0.9)
+    wait_for_alt_q()
+    # Mouse movement
+    print("Mouse movement for age for person no " + str(currentPerson))
+    move_mouse_to_center(age_location)
+    pyautogui.click(age_location)
+    human_typing_other(age)
     time.sleep(random.uniform(0.05, 1))
+    if machine == "laptop" and currentPerson >= 4:
+        autoit.send("{TAB}")
 
 
 def custom_hotkey():
@@ -720,15 +771,10 @@ def firstPageFill():
 
     autoit.send("{ENTER}")
 
-    speed_for_first_page(speed_first_page)
-
-    locationOfRooms = find_image_on_screen_using_opencv(rooms_image_path, 30)
+    locationOfRooms = find_image_on_screen_using_opencv(rooms_image_path, 10)
 
     print("Rooms was displayed here -->" + str(locationOfRooms))
-
-    select_room_priority(room)
-
-    time.sleep(0.5)
+    print("Rooms selection process can be started now")
 
 
 def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
@@ -759,17 +805,49 @@ def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
         time.sleep(0.5)
 
 
+def find_image_on_screen_using_opencv_in_region(template_path1, timeout, region, threshold=0.7):
+    template = cv2.imread(template_path1, 0)
+    w, h = template.shape[::-1]
+    start_time = time.time()
+
+    while True:
+        # Capture a screenshot of the specified region
+        screenshot = pyautogui.screenshot(region=region)
+
+        # Convert screenshot to numpy array and then to grayscale
+        screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2GRAY)
+
+        # Perform template matching
+        res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+
+        # Check if the match value is above the threshold
+        if max_val >= threshold:
+            # Calculate the absolute position of the matched region
+            abs_x = max_loc[0] + region[0]
+            abs_y = max_loc[1] + region[1]
+            return abs_x, abs_y, w, h
+
+        # Check if the timeout has been reached
+        if time.time() - start_time > timeout:
+            return None
+
+
 def enterMobile():
-    multiplePressUsingPyAutoGUI('tab', 3)
+    # multiplePressUsingPyAutoGUI('tab', 3)
+    wait_for_alt_q()
+    time.sleep(0.1)
+    mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
+    pyautogui.click(mobile_location)
     human_typing(mobileNumber)
     time.sleep(0.1)
     multiplePressUsingPyAutoGUI('tab', 1)
-    time.sleep(0.1)
+    time.sleep(0.2)
     multiplePressUsingPyAutoGUI('enter', 1)
 
 
 def payment():
-    location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 120)
+    location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
     pyautogui.click(location)
     if paymentMethod == "upi" or paymentMethod == "upi_id":
         location2 = find_image_on_screen_using_opencv(UPI_image_path, 60)
@@ -992,6 +1070,21 @@ def setImagePath():
     global UPI_Number_FirstImage_image_path
     UPI_Number_FirstImage_image_path = os.path.join(image_directory, 'UPI_Number_FirstImage.png')
 
+    global gender_dropdown_image_path
+    gender_dropdown_image_path = os.path.join(image_directory, 'gender_dropdown.png')
+
+    global id_details_image_path
+    id_details_image_path = os.path.join(image_directory, 'id_details.png')
+
+    global age_image_path
+    age_image_path = os.path.join(image_directory, 'age.png')
+
+    global fullname_image_path
+    fullname_image_path = os.path.join(image_directory, 'fullname.png')
+
+    global mobile_image_path
+    mobile_image_path = os.path.join(image_directory, 'mobile.png')
+
 
 def check_current_month(checkInDatePassed):
     input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month
@@ -1068,3 +1161,97 @@ def find_any_of_two_images_on_screen_using_opencv(template_path1, template_path2
             return None
 
         time.sleep(0.1)
+
+
+def roomSelection():
+    speed_for_first_page(speed_first_page)
+    autoit.send("{F3}")
+    time.sleep(0.1)
+    print(room)
+    autoit.send(room)
+    time.sleep(0.1)
+    autoit.send("{ESC}")
+    time.sleep(0.2)
+    autoit.send("{TAB}")
+    time.sleep(0.1)
+    autoit.send("{ENTER}")
+
+
+def find_image_in_region(left, top, width, height, image):
+    # Define the region of interest (left, top, width, height)
+    region = (left, top, width, height)
+    # Print debug information
+    print(f"Capturing screenshot of region: {region}")
+
+    # Capture a screenshot of the region
+    screenshot = pyautogui.screenshot(region=region)
+
+    # Print debug information
+    print(f"Searching for image '{image}' within the captured region...")
+
+    try:
+        # Locate the image within the specified region on the screen
+        image_location = pyautogui.locateOnScreen(image, region=region)
+
+        if image_location is not None:
+            # Get the center of the image location
+            center = pyautogui.center(image_location)
+            print(f"Image found at {center}")
+            return center
+        else:
+            print("Image not found in the specified region.")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return None
+
+
+def move_and_click_image(image_path, confidence=0.7, duration=0.0, left=0, top=0, width=0, height=0):
+    # Locate the image on the screen
+    # location = pyautogui.locateCenterOnScreen(image_path, confidence=confidence)
+    # location = find_image_on_screen_using_opencv(image_path, 10)
+    location = find_image_in_region(left, top, width, height, image_path)
+    print(location)
+    if location is not None:
+        # Move the mouse smoothly to the target location
+        # pyautogui.moveTo(location.x, location.y, duration=duration)
+        pyautogui.moveTo(location.x, location.y, 0.0)
+        # Perform the click
+        pyautogui.click()
+        return True
+    else:
+        print("Image not found on the screen.")
+        return False
+
+
+def wait_for_alt_q():
+    print("Waiting for 'Alt + Q' to be pressed...")
+    # Block until "Alt + Q" is pressed
+    keyboard.wait('alt+q')
+    print("'Alt + Q' was pressed!")
+
+
+def type_character(char):
+    if char.isalnum():  # Check if character is alphanumeric
+        pyautogui.press(char)
+    else:
+        if char == ' ':
+            pyautogui.press('space')
+        elif char == '\n':
+            pyautogui.press('enter')
+
+
+def type_text(text):
+    for char in text:
+        type_character(char)
+        # Simulate random delay between key presses
+        # time.sleep(random_number_between_min_and_max(10, 30) / 1000.0)
+        # time.sleep(random_number_between_min_and_max(45, 70) / 1000.0)
+        time.sleep(random.uniform(0.05, 0.20))
+
+
+def move_mouse_to_center(gender_dropdown_location, duration=0.2):
+    center_x = gender_dropdown_location.left + gender_dropdown_location.width / 2
+    center_y = gender_dropdown_location.top + gender_dropdown_location.height / 2
+    pyautogui.moveTo(center_x, center_y, duration=duration)
+    print(f"Mouse moved to ({center_x}, {center_y}).")

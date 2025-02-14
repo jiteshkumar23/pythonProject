@@ -395,6 +395,12 @@ def fillForm():
         Y5 = 981
         Y6 = 569
     elif machine == "desktop":
+        region1 = (114, 224, 1124, 117)
+        region2 = (114, 355, 1124, 117)
+        region3 = (114, 484, 1124, 117)
+        region4 = (114, 617, 1124, 117)
+        region5 = (114, 354, 1124, 117)
+        region6 = (114, 485, 1124, 117)
         indiaFlagX = 602
         identityDropDownX = 767
         Y1 = 298
@@ -508,12 +514,12 @@ def playback_mouse_movements(fileName):
 def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age,
                      currentPerson, random_numbers, random_numbers2, random_numbers3, region):
     print(currentPerson)
-    if not (machine == "laptop" and currentPerson >= 5):
+    if not (currentPerson >= 5):
         pyautogui.click(find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region))
         # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
         # pyautogui.click(fullname_location)
-
-    wait_for_alt_q()
+    if not currentPerson == 1:
+        wait_for_alt_q()
     time.sleep(0.1)
     # typing_text_with_random_delays(name, random_numbers, random_numbers3)
     # type_text(name.lower())
@@ -611,7 +617,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     pyautogui.click(age_location)
     human_typing_other(age)
     time.sleep(random.uniform(0.05, 1))
-    if machine == "laptop" and currentPerson >= 4:
+    if currentPerson >= 4:
         autoit.send("{TAB}")
 
 

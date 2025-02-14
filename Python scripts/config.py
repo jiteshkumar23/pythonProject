@@ -1,5 +1,5 @@
 # laptop or desktop or rohit or pradeeplaptop
-machine = "laptop"
+machine = "desktop"
 
 checkInDate = "2025-03-15"
 checkOutDate = "2025-03-18"
@@ -11,8 +11,8 @@ delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is 
 typingGap = 0.15 # minimum value of 0.05 , don't decrease below 0.05
 
 # Data Entry
-number_of_rooms = "1"
-number_of_adults = "1"
+number_of_rooms = "2"
+number_of_adults = "6"
 number_of_children = "0"
 
 pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
@@ -23,7 +23,7 @@ pax_5 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 pax_6 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
 
 # Select room to be booked
-room = "Rathuwadhab"
+room = "Morghati"
 # “Bijrani”
 # “Gairal New”
 # “Halduparao”

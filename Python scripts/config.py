@@ -11,8 +11,8 @@ delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is 
 typingGap = 0.15 # minimum value of 0.05 , don't decrease below 0.05
 
 # Data Entry
-number_of_rooms = "2"
-number_of_adults = "6"
+number_of_rooms = "1"
+number_of_adults = "2"
 number_of_children = "0"
 
 pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
@@ -96,13 +96,13 @@ idNumberOfSixthPerson = "BR123456"
 countrySixthPerson = "India"
 
 # MobileNumber for OTP
-mobileNumber = "9999999999"
+mobileNumber = "9667032761"
 
 # email address for payment
 emailAddress = "abcd@gmail.com"
 
 # Payment Method - "upi" or "upi_id" or "creditcard"
-paymentMethod = "upi_id"
+paymentMethod = "upi"
 
 # if payment method is upi_id , provide UPI ADDRESS
 UPI_ADDRESS = "9999999999@ibl"

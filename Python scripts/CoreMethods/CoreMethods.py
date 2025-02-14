@@ -515,9 +515,12 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
                      currentPerson, random_numbers, random_numbers2, random_numbers3, region):
     print(currentPerson)
     if not (currentPerson >= 5):
-        pyautogui.click(find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region))
-        # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
-        # pyautogui.click(fullname_location)
+        try:
+            pyautogui.click(find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region))
+             # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
+            # pyautogui.click(fullname_location)
+        except Exception as e:
+            print(f"An error occurred: {e}")
     if not currentPerson == 1:
         wait_for_alt_q()
     time.sleep(0.1)
@@ -525,26 +528,30 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     # type_text(name.lower())
     human_typing(name.lower())
 
-    gender_dropdown_location = pyautogui.locateOnScreen(gender_dropdown_image_path, region=region, confidence=0.7)
+    try:
+        gender_dropdown_location = pyautogui.locateOnScreen(gender_dropdown_image_path, region=region, confidence=0.7)
 
-    # wait for alt+q
-    wait_for_alt_q()
 
-    # Mouse movement
-    move_mouse_to_center(gender_dropdown_location)
+        # wait for alt+q
+        wait_for_alt_q()
 
-    # Click
-    pyautogui.click(gender_dropdown_location)
+        # Mouse movement
+        move_mouse_to_center(gender_dropdown_location)
 
-    if gender.lower() == 'female':
-        autoit.send("f")
-    elif gender.lower() == 'male':
-        autoit.send("m")
-    elif gender.lower() == 'transgender':
-        autoit.send("t")
+        # Click
+        pyautogui.click(gender_dropdown_location)
 
-    time.sleep(0.05)
-    autoit.send("{ENTER}")
+        if gender.lower() == 'female':
+            autoit.send("f")
+        elif gender.lower() == 'male':
+            autoit.send("m")
+        elif gender.lower() == 'transgender':
+            autoit.send("t")
+
+        time.sleep(0.05)
+        autoit.send("{ENTER}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
     # if nationalityDropDownDisplayed():
@@ -568,30 +575,33 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     # else:
     #     time.sleep(0.25)
 
-    identity_proof_type_location = pyautogui.locateOnScreen(identity_proof_type_image_path, region=region,
-                                                            confidence=0.7)
-    wait_for_alt_q()
+    try:
+        identity_proof_type_location = pyautogui.locateOnScreen(identity_proof_type_image_path, region=region,
+                                                                confidence=0.7)
+        wait_for_alt_q()
 
-    # Mouse movement
-    move_mouse_to_center(identity_proof_type_location)
+        # Mouse movement
+        move_mouse_to_center(identity_proof_type_location)
 
-    pyautogui.click(identity_proof_type_location)
-    time.sleep(0.2)
-    print(idType)
-    if idType.lower() == 'aadhar card':
-        autoit.send("aad")
-    elif idType.lower() == 'pan card':
-        autoit.send("pan")
-    elif idType.lower() == 'driving license':
-        autoit.send("d")
-    elif idType.lower() == 'passport':
-        autoit.send("pas")
-        print("sent pas")
-    elif idType.lower() == 'student id card':
-        autoit.send("s")
+        pyautogui.click(identity_proof_type_location)
+        time.sleep(0.2)
+        print(idType)
+        if idType.lower() == 'aadhar card':
+            autoit.send("aad")
+        elif idType.lower() == 'pan card':
+            autoit.send("pan")
+        elif idType.lower() == 'driving license':
+            autoit.send("d")
+        elif idType.lower() == 'passport':
+            autoit.send("pas")
+            print("sent pas")
+        elif idType.lower() == 'student id card':
+            autoit.send("s")
 
-    time.sleep(0.1)
-    autoit.send("{ENTER}")
+        time.sleep(0.1)
+        autoit.send("{ENTER}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     # if nationalityDropDownDisplayed():
     #     if country.lower() != "india":
@@ -599,23 +609,30 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     # time.sleep(0.25)
     # autoit.send("{TAB}")
     # autoit_slow_type_numbers_with_error(idNumber)
-    id_details_location = pyautogui.locateOnScreen(id_details_image_path, region=region, confidence=0.7)
-    wait_for_alt_q()
-    # Mouse movement
-    move_mouse_to_center(id_details_location)
+    try:
+        id_details_location = pyautogui.locateOnScreen(id_details_image_path, region=region, confidence=0.7)
+        wait_for_alt_q()
+        # Mouse movement
+        move_mouse_to_center(id_details_location)
 
-    pyautogui.click(id_details_location)
-    #typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
-    #type_text(idNumber.lower())
-    human_typing(idNumber.lower())
+        pyautogui.click(id_details_location)
+        #typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
+        #type_text(idNumber.lower())
+        human_typing(idNumber.lower())
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-    age_location = pyautogui.locateOnScreen(age_image_path, region=region, confidence=0.9)
-    wait_for_alt_q()
-    # Mouse movement
-    print("Mouse movement for age for person no " + str(currentPerson))
-    move_mouse_to_center(age_location)
-    pyautogui.click(age_location)
-    human_typing_other(age)
+    try:
+        age_location = pyautogui.locateOnScreen(age_image_path, region=region, confidence=0.9)
+        wait_for_alt_q()
+        # Mouse movement
+        print("Mouse movement for age for person no " + str(currentPerson))
+        move_mouse_to_center(age_location)
+        pyautogui.click(age_location)
+        human_typing_other(age)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
     time.sleep(random.uniform(0.05, 1))
     if currentPerson >= 4:
         autoit.send("{TAB}")
@@ -841,15 +858,18 @@ def find_image_on_screen_using_opencv_in_region(template_path1, timeout, region,
 
 def enterMobile():
     # multiplePressUsingPyAutoGUI('tab', 3)
-    wait_for_alt_q()
-    time.sleep(0.1)
-    mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
-    pyautogui.click(mobile_location)
-    human_typing(mobileNumber)
-    time.sleep(0.1)
-    multiplePressUsingPyAutoGUI('tab', 1)
-    time.sleep(0.2)
-    multiplePressUsingPyAutoGUI('enter', 1)
+    try:
+        wait_for_alt_q()
+        time.sleep(0.1)
+        mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
+        pyautogui.click(mobile_location)
+        human_typing(mobileNumber)
+        time.sleep(0.1)
+        multiplePressUsingPyAutoGUI('tab', 1)
+        time.sleep(0.2)
+        multiplePressUsingPyAutoGUI('enter', 1)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
 def payment():

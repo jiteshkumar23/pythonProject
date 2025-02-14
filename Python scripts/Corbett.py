@@ -13,41 +13,41 @@ from config import checkInDate, checkOutDate
 
 
 def exit_program():
-    print("r+5 keys pressed - Exiting... Goodbye!")
+    print("alt+5 keys pressed - Exiting... Goodbye!")
     os._exit(0)  # Exit the current process
 
 
 def handle_key_press():
-    if keyboard.is_pressed("r+1"):
-        print("Keys Pressed - r+1 - Filling first page only")
+    if keyboard.is_pressed("alt+1"):
+        print("Keys Pressed - alt+1 - Filling first page only")
         firstPageFill()
-        debounce_key("r+1")  # Wait until the key is released
+        debounce_key("alt+1")  # Wait until the key is released
         return True
-    elif keyboard.is_pressed("r+2"):
-        print("Keys Pressed - r+2  - Room Selection")
+    elif keyboard.is_pressed("alt+2"):
+        print("Keys Pressed - alt+2  - Room Selection")
         roomSelection()
         return True
-    elif keyboard.is_pressed("r+3"):
-        print("Keys Pressed - r+3  - Filling form only")
+    elif keyboard.is_pressed("alt+3"):
+        print("Keys Pressed - alt+3  - Filling form only")
         autoit.send("{HOME}")  # Takes you to the top of the page very fast
         time.sleep(0.25)
         fillForm()
-        debounce_key("r+3")  # Wait until the key is released
+        debounce_key("alt+3")  # Wait until the key is released
         return True
-    elif keyboard.is_pressed("r+4"):
-        print("Keys Pressed - r+4 - payment")
+    elif keyboard.is_pressed("alt+4"):
+        print("Keys Pressed - alt+4 - payment")
         payment()
-        debounce_key("r+4")  # Wait until the key is released
+        debounce_key("alt+4")  # Wait until the key is released
         return True
     return False  # Indicate that no key was pressed
 
 
 def print_instructions():
-    print("Press - r+1 - For filling first page only")
-    print("Press - r+2 - For Room Selection")
-    print("Press - r+3 - For filling form on second page")
-    print("Press - r+4 - For payment")
-    print("Press - r+5 - For exiting the script")
+    print("Press - alt+1 - For filling first page only")
+    print("Press - alt+2 - For Room Selection")
+    print("Press - alt+3 - For filling form on second page")
+    print("Press - alt+4 - For payment")
+    print("Press - alt+5 - For exiting the script")
 
 
 def main():
@@ -56,7 +56,7 @@ def main():
     print_instructions()
 
     # Add listener for exiting the program
-    keyboard.add_hotkey('r+5', exit_program)
+    keyboard.add_hotkey('alt+5', exit_program)
 
     while True:
         if handle_key_press():

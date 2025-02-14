@@ -516,42 +516,47 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     print(currentPerson)
     if not (currentPerson >= 5):
         try:
-            pyautogui.click(find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region))
+             location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
              # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
             # pyautogui.click(fullname_location)
         except Exception as e:
             print(f"An error occurred: {e}")
     if not currentPerson == 1:
         wait_for_alt_q()
+        pyautogui.click(location23)
+    else:
+        pyautogui.click(location23)
     time.sleep(0.1)
     # typing_text_with_random_delays(name, random_numbers, random_numbers3)
     # type_text(name.lower())
     human_typing(name.lower())
 
-    try:
-        gender_dropdown_location = pyautogui.locateOnScreen(gender_dropdown_image_path, region=region, confidence=0.7)
-
-
-        # wait for alt+q
-        wait_for_alt_q()
-
-        # Mouse movement
-        move_mouse_to_center(gender_dropdown_location)
-
-        # Click
-        pyautogui.click(gender_dropdown_location)
-
-        if gender.lower() == 'female':
-            autoit.send("f")
-        elif gender.lower() == 'male':
-            autoit.send("m")
-        elif gender.lower() == 'transgender':
-            autoit.send("t")
-
-        time.sleep(0.05)
-        autoit.send("{ENTER}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    # Disabled code for gender selection
+    # if not gender.lower() == 'male':
+    #     try:
+    #         gender_dropdown_location = pyautogui.locateOnScreen(gender_dropdown_image_path, region=region,
+    #                                                             confidence=0.7)
+    #
+    #         # wait for alt+q
+    #         wait_for_alt_q()
+    #
+    #         # Mouse movement
+    #         move_mouse_to_center(gender_dropdown_location)
+    #
+    #         # Click
+    #         pyautogui.click(gender_dropdown_location)
+    #
+    #         if gender.lower() == 'female':
+    #             autoit.send("f")
+    #         elif gender.lower() == 'male':
+    #             autoit.send("m")
+    #         elif gender.lower() == 'transgender':
+    #             autoit.send("t")
+    #
+    #         time.sleep(0.05)
+    #         autoit.send("{ENTER}")
+    #     except Exception as e:
+    #         print(f"An error occurred: {e}")
 
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
     # if nationalityDropDownDisplayed():
@@ -1251,10 +1256,10 @@ def move_and_click_image(image_path, confidence=0.7, duration=0.0, left=0, top=0
 
 
 def wait_for_alt_q():
-    print("Waiting for 'Alt + Q' to be pressed...")
+    print("Waiting for 'Alt + 3' to be pressed...")
     # Block until "Alt + Q" is pressed
-    keyboard.wait('alt+q')
-    print("'Alt + Q' was pressed!")
+    keyboard.wait('alt+3')
+    print("'Alt + 3' was pressed!")
 
 
 def type_character(char):

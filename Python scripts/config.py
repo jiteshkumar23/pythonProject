@@ -50,7 +50,7 @@ room = "Morghati"
 # Details of First Person
 nameOfFirstPerson = "John Doe"
 ageOfFirstPerson = "30"
-genderOfFirstPerson = "Female"  # "Male", "Female","Transgender"
+genderOfFirstPerson = "Male"  # "Male", "Female","Transgender"
 idTypeOfFirstPerson = "Passport"  # "Aadhar Card", "Pan Card", "Driving License", "Passport", "Student ID Card"
 idNumberOfFirstPerson = "AB123456"
 countryFirstPerson = "India"  # "USA", "United Kingdom","Canada","Australia","Italy, "India"

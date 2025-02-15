@@ -13,7 +13,7 @@ from config import checkInDate, checkOutDate
 
 
 def exit_program():
-    print("alt+5 keys pressed - Exiting... Goodbye!")
+    print("alt+q keys pressed - Exiting... Goodbye!")
     os._exit(0)  # Exit the current process
 
 
@@ -47,7 +47,7 @@ def print_instructions():
     print("Press - alt+2 - For Room Selection")
     print("Press - alt+3 - For filling form on second page")
     print("Press - alt+4 - For payment")
-    print("Press - alt+5 - For exiting the script")
+    print("Press - alt+q - For exiting the script")
 
 
 def main():
@@ -56,7 +56,7 @@ def main():
     print_instructions()
 
     # Add listener for exiting the program
-    keyboard.add_hotkey('alt+5', exit_program)
+    keyboard.add_hotkey('alt+q', exit_program)
 
     while True:
         if handle_key_press():

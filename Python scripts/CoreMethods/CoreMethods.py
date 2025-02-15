@@ -475,7 +475,7 @@ def fillForm():
                          Y6,
                          idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, currentPerson, random_numbers,
                          random_numbers2, random_numbers3, region6)
-    pyautogui.scroll(-2500)
+
     enterMobile()
 
 def playback_mouse_movements(fileName):
@@ -861,7 +861,8 @@ def enterMobile():
     # multiplePressUsingPyAutoGUI('tab', 3)
     try:
         wait_for_alt_q()
-        time.sleep(0.1)
+        pyautogui.scroll(-2500)
+        time.sleep(0.5)
         mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
         pyautogui.click(mobile_location)
         human_typing(mobileNumber)

@@ -9,9 +9,10 @@ speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is supe
 delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
 
 typingGap = 0.15 # minimum value of 0.05 , don't decrease below 0.05
+mouseMovementSpeed = 0.4  #
 
 # Data Entry
-number_of_rooms = "1"
+number_of_rooms = "2"
 number_of_adults = "2"
 number_of_children = "0"
 
@@ -96,7 +97,7 @@ idNumberOfSixthPerson = "BR123456"
 countrySixthPerson = "India"
 
 # MobileNumber for OTP
-mobileNumber = "9667032761"
+mobileNumber = "9999999999"
 
 # email address for payment
 emailAddress = "abcd@gmail.com"

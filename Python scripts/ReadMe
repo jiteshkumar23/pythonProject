@@ -17,7 +17,7 @@ https://www.jetbrains.com/pycharm/download/?section=windows
 9) This will install Python 3.12.3 in the system
 10) Error will go away
 11) Go to Terminal and run following command
-pip install keyboard, autoit, pyautoit, pyautogui, opencv-python, Pillow
+pip install keyboard, autoit, pyautoit, pyautogui, opencv-python, Pillow, pynput
 
 12)Install Shortkeys in Chrome and import the code from ShortKeys COde file in this project
 https://chromewebstore.google.com/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck?pli=1

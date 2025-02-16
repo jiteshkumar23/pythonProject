@@ -13,6 +13,7 @@ import pyautogui
 from autoit import autoit
 from pynput import mouse
 import time
+import pyautogui
 
 from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
@@ -25,7 +26,7 @@ from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
-    checkOutDate, UPI_ADDRESS, randomness_profile, typingGap
+    checkOutDate, UPI_ADDRESS, randomness_profile, typingGap, mouseMovementSpeed
 
 from room_shortcuts import select_room_priority
 
@@ -40,7 +41,7 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
     addANewCard_image_path, rooms_image_path, tiger_image_path, proceedAfterTiger_image_path, UPIQR_AfterTiger_image_path, \
     showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path, gender_dropdown_image_path, \
-    id_details_image_path, age_image_path, fullname_image_path, mobile_image_path,\
+    id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
     id_proof_not_selected_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
@@ -478,6 +479,7 @@ def fillForm():
 
     enterMobile()
 
+
 def playback_mouse_movements(fileName):
     mouse_movements = []
     with open(fileName, 'r') as file:
@@ -517,9 +519,9 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     print(currentPerson)
     if not (currentPerson >= 5):
         try:
-             location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
-             # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
-            # pyautogui.click(fullname_location)
+            location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
+            # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
+        # pyautogui.click(fullname_location)
         except Exception as e:
             print(f"An error occurred: {e}")
     if not currentPerson == 1:
@@ -543,7 +545,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     #         wait_for_alt_q()
     #
     #         # Mouse movement
-    #         move_mouse_to_center(gender_dropdown_location)
+    #         move_mouse_to_center(gender_dropdown_location, mouseMovementSpeed)
     #
     #         # Click
     #         pyautogui.click(gender_dropdown_location)
@@ -582,7 +584,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     # else:
     #     time.sleep(0.25)
 
-    id_proof_filling(region,idType,name)
+    id_proof_filling(region, idType, name)
 
     # if nationalityDropDownDisplayed():
     #     if country.lower() != "india":
@@ -593,16 +595,17 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     try:
         wait_for_alt_q()
         try:
-            id_proof_not_selected_location = pyautogui.locateOnScreen(id_proof_not_selected_image_path, region=region, confidence=0.7)
+            id_proof_not_selected_location = pyautogui.locateOnScreen(id_proof_not_selected_image_path, region=region,
+                                                                      confidence=0.7)
             print(f"Id Prood was NOT filled, I am filling it now")
-            id_proof_filling(region,idType,name)
+            id_proof_filling(region, idType, name)
             time.sleep(0.25)
         except Exception as e:
             print(f"Good to Proceed. Id Prood was filled")
         id_details_location = pyautogui.locateOnScreen(id_details_image_path, region=region, confidence=0.7)
 
         # Mouse movement
-        move_mouse_to_center(id_details_location)
+        move_mouse_to_center(id_details_location, mouseMovementSpeed)
 
         pyautogui.click(id_details_location)
         #typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
@@ -615,7 +618,8 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     try:
         wait_for_alt_q()
         try:
-            id_number_not_filled_location = pyautogui.locateOnScreen(id_details_image_path, region=region, confidence=0.7)
+            id_number_not_filled_location = pyautogui.locateOnScreen(id_details_image_path, region=region,
+                                                                     confidence=0.7)
             print(f"Id number was NOT filled, I am filling it now")
             location = find_image_on_screen_using_opencv_in_region(id_details_image_path, 10, region=region)
             pyautogui.click(location)
@@ -627,7 +631,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
         age_location = pyautogui.locateOnScreen(age_image_path, region=region, confidence=0.9)
         # Mouse movement
         print("Mouse movement for age for person no " + str(currentPerson))
-        move_mouse_to_center(age_location)
+        move_mouse_to_center(age_location, mouseMovementSpeed)
         pyautogui.click(age_location)
         human_typing_other(age)
     except Exception as e:
@@ -1282,13 +1286,14 @@ def type_text(text):
         time.sleep(random.uniform(0.05, 0.20))
 
 
-def move_mouse_to_center(gender_dropdown_location, duration=0.2):
-    center_x = gender_dropdown_location.left + gender_dropdown_location.width / 2
-    center_y = gender_dropdown_location.top + gender_dropdown_location.height / 2
-    pyautogui.moveTo(center_x, center_y, duration=duration)
+def move_mouse_to_center(location, mouseMovementSpeed1):
+    center_x = location.left + location.width / 2
+    center_y = location.top + location.height / 2
+    pyautogui.moveTo(center_x, center_y, duration=mouseMovementSpeed1, tween=pyautogui.easeInCubic)
     print(f"Mouse moved to ({center_x}, {center_y}).")
 
-def id_proof_filling(region, idType,name):
+
+def id_proof_filling(region, idType, name):
     try:
         wait_for_alt_q()
         try:
@@ -1304,9 +1309,8 @@ def id_proof_filling(region, idType,name):
         identity_proof_type_location = pyautogui.locateOnScreen(identity_proof_type_image_path, region=region,
                                                                 confidence=0.7)
 
-
         # Mouse movement
-        move_mouse_to_center(identity_proof_type_location)
+        move_mouse_to_center(identity_proof_type_location, mouseMovementSpeed)
 
         pyautogui.click(identity_proof_type_location)
         time.sleep(0.2)

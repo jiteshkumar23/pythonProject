@@ -2,18 +2,13 @@ import datetime
 import os
 import random
 import string
-import time
 import tkinter as tk
 from datetime import datetime
 from tkinter import simpledialog
-import cv2
 import keyboard
 import numpy as np
-import pyautogui
 from autoit import autoit
 from pynput import mouse
-import time
-import pyautogui
 
 from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
@@ -28,8 +23,6 @@ from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
     checkOutDate, UPI_ADDRESS, randomness_profile, typingGap, mouseMovementSpeed
 
-from room_shortcuts import select_room_priority
-
 fifth = False
 currentPerson = 0
 
@@ -39,12 +32,14 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     SelectPaymentOption_image_path, UPI_image_path, PayNow_image_path, email_image_path, \
     continue_image_path, contactdetails_image_path, showQR_image_path, \
     recommended_image_path, creditcard_image_path, payViaCard_image_path, \
-    addANewCard_image_path, rooms_image_path, tiger_image_path, proceedAfterTiger_image_path, UPIQR_AfterTiger_image_path, \
+    addANewCard_image_path, rooms_image_path, tiger_image_path, proceedAfterTiger_image_path, \
+    UPIQR_AfterTiger_image_path, \
     showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path, gender_dropdown_image_path, \
     id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
-    id_proof_not_selected_image_path
+    id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path
 
-global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
+global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6, location23
+global region1, region2, region3, region4, region5, region6
 
 
 def printDateTime():
@@ -375,6 +370,7 @@ def fillForm():
     global fifth
     global currentPerson
     global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
+    global region1, region2, region3, region4, region5, region6
     random_numbers = generate_3_random_numbers()
     random_numbers2 = generate_3_random_numbers_2()
     random_numbers3 = generate_1_random_number()
@@ -517,17 +513,17 @@ def playback_mouse_movements(fileName):
 def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age,
                      currentPerson, random_numbers, random_numbers2, random_numbers3, region):
     print(currentPerson)
-    if not (currentPerson >= 5):
+    global location23
+    if currentPerson <= 4:  # meaning for 1,2,3,4 go inside
         try:
             location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
-            # fullname_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
-        # pyautogui.click(fullname_location)
         except Exception as e:
             print(f"An error occurred: {e}")
-    if not currentPerson == 1:
+    if currentPerson not in [1]:  # meaning for 2,3,4,5,6 go inside
         wait_for_alt_q()
-        pyautogui.click(location23)
     else:
+        print(f"did not wait for alt+q as person number as {currentPerson}")
+    if currentPerson <= 4:
         pyautogui.click(location23)
     time.sleep(0.1)
     # typing_text_with_random_delays(name, random_numbers, random_numbers3)
@@ -608,8 +604,8 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
         move_mouse_to_center(id_details_location, mouseMovementSpeed)
 
         pyautogui.click(id_details_location)
-        #typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
-        #type_text(idNumber.lower())
+        # typing_text_with_random_delays_IDNumber(idNumber, currentPerson, random_numbers2)
+        # type_text(idNumber.lower())
         human_typing(idNumber.lower())
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -902,12 +898,13 @@ def payment():
 
         if image_name == "Image 1":
             print("Image 1 was displayed")
-            pyautogui.click(location4)
-            autoit.send("{TAB}")
-            time.sleep(0.1)
-            autoit.send("{TAB}")
-            time.sleep(0.1)
-            autoit.send("{TAB}")
+            locationOfEmail = find_image_on_screen_using_opencv(emailAddress_image_path, 60)
+            pyautogui.click(locationOfEmail)
+            # autoit.send("{TAB}")
+            # time.sleep(0.1)
+            # autoit.send("{TAB}")
+            # time.sleep(0.1)
+            # autoit.send("{TAB}")
             time.sleep(0.1)
             # autoit.send(emailAddress)
             human_typing(emailAddress)
@@ -939,12 +936,13 @@ def payment():
 
         elif image_name == "Image 2":
             print("Image 2 was displayed")
-            pyautogui.click(location4)
-            autoit.send("{TAB}")
-            time.sleep(0.1)
-            autoit.send("{TAB}")
-            time.sleep(0.1)
-            autoit.send("{TAB}")
+            locationOfEmail = find_image_on_screen_using_opencv(emailAddress_2_image_path, 60)
+            pyautogui.click(locationOfEmail)
+            # autoit.send("{TAB}")
+            # time.sleep(0.1)
+            # autoit.send("{TAB}")
+            # time.sleep(0.1)
+            # autoit.send("{TAB}")
             time.sleep(0.1)
             # autoit.send(emailAddress)
             human_typing(emailAddress)
@@ -1120,6 +1118,12 @@ def setImagePath():
 
     global id_proof_not_selected_image_path
     id_proof_not_selected_image_path = os.path.join(image_directory, 'id_proof_not_selected.png')
+
+    global emailAddress_image_path
+    emailAddress_image_path = os.path.join(image_directory, 'emailAddress.png')
+
+    global emailAddress_2_image_path
+    emailAddress_2_image_path = os.path.join(image_directory, 'emailAddress_2.png')
 
 
 def check_current_month(checkInDatePassed):

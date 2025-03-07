@@ -1,8 +1,8 @@
 # laptop or desktop or rohit or pradeeplaptop
 machine = "desktop"
 
-checkInDate = "2025-03-15"
-checkOutDate = "2025-03-18"
+checkInDate = "2025-04-15"
+checkOutDate = "2025-04-16"
 
 # SPEED Selection
 speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
@@ -10,6 +10,8 @@ delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is 
 
 typingGap = 0.15 # minimum value of 0.05 , don't decrease below 0.05
 mouseMovementSpeed = 0.4  #
+
+byPassOTP = "no" # "yes" or "no"
 
 # Data Entry
 number_of_rooms = "2"

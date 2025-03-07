@@ -1,0 +1,14 @@
+[
+  {
+    "key": "alt+w",
+    "action": "javascript",
+    "id": "29827327-3c95-4a7c-9ef7-b1681f55df22",
+    "sites": "",
+    "sitesArray": [
+      ""
+    ],
+    "code": "document.querySelector(\"#otp-input\").classList.remove(\"d-none\");",
+    "activeInInputs": true,
+    "blacklist": false
+  }
+]

@@ -21,7 +21,7 @@ from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
     room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
-    checkOutDate, UPI_ADDRESS, randomness_profile, typingGap, mouseMovementSpeed
+    checkOutDate, UPI_ADDRESS, randomness_profile, typingGap, mouseMovementSpeed, byPassOTP
 
 fifth = False
 currentPerson = 0
@@ -867,9 +867,18 @@ def enterMobile():
         pyautogui.click(mobile_location)
         human_typing(mobileNumber)
         time.sleep(0.1)
-        multiplePressUsingPyAutoGUI('tab', 1)
-        time.sleep(0.2)
-        multiplePressUsingPyAutoGUI('enter', 1)
+        if byPassOTP.lower() == "yes":
+            # Do something
+            print("You chose to bypass OTP.")
+            wait_for_alt_q()
+            pyautogui.hotkey('alt', 'w')
+            time.sleep(0.1)
+        else:
+            # Do something else
+            print("You chose not to bypass OTP.")
+            multiplePressUsingPyAutoGUI('tab', 1)
+            time.sleep(0.2)
+            multiplePressUsingPyAutoGUI('enter', 1)
     except Exception as e:
         print(f"An error occurred: {e}")
         wait_for_alt_q()

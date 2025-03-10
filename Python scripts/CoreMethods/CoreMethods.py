@@ -1365,7 +1365,7 @@ def otpBoxHandling():
     autoit.send("{F2}")
     time.sleep(0.25)
     multiplePressUsingPyAutoGUI('right', 44)
-    multiplePressUsingPyAutoGUI('backspace', 7)
+    multiplePressUsingPyAutoGUI('backspace', 6)
     time.sleep(0.1)
     autoit.send("{F2}")
     time.sleep(0.2)

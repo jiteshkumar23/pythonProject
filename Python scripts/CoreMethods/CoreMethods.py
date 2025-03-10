@@ -866,17 +866,17 @@ def enterMobile():
         mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
         pyautogui.click(mobile_location)
         human_typing(mobileNumber)
+        print("Mobile number has been entered")
         time.sleep(0.1)
+        multiplePressUsingPyAutoGUI('tab', 1)
         if byPassOTP.lower() == "yes":
-            # Do something
-            print("You chose to bypass OTP.")
             wait_for_alt_q()
-            pyautogui.hotkey('alt', 'w')
+            print("You chose to bypass OTP.")
+            otpBoxHandling()
             time.sleep(0.1)
         else:
             # Do something else
             print("You chose not to bypass OTP.")
-            multiplePressUsingPyAutoGUI('tab', 1)
             time.sleep(0.2)
             multiplePressUsingPyAutoGUI('enter', 1)
     except Exception as e:
@@ -1345,3 +1345,28 @@ def id_proof_filling(region, idType, name):
     except Exception as e:
         print(f"An error occurred: {e}")
         wait_for_alt_q()
+
+
+def otpBoxHandling():
+    # Open DevTools using F12
+    print("I started")
+    autoit.send("{F12}")
+    time.sleep(0.5)
+    autoit.send("^+p")
+    time.sleep(0.5)
+    autoit.send("elements")
+    time.sleep(0.25)
+    autoit.send("{ENTER}")
+    time.sleep(0.25)
+    autoit.send("^f")
+    time.sleep(0.25)
+    autoit.send("otp-input")
+    time.sleep(0.25)
+    autoit.send("{F2}")
+    time.sleep(0.25)
+    multiplePressUsingPyAutoGUI('right', 44)
+    multiplePressUsingPyAutoGUI('backspace', 7)
+    time.sleep(0.1)
+    autoit.send("{F2}")
+    time.sleep(0.2)
+    autoit.send("{F12}")

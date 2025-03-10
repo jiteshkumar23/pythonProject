@@ -7,7 +7,7 @@ import keyboard
 from autoit import autoit
 
 from CoreMethods.CoreMethods import (
-    fillForm, debounce_key, firstPageFill, enterMobile, payment, setImagePath, roomSelection
+    fillForm, debounce_key, firstPageFill, enterMobile, payment, setImagePath, roomSelection,otpBoxHandling
 )
 from config import checkInDate, checkOutDate
 
@@ -39,6 +39,11 @@ def handle_key_press():
         payment()
         debounce_key("alt+4")  # Wait until the key is released
         return True
+    elif keyboard.is_pressed("alt+w"):
+        print("Keys Pressed - alt+w - OTP Box Handling")
+        otpBoxHandling()
+        debounce_key("alt+w")  # Wait until the key is released
+        return True
     return False  # Indicate that no key was pressed
 
 
@@ -47,6 +52,7 @@ def print_instructions():
     print("Press - alt+2 - For Room Selection")
     print("Press - alt+3 - For filling form on second page")
     print("Press - alt+4 - For payment")
+    print("Press - alt+w - For only OTP Box Handling")
     print("Press - alt+q - For exiting the script")
 
 

@@ -665,7 +665,11 @@ def firstPageFill():
     pyautogui.click(find_image_on_screen_using_opencv(ReservationsFor_image_path, 10))
 
     # two tabs to open the checkin date
-    autoit.send("{TAB 2}")
+    autoit.send("{TAB 3}")
+
+    time.sleep(0.2)
+
+    autoit.send("+{TAB}")
 
     time.sleep(0.2)
 

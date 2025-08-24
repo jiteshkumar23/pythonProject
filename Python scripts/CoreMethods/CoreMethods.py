@@ -36,7 +36,8 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     UPIQR_AfterTiger_image_path, \
     showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path, gender_dropdown_image_path, \
     id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
-    id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path
+    id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path,\
+    indian_flag_only_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6, location23
 global region1, region2, region3, region4, region5, region6
@@ -393,12 +394,12 @@ def fillForm():
         Y5 = 981
         Y6 = 569
     elif machine == "desktop":
-        region1 = (114, 224, 1124, 73)
-        region2 = (114, 310, 1124, 76)
-        region3 = (114, 484, 1124, 117)
-        region4 = (114, 617, 1124, 117)
-        region5 = (114, 354, 1124, 117)
-        region6 = (114, 485, 1124, 117)
+        region1 = (110, 168, 1131, 91)
+        region2 = (110, 267, 1131, 91)
+        region3 = (110, 371, 1131, 91)
+        region4 = (110, 617, 1131, 91)
+        region5 = (110, 354, 1131, 91)
+        region6 = (110, 485, 1131, 91)
         indiaFlagX = 602
         identityDropDownX = 767
         Y1 = 253
@@ -563,25 +564,32 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
     if nationalityDropDownDisplayed():
         if country.lower() != "india":
-            pyautogui.click(indiaX, indiaY)
+            indian_flag_only_location = pyautogui.locateOnScreen(indian_flag_only_image_path, region=region,confidence=0.95)
+            print('location of indian flag' + str(indian_flag_only_location))
+            pyautogui.click(indian_flag_only_location)
+            time.sleep(1)
             pyautogui.press('f3')
             time.sleep(0.5)
             human_typing(country)
             # autoit.send(country)
             time.sleep(0.5)
+            autoit.send("{ENTER}")
+            time.sleep(0.1)
             autoit.send("{ESC}")
             # Wait for a moment before pressing Enter
             time.sleep(0.5)
             # Press Enter key
             autoit.send("{ENTER}")
             time.sleep(0.75)
+            pyautogui.scroll(10000)
         else:
             time.sleep(0.25)
             autoit.send("{TAB}")
     else:
         time.sleep(0.25)
 
-    id_proof_filling(region, idType, name)
+    if country.lower() == "india":
+        id_proof_filling(region, idType, name)
 
     # if nationalityDropDownDisplayed():
     #     if country.lower() != "india":
@@ -892,6 +900,7 @@ def enterMobile():
 def payment():
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
     pyautogui.click(location)
+    global paymentMethod
     if paymentMethod == "upi" or paymentMethod == "upi_id":
         location2 = find_image_on_screen_using_opencv(UPI_image_path, 60)
         pyautogui.click(location2)
@@ -903,81 +912,27 @@ def payment():
         time.sleep(0.1)
         autoit.send("{ENTER}")
         print("clicked on Pay Now button")
-        find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path, 600)
-        time.sleep(0.5)
-        result2 = find_any_of_two_images_on_screen_using_opencv(contactdetails_image_path, tiger_image_path, 60)
-        print(str(result2))
-        image_name, x_image, y_image, w_image, h_image = result2
-        location4 = int(x_image), int(y_image), w_image, h_image
-
-        if image_name == "Image 1":
-            print("Image 1 was displayed")
-            locationOfEmail = find_image_on_screen_using_opencv(emailAddress_image_path, 60)
-            pyautogui.click(locationOfEmail)
-            # autoit.send("{TAB}")
-            # time.sleep(0.1)
-            # autoit.send("{TAB}")
-            # time.sleep(0.1)
-            # autoit.send("{TAB}")
-            time.sleep(0.1)
-            # autoit.send(emailAddress)
-            human_typing(emailAddress)
-            time.sleep(0.2)
-            autoit.send("{TAB}")
-            autoit.send("{ENTER}")
-            if paymentMethod == "upi":
-                location6 = find_image_on_screen_using_opencv(showQR_image_path, 10)
-                print("show QR was displayed")
-                pyautogui.click(location6)
-                location6b = find_image_on_screen_using_opencv(recommended_image_path, 10)
-                pyautogui.click(location6b)
-            elif paymentMethod == "upi_id":
-                location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 10)
-                print("UPI_ID was displayed")
-                pyautogui.click(location6)
-                time.sleep(0.1)
-                location7 = find_image_on_screen_using_opencv(UPI_Number_FirstImage_image_path, 10)
-                pyautogui.click(location7)
-                # autoit.send("{TAB}")
-                time.sleep(0.1)
-                autoit.send("{TAB}")
-                time.sleep(0.1)
-                pyautogui.typewrite(UPI_ADDRESS)
-                time.sleep(0.25)
-                autoit.send("{TAB}")
-                time.sleep(0.1)
-                autoit.send("{ENTER}")
-
-        elif image_name == "Image 2":
-            print("Image 2 was displayed")
-            locationOfEmail = find_image_on_screen_using_opencv(emailAddress_2_image_path, 60)
-            pyautogui.click(locationOfEmail)
-            # autoit.send("{TAB}")
-            # time.sleep(0.1)
-            # autoit.send("{TAB}")
-            # time.sleep(0.1)
-            # autoit.send("{TAB}")
-            time.sleep(0.1)
-            # autoit.send(emailAddress)
-            human_typing(emailAddress)
-            location5 = find_image_on_screen_using_opencv(proceedAfterTiger_image_path, 10)
-            pyautogui.click(location5)
-            location6 = find_image_on_screen_using_opencv(UPIQR_AfterTiger_image_path, 10)
+        if paymentMethod == "upi":
+            print('Inside UPI Block')
+            location6 = find_image_on_screen_using_opencv(showQR_image_path, 60)
+            print("show QR was displayed")
+            print(str(location6))
             pyautogui.click(location6)
-            if paymentMethod == "upi":
-                location6b = find_image_on_screen_using_opencv(showQR_AfterTiger_image_path, 10)
-                pyautogui.click(location6b)
-            elif paymentMethod == "upi_id":
-                location6b = find_image_on_screen_using_opencv(UPI_ID_Image2_image_path, 10)
-                pyautogui.click(location6b)
-                time.sleep(0.25)
-                # pyautogui.typewrite(UPI_ADDRESS)
-                # autoit.send(UPI_ADDRESS)
-                human_typing(UPI_ADDRESS)
-                time.sleep(0.1)
-                autoit.send("{TAB}")
-                time.sleep(0.1)
-                autoit.send("{ENTER}")
+        elif paymentMethod == "upi_id":
+            location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 60)
+            print("UPI_ID was displayed")
+            pyautogui.click(location6)
+            time.sleep(0.1)
+            location7 = find_image_on_screen_using_opencv(UPI_Number_FirstImage_image_path, 10)
+            pyautogui.click(location7)
+            # autoit.send("{TAB}")
+            time.sleep(0.5)
+            pyautogui.typewrite(UPI_ADDRESS)
+            time.sleep(0.25)
+            autoit.send("{TAB}")
+            autoit.send("{TAB}")
+            time.sleep(1)
+            pyautogui.press('enter')
 
     elif paymentMethod == "creditcard":
         location7 = find_image_on_screen_using_opencv(creditcard_image_path, 10)
@@ -1139,6 +1094,10 @@ def setImagePath():
     global emailAddress_2_image_path
     emailAddress_2_image_path = os.path.join(image_directory, 'emailAddress_2.png')
 
+    global indian_flag_only_image_path
+    indian_flag_only_image_path = os.path.join(image_directory, 'indian_flag_only.png')
+    
+
 
 def check_current_month(checkInDatePassed):
     input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month
@@ -1149,7 +1108,7 @@ def check_current_month(checkInDatePassed):
 def days_difference_with_checkInDate(checkOutDate1):
     # Define the dates
     current_date = datetime.now()
-    compare_date = datetime(2024, 11, 15)
+    compare_date = datetime(2025, 11, 15)
 
     # Get the higher date
     higher_date = max(current_date, compare_date)
@@ -1159,7 +1118,15 @@ def days_difference_with_checkInDate(checkOutDate1):
 
     # Calculate the difference in days
     difference_in_days = abs((checkOutDate1 - higher_date).days)
-    return difference_in_days + 1
+    if is_leap_year():
+        return difference_in_days + 1
+    else:
+        return difference_in_days
+
+
+def is_leap_year():
+    year = datetime.now().year
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
 def days_difference_with_checkInDate_checkOutDate(checkInDate1, checkOutDate1):

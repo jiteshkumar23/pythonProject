@@ -393,15 +393,15 @@ def fillForm():
         Y5 = 981
         Y6 = 569
     elif machine == "desktop":
-        region1 = (114, 224, 1124, 117)
-        region2 = (114, 355, 1124, 117)
+        region1 = (114, 224, 1124, 73)
+        region2 = (114, 310, 1124, 76)
         region3 = (114, 484, 1124, 117)
         region4 = (114, 617, 1124, 117)
         region5 = (114, 354, 1124, 117)
         region6 = (114, 485, 1124, 117)
         indiaFlagX = 602
         identityDropDownX = 767
-        Y1 = 298
+        Y1 = 253
         Y2 = 430
         Y3 = 559
         Y4 = 687
@@ -524,8 +524,10 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     else:
         print(f"did not wait for alt+q as person number as {currentPerson}")
     if currentPerson <= 4:
+        print('I am more than 1')
         pyautogui.click(location23)
     time.sleep(0.1)
+
     # typing_text_with_random_delays(name, random_numbers, random_numbers3)
     # type_text(name.lower())
 
@@ -559,26 +561,25 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     #         print(f"An error occurred: {e}")
 
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
-    # if nationalityDropDownDisplayed():
-    #     if country.lower() != "india":
-    #         pyautogui.click(indiaX, indiaY)
-    #         pyautogui.hotkey('ctrl', 'f')
-    #         time.sleep(0.5)
-    #         human_typing(country)
-    #         # autoit.send(country)
-    #         time.sleep(0.5)
-    #         autoit.send("{ESC}")
-    #         # Wait for a moment before pressing Enter
-    #         time.sleep(0.2)
-    #         # Press Enter key
-    #         autoit.send("{ENTER}")
-    #         time.sleep(0.75)
-    #         pyautogui.click(identityProofX, identityProofY)
-    #     else:
-    #         time.sleep(0.25)
-    #         autoit.send("{TAB}")
-    # else:
-    #     time.sleep(0.25)
+    if nationalityDropDownDisplayed():
+        if country.lower() != "india":
+            pyautogui.click(indiaX, indiaY)
+            pyautogui.press('f3')
+            time.sleep(0.5)
+            human_typing(country)
+            # autoit.send(country)
+            time.sleep(0.5)
+            autoit.send("{ESC}")
+            # Wait for a moment before pressing Enter
+            time.sleep(0.5)
+            # Press Enter key
+            autoit.send("{ENTER}")
+            time.sleep(0.75)
+        else:
+            time.sleep(0.25)
+            autoit.send("{TAB}")
+    else:
+        time.sleep(0.25)
 
     id_proof_filling(region, idType, name)
 
@@ -1313,19 +1314,19 @@ def move_mouse_to_center(location, mouseMovementSpeed1):
 def id_proof_filling(region, idType, name):
     try:
         wait_for_alt_q()
-        try:
-            name_not_filled_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
-            print(f"Name was NOT filled, I am filling it now")
-            location = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
-            pyautogui.click(location)
-            human_typing(name.lower())
-            time.sleep(0.25)
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
-            print(f"Good to Proceed. Name was filled")
+        # try:
+        #     name_not_filled_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
+        #     print(f"Name was NOT filled, I am filling it now")
+        #     location = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
+        #     pyautogui.click(location)
+        #     human_typing(name.lower())
+        #     time.sleep(0.25)
+        # except Exception as e:
+        #     print(f"An error occurred: {str(e)}")
+        #     print(f"Good to Proceed. Name was filled")
         identity_proof_type_location = pyautogui.locateOnScreen(identity_proof_type_image_path, region=region,
                                                                 confidence=0.7)
-
+        print("identity_proof_type_location"+str(identity_proof_type_location))
         # Mouse movement
         move_mouse_to_center(identity_proof_type_location, mouseMovementSpeed)
 
@@ -1344,7 +1345,7 @@ def id_proof_filling(region, idType, name):
         elif idType.lower() == 'student id card':
             autoit.send("s")
 
-        time.sleep(0.1)
+        time.sleep(0.25)
         autoit.send("{ENTER}")
     except Exception as e:
         print(f"An error occurred: {e}")

@@ -394,10 +394,10 @@ def fillForm():
         Y5 = 981
         Y6 = 569
     elif machine == "desktop":
-        region1 = (110, 168, 1131, 91)
-        region2 = (110, 267, 1131, 91)
-        region3 = (110, 371, 1131, 91)
-        region4 = (110, 617, 1131, 91)
+        region1 = (110, 197, 1131, 91)
+        region2 = (110, 298, 1131, 91)
+        region3 = (110, 403, 1131, 91)
+        region4 = (110, 500, 1131, 91)
         region5 = (110, 354, 1131, 91)
         region6 = (110, 485, 1131, 91)
         indiaFlagX = 602
@@ -409,6 +409,12 @@ def fillForm():
         Y5 = 426
         Y6 = 554
     elif machine == "rohit":
+        region1 = (110, 197, 1131, 91)
+        region2 = (110, 298, 1131, 91)
+        region3 = (110, 403, 1131, 91)
+        region4 = (110, 500, 1131, 91)
+        region5 = (110, 354, 1131, 91)
+        region6 = (110, 485, 1131, 91)
         indiaFlagX = 602
         identityDropDownX = 767
         Y1 = 260
@@ -418,6 +424,12 @@ def fillForm():
         Y5 = 412
         Y6 = 536
     elif machine == "pradeeplaptop":
+        region1 = (110, 197, 1131, 91)
+        region2 = (110, 298, 1131, 91)
+        region3 = (110, 403, 1131, 91)
+        region4 = (110, 500, 1131, 91)
+        region5 = (110, 354, 1131, 91)
+        region6 = (110, 485, 1131, 91)
         indiaFlagX = 861
         identityDropDownX = 1054
         Y1 = 332

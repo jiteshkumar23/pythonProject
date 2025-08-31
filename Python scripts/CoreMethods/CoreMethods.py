@@ -397,9 +397,9 @@ def fillForm():
         region1 = (110, 197, 1131, 91)
         region2 = (110, 298, 1131, 91)
         region3 = (110, 403, 1131, 91)
-        region4 = (110, 500, 1131, 91)
-        region5 = (110, 354, 1131, 91)
-        region6 = (110, 485, 1131, 91)
+        region4 = (110, 508, 1131, 91)
+        region5 = (110, 609, 1131, 91)
+        region6 = (110, 370, 1131, 91)
         indiaFlagX = 602
         identityDropDownX = 767
         Y1 = 253
@@ -529,7 +529,7 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     global location23
     if currentPerson <= 4:  # meaning for 1,2,3,4 go inside
         try:
-            location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 10, region=region)
+            location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 20, region=region)
         except Exception as e:
             print(f"An error occurred: {e}")
     if currentPerson not in [1]:  # meaning for 2,3,4,5,6 go inside
@@ -593,7 +593,8 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
             # Press Enter key
             autoit.send("{ENTER}")
             time.sleep(0.75)
-            pyautogui.scroll(10000)
+            if currentPerson != 6:
+                pyautogui.scroll(10000)
         else:
             time.sleep(0.25)
             autoit.send("{TAB}")

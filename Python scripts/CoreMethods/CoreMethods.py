@@ -37,7 +37,7 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path, gender_dropdown_image_path, \
     id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
     id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path,\
-    indian_flag_only_image_path
+    indian_flag_only_image_path,name_not_filled_image_path,Proceed_to_pay_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6, location23
 global region1, region2, region3, region4, region5, region6
@@ -379,20 +379,12 @@ def fillForm():
     print(random_numbers2)
     print(random_numbers3)
     if machine == "laptop":
-        region1 = (251, 279, 1403, 142)
-        region2 = (251, 440, 1403, 142)
-        region3 = (251, 605, 1403, 142)
-        region4 = (251, 768, 1403, 142)
-        region5 = (251, 897, 1403, 142)
-        region6 = (251, 498, 1403, 142)
-        indiaFlagX = 861
-        identityDropDownX = 1054
-        Y1 = 332
-        Y2 = 494
-        Y3 = 656
-        Y4 = 815
-        Y5 = 981
-        Y6 = 569
+        region1 = (244, 254, 1410, 108)
+        region2 = (244, 375, 1410, 109)
+        region3 = (244, 505, 1410, 109)
+        region4 = (244, 636, 1410, 109)
+        region5 = (244, 767, 1410, 109)
+        region6 = (244, 892, 1410, 109)
     elif machine == "desktop":
         region1 = (110, 197, 1131, 91)
         region2 = (110, 298, 1131, 91)
@@ -400,14 +392,6 @@ def fillForm():
         region4 = (110, 508, 1131, 91)
         region5 = (110, 609, 1131, 91)
         region6 = (110, 370, 1131, 91)
-        indiaFlagX = 602
-        identityDropDownX = 767
-        Y1 = 253
-        Y2 = 430
-        Y3 = 559
-        Y4 = 687
-        Y5 = 426
-        Y6 = 554
     elif machine == "rohit":
         region1 = (110, 197, 1131, 91)
         region2 = (110, 298, 1131, 91)
@@ -415,14 +399,6 @@ def fillForm():
         region4 = (110, 500, 1131, 91)
         region5 = (110, 354, 1131, 91)
         region6 = (110, 485, 1131, 91)
-        indiaFlagX = 602
-        identityDropDownX = 767
-        Y1 = 260
-        Y2 = 394
-        Y3 = 524
-        Y4 = 649
-        Y5 = 412
-        Y6 = 536
     elif machine == "pradeeplaptop":
         region1 = (110, 197, 1131, 91)
         region2 = (110, 298, 1131, 91)
@@ -430,59 +406,45 @@ def fillForm():
         region4 = (110, 500, 1131, 91)
         region5 = (110, 354, 1131, 91)
         region6 = (110, 485, 1131, 91)
-        indiaFlagX = 861
-        identityDropDownX = 1054
-        Y1 = 332
-        Y2 = 530
-        Y3 = 701
-        Y4 = 860
-        Y5 = 991
-        Y6 = 585
     time.sleep(1.25)
     autoit.send("{HOME}")
     autoit.send("{HOME}")
 
     if int(number_of_adults) >= 1:
         currentPerson = 1
-        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson, indiaFlagX, Y1, identityDropDownX,
-                         Y1,
+        fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson,
                          idTypeOfFirstPerson,
                          idNumberOfFirstPerson, ageOfFirstPerson, currentPerson, random_numbers, random_numbers2,
                          random_numbers3, region1)
 
     if int(number_of_adults) >= 2:
         currentPerson = 2
-        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson, indiaFlagX, Y2,
-                         identityDropDownX, Y2,
+        fillPersonDetail(nameOfSecondPerson, genderOfSecondPerson, countrySecondPerson,
                          idTypeOfSecondPerson,
                          idNumberOfSecondPerson, ageOfSecondPerson, currentPerson, random_numbers, random_numbers2,
                          random_numbers3, region2)
     if int(number_of_adults) >= 3:
         currentPerson = 3
-        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson, indiaFlagX, Y3, identityDropDownX,
-                         Y3,
+        fillPersonDetail(nameOfThirdPerson, genderOfThirdPerson, countryThirdPerson,
                          idTypeOfThirdPerson, idNumberOfThirdPerson, ageOfThirdPerson, currentPerson, random_numbers,
                          random_numbers2, random_numbers3, region3)
     if int(number_of_adults) >= 4:
         currentPerson = 4
-        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson, indiaFlagX, Y4,
-                         identityDropDownX, Y4,
+        fillPersonDetail(nameOfFourthPerson, genderOfFourthPerson, countryFourthPerson,
                          idTypeOfFourthPerson, idNumberOfFourthPerson, ageOfFourthPerson, currentPerson, random_numbers,
                          random_numbers2, random_numbers3, region4)
 
     if int(number_of_adults) >= 5:
         currentPerson = 5
         fifth = True
-        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson, indiaFlagX, Y5, identityDropDownX,
-                         Y5,
+        fillPersonDetail(nameOfFifthPerson, genderOfFifthPerson, countryFifthPerson,
                          idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, currentPerson, random_numbers,
                          random_numbers2, random_numbers3, region5)
 
     if int(number_of_adults) >= 6:
         currentPerson = 6
         # fifth = False
-        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson, indiaFlagX, Y6, identityDropDownX,
-                         Y6,
+        fillPersonDetail(nameOfSixthPerson, genderOfSixthPerson, countrySixthPerson,
                          idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, currentPerson, random_numbers,
                          random_numbers2, random_numbers3, region6)
 
@@ -523,7 +485,7 @@ def playback_mouse_movements(fileName):
         start_time = timestamp
 
 
-def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, identityProofY, idType, idNumber, age,
+def fillPersonDetail(name, gender, country, idType, idNumber, age,
                      currentPerson, random_numbers, random_numbers2, random_numbers3, region):
     print(currentPerson)
     global location23
@@ -573,8 +535,27 @@ def fillPersonDetail(name, gender, country, indiaX, indiaY, identityProofX, iden
     #     except Exception as e:
     #         print(f"An error occurred: {e}")
 
+    # checking if name is not filled and entering it in that case
+    try:
+        wait_for_alt_q()
+
+        name_not_filled_location = pyautogui.locateOnScreen(name_not_filled_image_path, region=region,
+                                                                  confidence=0.7)
+        print(f"Name was NOT filled, I am filling it now")
+        location = find_image_on_screen_using_opencv_in_region(name_not_filled_image_path, 10, region=region)
+        pyautogui.click(location)
+        human_typing(name.lower())
+        time.sleep(0.25)
+    except Exception as e:
+        print(f"Good to Proceed. Name was filled")
+    time.sleep(0.25)
+    autoit.send("{TAB}")
+    time.sleep(0.25)
+
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
+
     if nationalityDropDownDisplayed():
+        wait_for_alt_q()
         if country.lower() != "india":
             indian_flag_only_location = pyautogui.locateOnScreen(indian_flag_only_image_path, region=region,confidence=0.95)
             print('location of indian flag' + str(indian_flag_only_location))
@@ -821,9 +802,9 @@ def firstPageFill():
 
     autoit.send("{ENTER}")
 
-    locationOfRooms = find_image_on_screen_using_opencv(rooms_image_path, 10)
+    # locationOfRooms = find_image_on_screen_using_opencv(rooms_image_path, 10)
 
-    print("Rooms was displayed here -->" + str(locationOfRooms))
+    # print("Rooms was displayed here -->" + str(locationOfRooms))
     print("Rooms selection process can be started now")
 
 
@@ -936,16 +917,8 @@ def payment():
             print("UPI_ID was displayed")
             pyautogui.click(location6)
             time.sleep(0.1)
-            location7 = find_image_on_screen_using_opencv(UPI_Number_FirstImage_image_path, 10)
+            location7 = find_image_on_screen_using_opencv(Proceed_to_pay_image_path, 10)
             pyautogui.click(location7)
-            # autoit.send("{TAB}")
-            time.sleep(0.5)
-            pyautogui.typewrite(UPI_ADDRESS)
-            time.sleep(0.25)
-            autoit.send("{TAB}")
-            autoit.send("{TAB}")
-            time.sleep(1)
-            pyautogui.press('enter')
 
     elif paymentMethod == "creditcard":
         location7 = find_image_on_screen_using_opencv(creditcard_image_path, 10)
@@ -1109,7 +1082,12 @@ def setImagePath():
 
     global indian_flag_only_image_path
     indian_flag_only_image_path = os.path.join(image_directory, 'indian_flag_only.png')
-    
+
+    global name_not_filled_image_path
+    name_not_filled_image_path = os.path.join(image_directory, 'name_not_filled.png')
+
+    global Proceed_to_pay_image_path
+    Proceed_to_pay_image_path = os.path.join(image_directory, 'Proceed_to_pay.png')
 
 
 def check_current_month(checkInDatePassed):

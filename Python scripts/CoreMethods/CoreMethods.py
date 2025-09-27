@@ -37,7 +37,8 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     showQR_AfterTiger_image_path, UPI_ID_image_path, UPI_ID_Image2_image_path, gender_dropdown_image_path, \
     id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
     id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path,\
-    indian_flag_only_image_path,name_not_filled_image_path,Proceed_to_pay_image_path
+    indian_flag_only_image_path,name_not_filled_image_path,Proceed_to_pay_image_path,\
+    add_new_upi_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6, location23
 global region1, region2, region3, region4, region5, region6
@@ -927,6 +928,14 @@ def payment():
             print("UPI_ID was displayed")
             pyautogui.click(location6)
             time.sleep(0.1)
+            locationOfAddNewUPI = find_image_on_screen_using_opencv(add_new_upi_image_path, 2)
+            if locationOfAddNewUPI is not None:
+                pyautogui.click(locationOfAddNewUPI)
+                autoit.send("{TAB}")
+                autoit.send("{TAB}")
+                time.sleep(0.1)
+                human_typing(UPI_ADDRESS.lower())
+            time.sleep(0.1)
             location7 = find_image_on_screen_using_opencv(Proceed_to_pay_image_path, 10)
             pyautogui.click(location7)
 
@@ -1098,6 +1107,10 @@ def setImagePath():
 
     global Proceed_to_pay_image_path
     Proceed_to_pay_image_path = os.path.join(image_directory, 'Proceed_to_pay.png')
+
+    global add_new_upi_image_path
+    add_new_upi_image_path = os.path.join(image_directory, 'add_new_upi.png')
+
 
 
 def check_current_month(checkInDatePassed):

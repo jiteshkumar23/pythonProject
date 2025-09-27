@@ -56,16 +56,25 @@ def speed_for_first_page(speed):
     time.sleep(speed)
 
 
+# def nationalityDropDownDisplayed():
+#     if (pax_1.lower() == "foreigner" or
+#             pax_2.lower() == "foreigner" or
+#             pax_3.lower() == "foreigner" or
+#             pax_4.lower() == "foreigner" or
+#             pax_5.lower() == "foreigner" or
+#             pax_6.lower() == "foreigner"):
+#         return True
+#     else:
+#         return False
+
+# updated fucntion
 def nationalityDropDownDisplayed():
-    if (pax_1.lower() == "foreigner" or
-            pax_2.lower() == "foreigner" or
-            pax_3.lower() == "foreigner" or
-            pax_4.lower() == "foreigner" or
-            pax_5.lower() == "foreigner" or
-            pax_6.lower() == "foreigner"):
-        return True
-    else:
-        return False
+    for i in range(1, int(number_of_adults) + 1):
+        pax_value = globals().get(f'pax_{i}', '').lower()
+        if pax_value == "foreigner":
+            return True
+    return False
+
 
 
 def allForeigners():
@@ -536,27 +545,28 @@ def fillPersonDetail(name, gender, country, idType, idNumber, age,
     #         print(f"An error occurred: {e}")
 
     # checking if name is not filled and entering it in that case
-    try:
-        wait_for_alt_q()
-
-        name_not_filled_location = pyautogui.locateOnScreen(name_not_filled_image_path, region=region,
-                                                                  confidence=0.7)
-        print(f"Name was NOT filled, I am filling it now")
-        location = find_image_on_screen_using_opencv_in_region(name_not_filled_image_path, 10, region=region)
-        pyautogui.click(location)
-        human_typing(name.lower())
-        time.sleep(0.25)
-    except Exception as e:
-        print(f"Good to Proceed. Name was filled")
-    time.sleep(0.25)
-    autoit.send("{TAB}")
-    time.sleep(0.25)
+    # try:
+    #     wait_for_alt_q()
+    #
+    #     name_not_filled_location = pyautogui.locateOnScreen(name_not_filled_image_path, region=region,
+    #                                                               confidence=0.7)
+    #     print(f"Name was NOT filled, I am filling it now")
+    #     location = find_image_on_screen_using_opencv_in_region(name_not_filled_image_path, 10, region=region)
+    #     pyautogui.click(location)
+    #     human_typing(name.lower())
+    #     time.sleep(0.25)
+    # except Exception as e:
+    #     print(f"Good to Proceed. Name was filled")
+    # time.sleep(0.25)
+    # autoit.send("{TAB}")
+    # time.sleep(0.25)
 
     # click_on_image_in_region(144, 306, 1609, 138, 'indian_flag.png')
 
     if nationalityDropDownDisplayed():
         wait_for_alt_q()
         if country.lower() != "india":
+            checkIfNameIsFilled(name, region=region)
             indian_flag_only_location = pyautogui.locateOnScreen(indian_flag_only_image_path, region=region,confidence=0.95)
             print('location of indian flag' + str(indian_flag_only_location))
             pyautogui.click(indian_flag_only_location)
@@ -578,7 +588,7 @@ def fillPersonDetail(name, gender, country, idType, idNumber, age,
                 pyautogui.scroll(10000)
         else:
             time.sleep(0.25)
-            autoit.send("{TAB}")
+            # autoit.send("{TAB}")
     else:
         time.sleep(0.25)
 
@@ -1272,6 +1282,7 @@ def move_mouse_to_center(location, mouseMovementSpeed1):
 def id_proof_filling(region, idType, name):
     try:
         wait_for_alt_q()
+        checkIfNameIsFilled(name, region=region)
         # try:
         #     name_not_filled_location = pyautogui.locateOnScreen(fullname_image_path, region=region, confidence=0.7)
         #     print(f"Name was NOT filled, I am filling it now")
@@ -1282,6 +1293,7 @@ def id_proof_filling(region, idType, name):
         # except Exception as e:
         #     print(f"An error occurred: {str(e)}")
         #     print(f"Good to Proceed. Name was filled")
+
         identity_proof_type_location = pyautogui.locateOnScreen(identity_proof_type_image_path, region=region,
                                                                 confidence=0.7)
         print("identity_proof_type_location"+str(identity_proof_type_location))
@@ -1333,3 +1345,16 @@ def otpBoxHandling():
     autoit.send("{F2}")
     time.sleep(0.2)
     autoit.send("{F12}")
+
+def checkIfNameIsFilled(name, region):
+    try:
+        name_not_filled_location = pyautogui.locateOnScreen(name_not_filled_image_path, region=region,
+                                                                  confidence=0.7)
+        print(f"Name was NOT filled, I am filling it now")
+        location = find_image_on_screen_using_opencv_in_region(name_not_filled_image_path, 10, region=region)
+        pyautogui.click(location)
+        human_typing(name.lower())
+        time.sleep(0.25)
+    except Exception as e:
+        print(f"Good to Proceed. Name was filled")
+    time.sleep(0.25)

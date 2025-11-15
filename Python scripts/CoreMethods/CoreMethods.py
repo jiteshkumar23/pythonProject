@@ -1135,7 +1135,7 @@ def days_difference_with_checkInDate(checkOutDate1):
     if is_leap_year():
         return difference_in_days + 1
     else:
-        return difference_in_days
+        return difference_in_days + 1
 
 
 def is_leap_year():

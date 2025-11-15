@@ -1121,7 +1121,9 @@ def check_current_month(checkInDatePassed):
 
 def days_difference_with_checkInDate(checkOutDate1):
     # Define the dates
-    current_date = datetime.now()
+    today = datetime.today()
+    current_date = datetime(today.year, today.month, today.day)
+
     compare_date = datetime(2025, 11, 15)
 
     # Get the higher date
@@ -1132,10 +1134,11 @@ def days_difference_with_checkInDate(checkOutDate1):
 
     # Calculate the difference in days
     difference_in_days = abs((checkOutDate1 - higher_date).days)
+
     if is_leap_year():
         return difference_in_days + 1
     else:
-        return difference_in_days + 1
+        return difference_in_days
 
 
 def is_leap_year():

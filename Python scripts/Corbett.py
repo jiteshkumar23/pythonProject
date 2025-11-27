@@ -2,9 +2,9 @@ import os
 import subprocess
 import sys
 import time
-
 import keyboard
 from autoit import autoit
+
 
 from CoreMethods.CoreMethods import (
     fillForm, debounce_key, firstPageFill, enterMobile, payment, setImagePath, roomSelection,otpBoxHandling
@@ -39,6 +39,11 @@ def handle_key_press():
         payment()
         debounce_key("alt+4")  # Wait until the key is released
         return True
+    # elif keyboard.is_pressed("alt+5"):
+    #     print("Keys Pressed - alt+5 - mobile number")
+    #     enterMobile()
+    #     debounce_key("alt+4")  # Wait until the key is released
+    #     return True
     elif keyboard.is_pressed("alt+w"):
         print("Keys Pressed - alt+w - OTP Box Handling")
         otpBoxHandling()

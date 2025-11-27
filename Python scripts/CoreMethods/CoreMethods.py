@@ -7,6 +7,7 @@ from datetime import datetime
 from tkinter import simpledialog
 import keyboard
 import numpy as np
+import pyperclip
 from autoit import autoit
 from pynput import mouse
 
@@ -419,7 +420,7 @@ def fillForm():
     time.sleep(1.25)
     autoit.send("{HOME}")
     autoit.send("{HOME}")
-
+    print("Number of adults selected:", int(number_of_adults))
     if int(number_of_adults) >= 1:
         currentPerson = 1
         fillPersonDetail(nameOfFirstPerson, genderOfFirstPerson, countryFirstPerson,
@@ -497,11 +498,12 @@ def playback_mouse_movements(fileName):
 
 def fillPersonDetail(name, gender, country, idType, idNumber, age,
                      currentPerson, random_numbers, random_numbers2, random_numbers3, region):
-    print(currentPerson)
+    print("Current person:", currentPerson)
     global location23
     if currentPerson <= 4:  # meaning for 1,2,3,4 go inside
         try:
             location23 = find_image_on_screen_using_opencv_in_region(fullname_image_path, 20, region=region)
+            print("Location:", location23)
         except Exception as e:
             print(f"An error occurred: {e}")
     if currentPerson not in [1]:  # meaning for 2,3,4,5,6 go inside
@@ -834,17 +836,18 @@ def find_image_on_screen_using_opencv(template_path1, timeout, threshold=0.7):
         # Perform template matching
         res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-
+        print(f"Searching for image: {template_path1.split('/')[-1]} - Time elapsed: {time.time() - start_time:.1f}s")
         # Check if the match value is above the threshold
         if max_val >= threshold:
             # Return the location of the matched region
+            print(f"✅ Image found: {template_path1.split('/')[-1]} (Confidence: {max_val:.2f})")
             return max_loc[0], max_loc[1], w, h
 
         # Check if the timeout has been reached
         if time.time() - start_time > timeout:
             return None
 
-        time.sleep(0.5)
+        # time.sleep(0.1)
 
 
 def find_image_on_screen_using_opencv_in_region(template_path1, timeout, region, threshold=0.7):
@@ -862,12 +865,14 @@ def find_image_on_screen_using_opencv_in_region(template_path1, timeout, region,
         # Perform template matching
         res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+        print(f"Searching for image: {template_path1.split('/')[-1]} in region {region} - Time elapsed: {time.time() - start_time:.1f}s")
 
         # Check if the match value is above the threshold
         if max_val >= threshold:
             # Calculate the absolute position of the matched region
             abs_x = max_loc[0] + region[0]
             abs_y = max_loc[1] + region[1]
+            print(f"✅ Image found: {template_path1.split('/')[-1]} (Confidence: {max_val:.2f}) at position ({abs_x}, {abs_y})")
             return abs_x, abs_y, w, h
 
         # Check if the timeout has been reached
@@ -881,8 +886,9 @@ def enterMobile():
         wait_for_alt_q()
         pyautogui.scroll(-2500)
         time.sleep(0.5)
-        mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
-        pyautogui.click(mobile_location)
+        pyautogui.click(find_image_on_screen_using_opencv(mobile_image_path, 10))
+        # mobile_location = pyautogui.locateOnScreen(mobile_image_path, confidence=0.7)
+        # pyautogui.click(mobile_location)
         human_typing(mobileNumber)
         print("Mobile number has been entered")
         time.sleep(0.1)
@@ -919,14 +925,17 @@ def payment():
         print("clicked on Pay Now button")
         if paymentMethod == "upi":
             print('Inside UPI Block')
-            location6 = find_image_on_screen_using_opencv(showQR_image_path, 60)
-            print("show QR was displayed")
-            print(str(location6))
-            pyautogui.click(location6)
+
+            # location6 = find_image_on_screen_using_opencv(showQR_image_path, 60)
+            # print("show QR was displayed")
+            # print(str(location6))
+            # pyautogui.click(location6)
+            pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 60))
         elif paymentMethod == "upi_id":
-            location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 60)
-            print("UPI_ID was displayed")
-            pyautogui.click(location6)
+            # location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 60)
+            # print("UPI_ID was displayed")
+            # pyautogui.click(location6)
+            pyautogui.click(find_image_on_screen_using_opencv(UPI_ID_image_path, 60))
             time.sleep(0.1)
             locationOfAddNewUPI = find_image_on_screen_using_opencv(add_new_upi_image_path, 2)
             if locationOfAddNewUPI is not None:
@@ -934,7 +943,9 @@ def payment():
                 autoit.send("{TAB}")
                 autoit.send("{TAB}")
                 time.sleep(0.1)
-                human_typing(UPI_ADDRESS.lower())
+                # human_typing(UPI_ADDRESS.lower())
+                pyperclip.copy(UPI_ADDRESS.lower())
+                autoit.send("^v")
             time.sleep(0.1)
             location7 = find_image_on_screen_using_opencv(Proceed_to_pay_image_path, 10)
             pyautogui.click(location7)

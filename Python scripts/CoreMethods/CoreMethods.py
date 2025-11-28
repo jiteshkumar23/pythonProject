@@ -931,6 +931,9 @@ def payment():
             # print(str(location6))
             # pyautogui.click(location6)
             pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 60))
+            screen_width, screen_height = pyautogui.size()
+            pyautogui.moveTo(screen_width - 10, pyautogui.position()[1])
+
         elif paymentMethod == "upi_id":
             # location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 60)
             # print("UPI_ID was displayed")

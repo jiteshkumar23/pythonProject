@@ -39,7 +39,7 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
     id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path,\
     indian_flag_only_image_path,name_not_filled_image_path,Proceed_to_pay_image_path,\
-    add_new_upi_image_path
+    add_new_upi_image_path,PayNow_Green_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6, location23
 global region1, region2, region3, region4, region5, region6
@@ -909,11 +909,14 @@ def enterMobile():
 
 
 def payment():
+    pyautogui.click(find_image_on_screen_using_opencv_color(PayNow_Green_image_path, 120, 1))
+    print("Pay Now was clicked")
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
     pyautogui.click(location)
     global paymentMethod
     if paymentMethod == "upi" or paymentMethod == "upi_id":
         location2 = find_image_on_screen_using_opencv(UPI_image_path, 60)
+        time.sleep(0.5)
         pyautogui.click(location2)
         print("clicked on UPI")
         # location3 = find_image_on_screen_using_opencv(PayNow_image_path, 60)
@@ -925,12 +928,14 @@ def payment():
         print("clicked on Pay Now button")
         if paymentMethod == "upi":
             print('Inside UPI Block')
-
-            # location6 = find_image_on_screen_using_opencv(showQR_image_path, 60)
-            # print("show QR was displayed")
-            # print(str(location6))
-            # pyautogui.click(location6)
-            pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 60))
+            location6 = find_image_on_screen_using_opencv(showQR_image_path, 60)
+            print("show QR was displayed")
+            time.sleep(0.3)
+            print(str(location6))
+            pyautogui.click(location6)
+            print("Clicked on show QR button")
+            # pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 60))
+            # pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 1))
             screen_width, screen_height = pyautogui.size()
             pyautogui.moveTo(screen_width - 10, pyautogui.position()[1])
 
@@ -1125,6 +1130,8 @@ def setImagePath():
     global add_new_upi_image_path
     add_new_upi_image_path = os.path.join(image_directory, 'add_new_upi.png')
 
+    global PayNow_Green_image_path
+    PayNow_Green_image_path = os.path.join(image_directory, 'PayNow_Green.png')
 
 
 def check_current_month(checkInDatePassed):
@@ -1282,6 +1289,11 @@ def wait_for_alt_q():
     keyboard.wait('alt+3')
     print("'Alt + 3' was pressed!")
 
+def wait_for_alt_4():
+    print("Waiting for 'Alt + 4' to be pressed...")
+    # Block until "Alt + Q" is pressed
+    keyboard.wait('alt+4')
+    print("'Alt + 4' was pressed!")
 
 def type_character(char):
     if char.isalnum():  # Check if character is alphanumeric
@@ -1388,3 +1400,26 @@ def checkIfNameIsFilled(name, region):
     except Exception as e:
         print(f"Good to Proceed. Name was filled")
     time.sleep(0.25)
+
+def find_image_on_screen_using_opencv_color(template_path1, timeout, threshold=0.7):
+    template = cv2.imread(template_path1)  # Read in color (BGR)
+    h, w, _ = template.shape
+    start_time = time.time()
+
+    while True:
+        # Capture a screenshot
+        screenshot = pyautogui.screenshot()
+        screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)  # Convert to BGR
+
+        # Perform template matching in color
+        res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+
+        if max_val >= threshold:
+            print("Color image found ->" + template_path1)
+            return max_loc[0], max_loc[1], w, h
+
+        if time.time() - start_time > timeout:
+            return None
+        print("Color image searching for " + template_path1)
+        time.sleep(0.01)

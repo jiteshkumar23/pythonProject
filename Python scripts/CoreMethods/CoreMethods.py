@@ -909,7 +909,7 @@ def enterMobile():
 
 
 def payment():
-    pyautogui.click(find_image_on_screen_using_opencv_color(PayNow_Green_image_path, 120, 1))
+    # pyautogui.click(find_image_on_screen_using_opencv_color_more_sensitive(PayNow_Green_image_path, 120, 0.9))
     print("Pay Now was clicked")
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
     pyautogui.click(location)
@@ -1227,7 +1227,9 @@ def roomSelection():
     autoit.send("{F3}")
     time.sleep(0.1)
     print(room)
-    autoit.send(room)
+    pyperclip.copy(room)
+    autoit.send("^v")
+    # autoit.send(room)
     time.sleep(0.1)
     autoit.send("{ESC}")
     time.sleep(0.2)
@@ -1423,3 +1425,49 @@ def find_image_on_screen_using_opencv_color(template_path1, timeout, threshold=0
             return None
         print("Color image searching for " + template_path1)
         time.sleep(0.01)
+
+
+def find_image_on_screen_using_opencv_color_more_sensitive(template_path, timeout, threshold):
+    """
+    Detects and clicks the enabled (dark green) button only.
+    Uses template matching + HSV color range verification.
+    """
+
+    # Load template
+    template = cv2.imread(template_path)
+    h, w, _ = template.shape
+
+    start_time = time.time()
+
+    while True:
+        # Capture screenshot
+        screenshot = pyautogui.screenshot()
+        screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+
+        # Perform template matching
+        res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
+        _, max_val, _, max_loc = cv2.minMaxLoc(res)
+
+        if max_val >= threshold:
+            x, y = max_loc
+            roi = screenshot[y:y+h, x:x+w]
+
+            # Convert ROI to HSV
+            roi_hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+            avg_hsv = cv2.mean(roi_hsv)[:3]  # (H, S, V)
+
+            # Define dark green range (tune these values!)
+            # Hue ~ 35–85, Saturation > 80, Value < 150
+            h_val, s_val, v_val = avg_hsv
+            if 35 <= h_val <= 85 and s_val > 80 and v_val < 150:
+                print("Enabled (dark green) button detected — clicking")
+                pyautogui.click(x + w//2, y + h//2)
+                return x, y, w, h
+            else:
+                print("Button found but not dark green (disabled state)")
+
+        if time.time() - start_time > timeout:
+            print("Enabled button not found within timeout")
+            return None
+
+        time.sleep(0.05)

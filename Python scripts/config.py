@@ -1,21 +1,21 @@
 # laptop or desktop or rohit or pradeeplaptop
 machine = "desktop"
 
-checkInDate = "2025-04-15"
-checkOutDate = "2025-04-16"
+checkInDate = "2026-01-02"
+checkOutDate = "2026-01-04"
 
 # SPEED Selection
-speed_first_page = 0.1  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
-delay_correct = 0.09  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
+speed_first_page = 0.05  # 0.1 is more human like ,0.05 is faster ,  0.01 is super fast , 0.0 is GOD mode
+delay_correct = 0.12  # delay between typing - 0.1 is more human like , 0.01 is super fast , 0.0 is GOD mode
 
-typingGap = 0.15 # minimum value of 0.05 , don't decrease below 0.05
+typingGap = 0.18 # minimum value of 0.05 , don't decrease below 0.05
 mouseMovementSpeed = 0.4  #
 
 byPassOTP = "no" # "yes" or "no"
 
 # Data Entry
 number_of_rooms = "2"
-number_of_adults = "2"
+number_of_adults = "3"
 number_of_children = "0"
 
 pax_1 = "Indian"  # "Indian" , "Foreigner","Student","Senior Citizen"
@@ -51,35 +51,35 @@ room = "Morghati"
 
 
 # Details of First Person
-nameOfFirstPerson = "John Doe"
-ageOfFirstPerson = "30"
+nameOfFirstPerson = "Vinod Gaind"
+ageOfFirstPerson = "67"
 genderOfFirstPerson = "Male"  # "Male", "Female","Transgender"
-idTypeOfFirstPerson = "Passport"  # "Aadhar Card", "Pan Card", "Driving License", "Passport", "Student ID Card"
-idNumberOfFirstPerson = "AB123456"
+idTypeOfFirstPerson = "Aadhar Card"  # "Aadhar Card", "Pan Card", "Driving License", "Passport", "Student ID Card"
+idNumberOfFirstPerson = "870515288086"
 countryFirstPerson = "India"  # "USA", "United Kingdom","Canada","Australia","Italy, "India"
 
 # Details of Second Person
-nameOfSecondPerson = "Jane Smith"
-ageOfSecondPerson = "28"
-genderOfSecondPerson = "Female"
-idTypeOfSecondPerson = "Passport"
-idNumberOfSecondPerson = "BC987654"
+nameOfSecondPerson = "Rukmani Fanda"
+ageOfSecondPerson = "67"
+genderOfSecondPerson = "Male"
+idTypeOfSecondPerson = "Aadhar Card"
+idNumberOfSecondPerson = "424823379273"
 countrySecondPerson = "India"
 
 # Details of Third Person
-nameOfThirdPerson = "Alex Lee"
-ageOfThirdPerson = "35"
-genderOfThirdPerson = "Transgender"
-idTypeOfThirdPerson = "Passport"
-idNumberOfThirdPerson = "AU123789"
+nameOfThirdPerson = "Sandeepa Fanda"
+ageOfThirdPerson = "42"
+genderOfThirdPerson = "Male"
+idTypeOfThirdPerson = "Aadhar Card"
+idNumberOfThirdPerson = "938235020381"
 countryThirdPerson = "India"
 
 # Details of Fourth Person
-nameOfFourthPerson = "Carlos Rodriguez"
-ageOfFourthPerson = "42"
+nameOfFourthPerson = "Anita Gaind"
+ageOfFourthPerson = "65"
 genderOfFourthPerson = "Male"
-idTypeOfFourthPerson = "Passport"
-idNumberOfFourthPerson = "ES456789"
+idTypeOfFourthPerson = "Aadhar Card"
+idNumberOfFourthPerson = "885451504928"
 countryFourthPerson = "India"
 
 # Details of Fifth Person
@@ -102,7 +102,7 @@ countrySixthPerson = "India"
 mobileNumber = "9999999999"
 
 # email address for payment
-emailAddress = "abcd@gmail.com"
+emailAddress = "abcd.corbett@gmail.com"
 
 # Payment Method - "upi" or "upi_id" or "creditcard"
 paymentMethod = "upi"

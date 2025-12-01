@@ -39,7 +39,7 @@ global image_directory, ok_image_path, firstPersonText_image_path, firstPersonTe
     id_details_image_path, age_image_path, fullname_image_path, mobile_image_path, \
     id_proof_not_selected_image_path, emailAddress_image_path, emailAddress_2_image_path,\
     indian_flag_only_image_path,name_not_filled_image_path,Proceed_to_pay_image_path,\
-    add_new_upi_image_path,PayNow_Green_image_path
+    add_new_upi_image_path,PayNow_Green_image_path,PayNow_light_image_path
 
 global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6, location23
 global region1, region2, region3, region4, region5, region6
@@ -909,7 +909,7 @@ def enterMobile():
 
 
 def payment():
-    # pyautogui.click(find_image_on_screen_using_opencv_color_more_sensitive(PayNow_Green_image_path, 120, 0.9))
+    pyautogui.click(find_image_on_screen_using_opencv_color_more_sensitive(PayNow_Green_image_path, 120, 0.8))
     print("Pay Now was clicked")
     location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
     pyautogui.click(location)
@@ -1133,6 +1133,9 @@ def setImagePath():
     global PayNow_Green_image_path
     PayNow_Green_image_path = os.path.join(image_directory, 'PayNow_Green.png')
 
+    global PayNow_light_image_path
+    PayNow_light_image_path = os.path.join(image_directory, 'PayNow_light.png')
+
 
 def check_current_month(checkInDatePassed):
     input_month = datetime.strptime(checkInDatePassed, "%Y-%m-%d").month
@@ -1297,6 +1300,9 @@ def wait_for_alt_4():
     keyboard.wait('alt+4')
     print("'Alt + 4' was pressed!")
 
+def analyze_buttons():
+    analyze_button_states(PayNow_light_image_path,PayNow_Green_image_path)
+
 def type_character(char):
     if char.isalnum():  # Check if character is alphanumeric
         pyautogui.press(char)
@@ -1427,15 +1433,19 @@ def find_image_on_screen_using_opencv_color(template_path1, timeout, threshold=0
         time.sleep(0.01)
 
 
-def find_image_on_screen_using_opencv_color_more_sensitive(template_path, timeout, threshold):
+def find_image_on_screen_using_opencv_color_more_sensitive(template_path, timeout, threshold=0.7):
     """
     Detects and clicks the enabled (dark green) button only.
-    Uses template matching + HSV color range verification.
+    Uses template matching + HSV pixel ratio check based on tuned thresholds.
     """
 
-    # Load template
+    # Load template image of the button in enabled state
     template = cv2.imread(template_path)
     h, w, _ = template.shape
+
+    # HSV thresholds based on your image analysis
+    lower_enabled = np.array([70, 150, 100])  # H, S, V
+    upper_enabled = np.array([85, 255, 170])
 
     start_time = time.time()
 
@@ -1444,30 +1454,61 @@ def find_image_on_screen_using_opencv_color_more_sensitive(template_path, timeou
         screenshot = pyautogui.screenshot()
         screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
 
-        # Perform template matching
+        # Template matching
         res = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
         _, max_val, _, max_loc = cv2.minMaxLoc(res)
 
         if max_val >= threshold:
             x, y = max_loc
             roi = screenshot[y:y+h, x:x+w]
-
-            # Convert ROI to HSV
             roi_hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-            avg_hsv = cv2.mean(roi_hsv)[:3]  # (H, S, V)
 
-            # Define dark green range (tune these values!)
-            # Hue ~ 35–85, Saturation > 80, Value < 150
-            h_val, s_val, v_val = avg_hsv
-            if 35 <= h_val <= 85 and s_val > 80 and v_val < 150:
-                print("Enabled (dark green) button detected — clicking")
+            # Create mask for enabled color range
+            mask = cv2.inRange(roi_hsv, lower_enabled, upper_enabled)
+            ratio = cv2.countNonZero(mask) / (roi_hsv.shape[0] * roi_hsv.shape[1])
+
+            print(f"Match score: {max_val:.3f}, Enabled pixel ratio: {ratio:.3f}")
+
+            if ratio > 0.6:
+                print("✅ Enabled (dark green) button detected — clicking")
                 pyautogui.click(x + w//2, y + h//2)
                 return x, y, w, h
             else:
-                print("Button found but not dark green (disabled state)")
+                print("⚠️ Button found but appears disabled (light green)")
 
         if time.time() - start_time > timeout:
-            print("Enabled button not found within timeout")
+            print("⏳ Enabled button not found within timeout")
             return None
 
-        time.sleep(0.05)
+        # time.sleep(0.05)
+
+
+def analyze_button_states(disabled_path, enabled_path):
+    """
+    Loads two images (disabled and enabled button states),
+    converts them to HSV, and prints color statistics for comparison.
+    """
+
+    # Load both images
+    img_disabled = cv2.imread(disabled_path)
+    img_enabled = cv2.imread(enabled_path)
+
+    # Convert to HSV
+    hsv_disabled = cv2.cvtColor(img_disabled, cv2.COLOR_BGR2HSV)
+    hsv_enabled = cv2.cvtColor(img_enabled, cv2.COLOR_BGR2HSV)
+
+    def stats(name, hsv_img):
+        h = hsv_img[:,:,0]
+        s = hsv_img[:,:,1]
+        v = hsv_img[:,:,2]
+
+        print(f"\n{name} button stats:")
+        print("  Average HSV:", cv2.mean(hsv_img)[:3])
+        print("  Median HSV:", (np.median(h), np.median(s), np.median(v)))
+        print("  Hue range:", (h.min(), h.max()))
+        print("  Saturation range:", (s.min(), s.max()))
+        print("  Value range:", (v.min(), v.max()))
+
+    # Print stats for both states
+    stats("Disabled (light green)", hsv_disabled)
+    stats("Enabled (dark green)", hsv_enabled)

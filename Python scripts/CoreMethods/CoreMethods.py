@@ -10,6 +10,7 @@ import numpy as np
 import pyperclip
 from autoit import autoit
 from pynput import mouse
+from regions import region1, region2, region3, region4, region5, region6
 
 from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     number_of_adults, nameOfSecondPerson, genderOfSecondPerson, \
@@ -21,7 +22,7 @@ from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     idTypeOfFifthPerson, idNumberOfFifthPerson, ageOfFifthPerson, nameOfSixthPerson, genderOfSixthPerson, \
     countrySixthPerson, idTypeOfSixthPerson, idNumberOfSixthPerson, ageOfSixthPerson, speed_first_page, \
     number_of_children, number_of_rooms, \
-    room, mobileNumber, emailAddress, paymentMethod, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
+    room, mobileNumber, emailAddress, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
     checkOutDate, UPI_ADDRESS, randomness_profile, typingGap, mouseMovementSpeed, byPassOTP
 
 fifth = False
@@ -382,41 +383,41 @@ def fillForm():
     global fifth
     global currentPerson
     global indiaFlagX, identityDropDownX, Y1, Y2, Y3, Y4, Y5, Y6
-    global region1, region2, region3, region4, region5, region6
+    # global region1, region2, region3, region4, region5, region6
     random_numbers = generate_3_random_numbers()
     random_numbers2 = generate_3_random_numbers_2()
     random_numbers3 = generate_1_random_number()
     print(random_numbers)
     print(random_numbers2)
     print(random_numbers3)
-    if machine == "laptop":
-        region1 = (244, 254, 1410, 108)
-        region2 = (244, 375, 1410, 109)
-        region3 = (244, 505, 1410, 109)
-        region4 = (244, 636, 1410, 109)
-        region5 = (244, 767, 1410, 109)
-        region6 = (244, 892, 1410, 109)
-    elif machine == "desktop":
-        region1 = (110, 197, 1131, 91)
-        region2 = (110, 298, 1131, 91)
-        region3 = (110, 403, 1131, 91)
-        region4 = (110, 508, 1131, 91)
-        region5 = (110, 609, 1131, 91)
-        region6 = (110, 370, 1131, 91)
-    elif machine == "rohit":
-        region1 = (110, 197, 1131, 91)
-        region2 = (110, 298, 1131, 91)
-        region3 = (110, 403, 1131, 91)
-        region4 = (110, 500, 1131, 91)
-        region5 = (110, 354, 1131, 91)
-        region6 = (110, 485, 1131, 91)
-    elif machine == "pradeeplaptop":
-        region1 = (110, 197, 1131, 91)
-        region2 = (110, 298, 1131, 91)
-        region3 = (110, 403, 1131, 91)
-        region4 = (110, 500, 1131, 91)
-        region5 = (110, 354, 1131, 91)
-        region6 = (110, 485, 1131, 91)
+    # if machine == "laptop":
+    #     region1 = (244, 254, 1410, 108)
+    #     region2 = (244, 375, 1410, 109)
+    #     region3 = (244, 505, 1410, 109)
+    #     region4 = (244, 636, 1410, 109)
+    #     region5 = (244, 767, 1410, 109)
+    #     region6 = (244, 892, 1410, 109)
+    # elif machine == "desktop":
+    #     region1 = (110, 197, 1131, 91)
+    #     region2 = (110, 298, 1131, 91)
+    #     region3 = (110, 403, 1131, 91)
+    #     region4 = (110, 508, 1131, 91)
+    #     region5 = (110, 609, 1131, 91)
+    #     region6 = (110, 370, 1131, 91)
+    # elif machine == "rohit":
+    #     region1 = (110, 197, 1131, 91)
+    #     region2 = (110, 298, 1131, 91)
+    #     region3 = (110, 403, 1131, 91)
+    #     region4 = (110, 500, 1131, 91)
+    #     region5 = (110, 354, 1131, 91)
+    #     region6 = (110, 485, 1131, 91)
+    # elif machine == "pradeeplaptop":
+    #     region1 = (110, 197, 1131, 91)
+    #     region2 = (110, 298, 1131, 91)
+    #     region3 = (110, 403, 1131, 91)
+    #     region4 = (110, 500, 1131, 91)
+    #     region5 = (110, 354, 1131, 91)
+    #     region6 = (110, 485, 1131, 91)
     time.sleep(1.25)
     autoit.send("{HOME}")
     autoit.send("{HOME}")
@@ -1226,19 +1227,43 @@ def find_any_of_two_images_on_screen_using_opencv(template_path1, template_path2
 
 
 def roomSelection():
-    speed_for_first_page(speed_first_page)
-    autoit.send("{F3}")
-    time.sleep(0.1)
-    print(room)
-    pyperclip.copy(room)
-    autoit.send("^v")
-    # autoit.send(room)
-    time.sleep(0.1)
-    autoit.send("{ESC}")
-    time.sleep(0.2)
-    autoit.send("{TAB}")
-    time.sleep(0.1)
-    autoit.send("{ENTER}")
+    start_time = time.time()
+    max_timeout = 5.0  # 5 seconds maximum timeout
+
+    while True:
+        speed_for_first_page(speed_first_page)
+        autoit.send("{F3}")
+        time.sleep(0.1)
+        print(room)
+        pyperclip.copy(room)
+        autoit.send("^v")
+        time.sleep(0.1)
+        autoit.send("{ESC}")
+        time.sleep(0.2)
+        autoit.send("{TAB}")
+        time.sleep(0.1)
+        autoit.send("{ENTER}")
+
+        # Check if location23 is found in region1
+        location = find_image_on_screen_using_opencv_in_region(fullname_image_path, 0.2, region=region1)
+
+        if location is not None:
+            print("✅ Location found in region1. Exiting room selection loop.")
+            break
+        else:
+            print("❌ Location not found in region1. Retrying room selection...")
+            time.sleep(0.1)
+
+        # Check if maximum timeout has been reached
+        elapsed_time = time.time() - start_time
+        if elapsed_time >= max_timeout:
+            print(f"⏰ Maximum timeout of {max_timeout} seconds reached. Exiting room selection loop.")
+            break
+        else:
+            print(f"⏱️ Time elapsed: {elapsed_time:.1f}s / {max_timeout}s")
+
+        autoit.send("{HOME}")
+        autoit.send("{HOME}")
 
 
 def find_image_in_region(left, top, width, height, image):

@@ -1227,23 +1227,25 @@ def find_any_of_two_images_on_screen_using_opencv(template_path1, template_path2
 
 
 def roomSelection():
+    speed_for_first_page(speed_first_page)
+    autoit.send("{F3}")
+    time.sleep(0.1)
+    print(room)
+    pyperclip.copy(room)
+    autoit.send("^v")
+    time.sleep(0.1)
+    autoit.send("{ESC}")
+    time.sleep(0.2)
+    autoit.send("{TAB}")
+    time.sleep(0.1)
+    
     start_time = time.time()
     max_timeout = 5.0  # 5 seconds maximum timeout
 
     while True:
-        speed_for_first_page(speed_first_page)
-        autoit.send("{F3}")
-        time.sleep(0.1)
-        print(room)
-        pyperclip.copy(room)
-        autoit.send("^v")
-        time.sleep(0.1)
-        autoit.send("{ESC}")
-        time.sleep(0.2)
-        autoit.send("{TAB}")
         time.sleep(0.1)
         autoit.send("{ENTER}")
-
+        time.sleep(0.1)
         # Check if location23 is found in region1
         location = find_image_on_screen_using_opencv_in_region(fullname_image_path, 0.2, region=region1)
 

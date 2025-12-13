@@ -25,6 +25,7 @@ from config import delay_correct, pax_1, pax_2, pax_3, pax_4, pax_5, pax_6, \
     room, mobileNumber, emailAddress, card_number, Month, Year, CVV, NameOnCard, machine, checkInDate, \
     checkOutDate, UPI_ADDRESS, randomness_profile, typingGap, mouseMovementSpeed, byPassOTP
 
+from config import paymentMethod
 fifth = False
 currentPerson = 0
 
@@ -1238,7 +1239,7 @@ def roomSelection():
     time.sleep(0.2)
     autoit.send("{TAB}")
     time.sleep(0.1)
-    
+
     start_time = time.time()
     max_timeout = 5.0  # 5 seconds maximum timeout
 

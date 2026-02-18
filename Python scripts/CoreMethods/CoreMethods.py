@@ -933,7 +933,7 @@ def payment():
             if machine=="laptop" :
                 regionForQR = (943, 271, 462, 197)
             else:
-                regionForQR = (100, 100, 1820, 900)
+                regionForQR = (670, 220, 370, 153)
 
             location6 = find_image_on_screen_using_opencv_in_region(showQR_image_path, 300, region=regionForQR)
             print("show QR was displayed")

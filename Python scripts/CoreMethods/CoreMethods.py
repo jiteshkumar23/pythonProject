@@ -911,26 +911,31 @@ def enterMobile():
 
 
 def payment():
-    pyautogui.click(find_image_on_screen_using_opencv_color_more_sensitive(PayNow_Green_image_path, 120, 0.8))
-    print("Pay Now was clicked")
-    location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
-    pyautogui.click(location)
+    # pyautogui.click(find_image_on_screen_using_opencv_color_more_sensitive(PayNow_Green_image_path, 120, 0.8))
+    # print("Pay Now was clicked")
+    # location = find_image_on_screen_using_opencv(SelectPaymentOption_image_path, 300)
+    # pyautogui.click(location)
     global paymentMethod
     if paymentMethod == "upi" or paymentMethod == "upi_id":
-        location2 = find_image_on_screen_using_opencv(UPI_image_path, 60)
-        time.sleep(0.5)
-        pyautogui.click(location2)
-        print("clicked on UPI")
-        # location3 = find_image_on_screen_using_opencv(PayNow_image_path, 60)
-        # pyautogui.click(location3)
-        time.sleep(0.1)
-        autoit.send("{TAB}")
-        time.sleep(0.1)
-        autoit.send("{ENTER}")
-        print("clicked on Pay Now button")
+        # location2 = find_image_on_screen_using_opencv(UPI_image_path, 60)
+        # time.sleep(0.5)
+        # pyautogui.click(location2)
+        # print("clicked on UPI")
+        # # location3 = find_image_on_screen_using_opencv(PayNow_image_path, 60)
+        # # pyautogui.click(location3)
+        # time.sleep(0.1)
+        # autoit.send("{TAB}")
+        # time.sleep(0.1)
+        # autoit.send("{ENTER}")
+        # print("clicked on Pay Now button")
         if paymentMethod == "upi":
             print('Inside UPI Block')
-            location6 = find_image_on_screen_using_opencv(showQR_image_path, 60)
+            if machine=="laptop" :
+                regionForQR = (943, 271, 462, 197)
+            else:
+                regionForQR = (100, 100, 1820, 900)
+
+            location6 = find_image_on_screen_using_opencv_in_region(showQR_image_path, 300, region=regionForQR)
             print("show QR was displayed")
             time.sleep(0.3)
             print(str(location6))

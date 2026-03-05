@@ -941,10 +941,10 @@ def payment():
             print(str(location6))
             pyautogui.click(location6)
             print("Clicked on show QR button")
-            # pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 60))
-            # pyautogui.click(find_image_on_screen_using_opencv(showQR_image_path, 1))
-            screen_width, screen_height = pyautogui.size()
-            pyautogui.moveTo(screen_width - 10, pyautogui.position()[1])
+            zoom_in_key = '='  # use 'numadd' for numeric keypad + if needed
+            for _ in range(4):
+                pyautogui.hotkey('ctrl', zoom_in_key)
+            print(f"Page zoomed in by {4} steps")
 
         elif paymentMethod == "upi_id":
             # location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 60)
@@ -1545,3 +1545,4 @@ def analyze_button_states(disabled_path, enabled_path):
     # Print stats for both states
     stats("Disabled (light green)", hsv_disabled)
     stats("Enabled (dark green)", hsv_enabled)
+

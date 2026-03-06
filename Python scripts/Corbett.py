@@ -18,25 +18,26 @@ def exit_program():
 
 def handle_key_press():
     if keyboard.is_pressed("alt+1"):
+        debounce_key("alt+1")
         print("Keys Pressed - alt+1 - Filling first page only")
         firstPageFill()
-        debounce_key("alt+1")  # Wait until the key is released
         return True
     elif keyboard.is_pressed("alt+2"):
+        debounce_key("alt+2")
         print("Keys Pressed - alt+2  - Room Selection")
         roomSelection()
         return True
     elif keyboard.is_pressed("alt+3"):
+        debounce_key("alt+3")
         print("Keys Pressed - alt+3  - Filling form only")
         autoit.send("{HOME}")  # Takes you to the top of the page very fast
         time.sleep(0.25)
         fillForm()
-        debounce_key("alt+3")  # Wait until the key is released
         return True
     elif keyboard.is_pressed("alt+4"):
+        debounce_key("alt+4")  # Wait until the key is released
         print("Keys Pressed - alt+4 - payment")
         payment()
-        debounce_key("alt+4")  # Wait until the key is released
         return True
     # elif keyboard.is_pressed("alt+5"):
     #     print("Keys Pressed - alt+5 - mobile number")
@@ -44,9 +45,9 @@ def handle_key_press():
     #     debounce_key("alt+5")  # Wait until the key is released
     #     return True
     elif keyboard.is_pressed("alt+w"):
+        debounce_key("alt+w")
         print("Keys Pressed - alt+w - OTP Box Handling")
         otpBoxHandling()
-        debounce_key("alt+w")  # Wait until the key is released
         return True
     return False  # Indicate that no key was pressed
 

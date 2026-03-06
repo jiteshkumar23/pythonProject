@@ -941,10 +941,7 @@ def payment():
             print(str(location6))
             pyautogui.click(location6)
             print("Clicked on show QR button")
-            zoom_in_key = '='  # use 'numadd' for numeric keypad + if needed
-            for _ in range(4):
-                pyautogui.hotkey('ctrl', zoom_in_key)
-            print(f"Page zoomed in by {4} steps")
+            set_browser_zoom_175()
 
         elif paymentMethod == "upi_id":
             # location6 = find_image_on_screen_using_opencv(UPI_ID_image_path, 60)
@@ -1546,3 +1543,12 @@ def analyze_button_states(disabled_path, enabled_path):
     stats("Disabled (light green)", hsv_disabled)
     stats("Enabled (dark green)", hsv_enabled)
 
+
+def set_browser_zoom_175():
+    autoit.send("^0")  # Ctrl+0 — reset to 100%
+    time.sleep(0.1)
+
+    for _ in range(4):
+        autoit.send("^=")
+        time.sleep(0.05)# Ctrl+= — zoom in one step
+    print("Zoom set to 175%")

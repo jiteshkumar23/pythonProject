@@ -666,6 +666,8 @@ def debounce_key(key):
     # Wait for key release
     while keyboard.is_pressed(key):
         pass
+    keyboard.release('alt')  # Force release just in case
+    time.sleep(0.05)
 
 
 def firstPageFill():
